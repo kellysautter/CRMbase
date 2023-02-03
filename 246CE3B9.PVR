@@ -1,0 +1,12 @@
+z1000-Zeidon    246CE3B9 TZWDVORO 10/26/22   11:11:59 1.0a2    
+eViewObjRef 1
+aZKey      611115961
+aNextZKeyToAssign 611115961
+aName      sAppMgrMenu
+
+eLOD       2
+aZKey      715265729
+aName      sAppMgr
+aDesc      System Application Manager
+aDLL_Name  LODOPSYS
+

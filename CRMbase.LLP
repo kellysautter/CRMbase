@@ -1,0 +1,6614 @@
+z1000-Zeidon    CRMBASE  TZCMLPLO 02/03/23   14:09:17 1.0a2    
+eLPLR      1
+aName      CRMbase
+aDesc      CRM Reusable Components Base
+aZKey      370000011
+aPgmSrcDir C:\lplr\CRMbase
+aExecDir   C:\lplr\CRMbase\JavaProject\src\main\resources\bin
+aMetaSrcDir C:\lplr\CRMbase
+aTaskUseCount 0
+aLastBuildDate 20230114151047099
+aLPLR_Type 3
+aTempDesc  CRM Reusable Components Base
+aMergeType L
+aJavaPackageName CRMbase
+awMergeSourceLPLR_Name NazSIS
+awExecutableSubDirectory JavaProject\src\main\resources\bin
+awMergeMetaType Dialog
+awMergeMetaName wCRMBase
+
+eW_MetaType 2
+aType      0
+
+eW_MetaType 2
+aType      1
+
+eW_MetaType 2
+aType      2
+
+eW_MetaDef 3
+aCPLR_ZKey 210094687
+aStatus    1
+aUpdateInd 2
+aName      ACCEPT_ProposedChanges
+
+eW_MetaDef 3
+aCPLR_ZKey 354013036
+aStatus    1
+aUpdateInd 2
+aName      ActivateDocumentsForDivByType
+
+eW_MetaDef 3
+aCPLR_ZKey 354013102
+aStatus    1
+aUpdateInd 2
+aName      ActivateDocumentsForDivision
+
+eW_MetaDef 3
+aCPLR_ZKey 354013100
+aStatus    1
+aUpdateInd 2
+aName      ActivateDomainsForDivision
+
+eW_MetaDef 3
+aCPLR_ZKey 354012955
+aStatus    1
+aUpdateInd 2
+aName      ActivateDynamicDomain
+
+eW_MetaDef 3
+aCPLR_ZKey 621131606
+aStatus    1
+aUpdateInd 2
+aName      ActivateQueryObject
+
+eW_MetaDef 3
+aCPLR_ZKey 621131517
+aStatus    1
+aUpdateInd 2
+aName      ActivateQueryViewByName
+
+eW_MetaDef 3
+aCPLR_ZKey 621131548
+aStatus    1
+aUpdateInd 2
+aName      ActivateUpdateXOD
+
+eW_MetaDef 3
+aCPLR_ZKey 110276443
+aStatus    1
+aUpdateInd 2
+aName      ActivateWorkObjectFromFile
+
+eW_MetaDef 3
+aCPLR_ZKey 110276089
+aStatus    1
+aUpdateInd 2
+aName      AD_AddNewUser
+
+eW_MetaDef 3
+aCPLR_ZKey 110276113
+aStatus    1
+aUpdateInd 2
+aName      AD_AddUserPassword
+
+eW_MetaDef 3
+aCPLR_ZKey 110276119
+aStatus    1
+aUpdateInd 2
+aName      AD_AuthenticateUserPassword
+
+eW_MetaDef 3
+aCPLR_ZKey 110276079
+aStatus    1
+aUpdateInd 2
+aName      AD_GetUserProperty
+
+eW_MetaDef 3
+aCPLR_ZKey 110276085
+aStatus    1
+aUpdateInd 2
+aName      AD_RemoveUser
+
+eW_MetaDef 3
+aCPLR_ZKey 110276108
+aStatus    1
+aUpdateInd 2
+aName      AD_RemoveUserPassword
+
+eW_MetaDef 3
+aCPLR_ZKey 110276095
+aStatus    1
+aUpdateInd 2
+aName      AD_SetPassword
+
+eW_MetaDef 3
+aCPLR_ZKey 110276053
+aStatus    1
+aUpdateInd 2
+aName      AD_SetUserProperty
+
+eW_MetaDef 3
+aCPLR_ZKey 110276438
+aStatus    1
+aUpdateInd 2
+aName      AddDaysToDate
+
+eW_MetaDef 3
+aCPLR_ZKey 210094663
+aStatus    1
+aUpdateInd 2
+aName      AddDefaultTasks
+
+eW_MetaDef 3
+aCPLR_ZKey 354013195
+aStatus    1
+aUpdateInd 2
+aName      AddDelayedEmail
+
+eW_MetaDef 3
+aCPLR_ZKey 110276702
+aStatus    1
+aUpdateInd 2
+aName      AddMinutesToDate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276723
+aStatus    1
+aUpdateInd 2
+aName      AddMinutesToDateTime
+
+eW_MetaDef 3
+aCPLR_ZKey 110276372
+aStatus    1
+aUpdateInd 2
+aName      AddMonthsToDate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276408
+aStatus    1
+aUpdateInd 2
+aName      AddressFormatToMultiLine
+
+eW_MetaDef 3
+aCPLR_ZKey 110276330
+aStatus    1
+aUpdateInd 2
+aName      AddSpacesToString
+
+eW_MetaDef 3
+aCPLR_ZKey 210094657
+aStatus    1
+aUpdateInd 2
+aName      AddTask
+
+eW_MetaDef 3
+aCPLR_ZKey 110276496
+aStatus    1
+aUpdateInd 2
+aName      AddToAttrFromIntByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 354013187
+aStatus    1
+aUpdateInd 2
+aName      AddToQualificationForLanguage
+
+eW_MetaDef 3
+aCPLR_ZKey 110276453
+aStatus    1
+aUpdateInd 2
+aName      AddWorkingDaysToDate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276697
+aStatus    1
+aUpdateInd 2
+aName      AddYearsToDate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276354
+aStatus    1
+aUpdateInd 2
+aName      AGetRegistryValue
+
+eW_MetaDef 3
+aCPLR_ZKey 354013084
+aStatus    1
+aUpdateInd 2
+aName      BuildFamilyRole
+
+eW_MetaDef 3
+aCPLR_ZKey 621131634
+aStatus    1
+aUpdateInd 2
+aName      BuildValueComboBoxTable
+
+eW_MetaDef 3
+aCPLR_ZKey 354013149
+aStatus    1
+aUpdateInd 2
+aName      CalculatePellCOA
+
+eW_MetaDef 3
+aCPLR_ZKey 354012923
+aStatus    1
+aUpdateInd 2
+aName      CalculateTotalCOA
+
+eW_MetaDef 3
+aCPLR_ZKey 354012914
+aStatus    1
+aUpdateInd 2
+aName      CalculateTotalCostOfLivingCOA
+
+eW_MetaDef 3
+aCPLR_ZKey 354012920
+aStatus    1
+aUpdateInd 2
+aName      CalculateTotalInstitutionalCOA
+
+eW_MetaDef 3
+aCPLR_ZKey 354012917
+aStatus    1
+aUpdateInd 2
+aName      CalculateTotalTuitionFeesCOA
+
+eW_MetaDef 3
+aCPLR_ZKey 110276549
+aStatus    1
+aUpdateInd 2
+aName      CallJasperReport
+
+eW_MetaDef 3
+aCPLR_ZKey 110276357
+aStatus    1
+aUpdateInd 2
+aName      CallObjectOperation
+
+eW_MetaDef 3
+aCPLR_ZKey 110276466
+aStatus    1
+aUpdateInd 2
+aName      CharToCode
+
+eW_MetaDef 3
+aCPLR_ZKey 110276733
+aStatus    1
+aUpdateInd 2
+aName      CHECK_FileExists
+
+eW_MetaDef 3
+aCPLR_ZKey 110276140
+aStatus    1
+aUpdateInd 2
+aName      CheckForTableAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276595
+aStatus    1
+aUpdateInd 2
+aName      CheckImportDate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276563
+aStatus    1
+aUpdateInd 2
+aName      CheckPassword
+
+eW_MetaDef 3
+aCPLR_ZKey 110276546
+aStatus    1
+aUpdateInd 2
+aName      CheckPasswordInternal
+
+eW_MetaDef 3
+aCPLR_ZKey 354013136
+aStatus    1
+aUpdateInd 2
+aName      CLEAN_ForLogout
+
+eW_MetaDef 3
+aCPLR_ZKey 354013133
+aStatus    1
+aUpdateInd 2
+aName      ClearWebErrorMessage
+
+eW_MetaDef 3
+aCPLR_ZKey 110276468
+aStatus    1
+aUpdateInd 2
+aName      CodeToChar
+
+eW_MetaDef 3
+aCPLR_ZKey 110276448
+aStatus    1
+aUpdateInd 2
+aName      CompareAttributeByShortString
+
+eW_MetaDef 3
+aCPLR_ZKey 354013167
+aStatus    1
+aUpdateInd 2
+aName      ComputeHighExamScore
+
+eW_MetaDef 3
+aCPLR_ZKey 354013039
+aStatus    1
+aUpdateInd 2
+aName      ComputeHighExamScoreACT
+
+eW_MetaDef 3
+aCPLR_ZKey 354013042
+aStatus    1
+aUpdateInd 2
+aName      ComputeHighExamScoreSAT
+
+eW_MetaDef 3
+aCPLR_ZKey 354012999
+aStatus    1
+aUpdateInd 2
+aName      ComputeNewHighExamScoreSAT
+
+eW_MetaDef 3
+aCPLR_ZKey 110276591
+aStatus    1
+aUpdateInd 2
+aName      ConvertDecimalToString
+
+eW_MetaDef 3
+aCPLR_ZKey 110276337
+aStatus    1
+aUpdateInd 2
+aName      ConvertExternalValueOfAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276156
+aStatus    1
+aUpdateInd 2
+aName      ConvertISIR_NumberToAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276033
+aStatus    1
+aUpdateInd 2
+aName      ConvertLineToEntity
+
+eW_MetaDef 3
+aCPLR_ZKey 110276044
+aStatus    1
+aUpdateInd 2
+aName      ConvertTabStringToEntity
+
+eW_MetaDef 3
+aCPLR_ZKey 110276039
+aStatus    1
+aUpdateInd 2
+aName      ConvertXML_SpecialCharacters
+
+eW_MetaDef 3
+aCPLR_ZKey 110276749
+aStatus    1
+aUpdateInd 2
+aName      COPY_File
+
+eW_MetaDef 3
+aCPLR_ZKey 110276669
+aStatus    1
+aUpdateInd 2
+aName      COPY_ToClipboard
+
+eW_MetaDef 3
+aCPLR_ZKey 110276049
+aStatus    1
+aUpdateInd 2
+aName      CopyFileToPDF
+
+eW_MetaDef 3
+aCPLR_ZKey 354012995
+aStatus    1
+aUpdateInd 2
+aName      CREATE_MenuSecuritySubSection
+
+eW_MetaDef 3
+aCPLR_ZKey 354012992
+aStatus    1
+aUpdateInd 2
+aName      CREATE_SecuritySubSections_G
+
+eW_MetaDef 3
+aCPLR_ZKey 110276182
+aStatus    1
+aUpdateInd 2
+aName      CreateBlobsFromLegacyTranscript
+
+eW_MetaDef 3
+aCPLR_ZKey 110276615
+aStatus    1
+aUpdateInd 2
+aName      CreateEnrollmentRptXLS
+
+eW_MetaDef 3
+aCPLR_ZKey 354012990
+aStatus    1
+aUpdateInd 2
+aName      CreateSecurityAdminSubSection
+
+eW_MetaDef 3
+aCPLR_ZKey 354012984
+aStatus    1
+aUpdateInd 2
+aName      CreateSecuritySubSection
+
+eW_MetaDef 3
+aCPLR_ZKey 110276400
+aStatus    1
+aUpdateInd 2
+aName      dAdressLabel
+
+eW_MetaDef 3
+aCPLR_ZKey 110276395
+aStatus    1
+aUpdateInd 2
+aName      dAdressLabelFull
+
+eW_MetaDef 3
+aCPLR_ZKey 110276303
+aStatus    1
+aUpdateInd 2
+aName      DBQualEntityByString
+
+eW_MetaDef 3
+aCPLR_ZKey 110276473
+aStatus    1
+aUpdateInd 2
+aName      DecimalSumOf
+
+eW_MetaDef 3
+aCPLR_ZKey 110276635
+aStatus    1
+aUpdateInd 2
+aName      DecimalToInt
+
+eW_MetaDef 3
+aCPLR_ZKey 110276761
+aStatus    1
+aUpdateInd 2
+aName      DecimalToString
+
+eW_MetaDef 3
+aCPLR_ZKey 110276639
+aStatus    1
+aUpdateInd 2
+aName      DELETE_File
+
+eW_MetaDef 3
+aCPLR_ZKey 210094645
+aStatus    1
+aUpdateInd 2
+aName      DELETE_Person_G
+
+eW_MetaDef 3
+aCPLR_ZKey 354012884
+aStatus    1
+aUpdateInd 2
+aName      DeleteCheckOI_ForUpdate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276573
+aStatus    1
+aUpdateInd 2
+aName      DropApplicationDomainView
+
+eW_MetaDef 3
+aCPLR_ZKey 621131628
+aStatus    1
+aUpdateInd 2
+aName      ExpandQueryGeneralParms
+
+eW_MetaDef 3
+aCPLR_ZKey 110276695
+aStatus    1
+aUpdateInd 2
+aName      ExportDepositToExcel
+
+eW_MetaDef 3
+aCPLR_ZKey 110276628
+aStatus    1
+aUpdateInd 2
+aName      ExportOrigTextOrigin
+
+eW_MetaDef 3
+aCPLR_ZKey 110276690
+aStatus    1
+aUpdateInd 2
+aName      ExportPermissionsToExcel
+
+eW_MetaDef 3
+aCPLR_ZKey 110276651
+aStatus    1
+aUpdateInd 2
+aName      ExportPostingToExcel
+
+eW_MetaDef 3
+aCPLR_ZKey 110276692
+aStatus    1
+aUpdateInd 2
+aName      ExportPostingToSage
+
+eW_MetaDef 3
+aCPLR_ZKey 110276332
+aStatus    1
+aUpdateInd 2
+aName      FindStringInAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 621131641
+aStatus    1
+aUpdateInd 2
+aName      FindSuffixForDirectory
+
+eW_MetaDef 3
+aCPLR_ZKey 110276169
+aStatus    1
+aUpdateInd 2
+aName      FixLegacyReportDate
+
+eW_MetaDef 3
+aCPLR_ZKey 354013086
+aStatus    1
+aUpdateInd 2
+aName      FormatDocumentFromTemplate
+
+eW_MetaDef 3
+aCPLR_ZKey 621131609
+aStatus    1
+aUpdateInd 2
+aName      FormatQueryDisplay
+
+eW_MetaDef 3
+aCPLR_ZKey 621131613
+aStatus    1
+aUpdateInd 2
+aName      FormatQueryDisplayRecur
+
+eW_MetaDef 3
+aCPLR_ZKey 110276161
+aStatus    1
+aUpdateInd 2
+aName      FTPSendFile
+
+eW_MetaDef 3
+aCPLR_ZKey 354013020
+aStatus    1
+aUpdateInd 2
+aName      GenAndSetStudentEmailAddress
+
+eW_MetaDef 3
+aCPLR_ZKey 354012964
+aStatus    1
+aUpdateInd 2
+aName      GenerateCampusID
+
+eW_MetaDef 3
+aCPLR_ZKey 621131526
+aStatus    1
+aUpdateInd 2
+aName      GenerateColumnChartHTML
+
+eW_MetaDef 3
+aCPLR_ZKey 621131521
+aStatus    1
+aUpdateInd 2
+aName      GenerateLineWithTrace
+
+eW_MetaDef 3
+aCPLR_ZKey 354013161
+aStatus    1
+aUpdateInd 2
+aName      GeneratePatronBarCode
+
+eW_MetaDef 3
+aCPLR_ZKey 354013118
+aStatus    1
+aUpdateInd 2
+aName      GenerateSeasonalAddresses
+
+eW_MetaDef 3
+aCPLR_ZKey 354013096
+aStatus    1
+aUpdateInd 2
+aName      GenerateTransactionEntry
+
+eW_MetaDef 3
+aCPLR_ZKey 354013013
+aStatus    1
+aUpdateInd 2
+aName      GenerateTransactionEntryWDesc
+
+eW_MetaDef 3
+aCPLR_ZKey 354013152
+aStatus    1
+aUpdateInd 2
+aName      GetAgeAtDate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276392
+aStatus    1
+aUpdateInd 2
+aName      GetAttribNameFromStructure
+
+eW_MetaDef 3
+aCPLR_ZKey 110276369
+aStatus    1
+aUpdateInd 2
+aName      GetButtonHeaderName
+
+eW_MetaDef 3
+aCPLR_ZKey 354012906
+aStatus    1
+aUpdateInd 2
+aName      GetCurrentAgeFromDate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276310
+aStatus    1
+aUpdateInd 2
+aName      GetCurrentApplicationName
+
+eW_MetaDef 3
+aCPLR_ZKey 110276325
+aStatus    1
+aUpdateInd 2
+aName      GetDataTypeForAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276458
+aStatus    1
+aUpdateInd 2
+aName      GetDateAttributeDifferenceInDays
+
+eW_MetaDef 3
+aCPLR_ZKey 354013127
+aStatus    1
+aUpdateInd 2
+aName      GetDaysInMonth
+
+eW_MetaDef 3
+aCPLR_ZKey 354013173
+aStatus    1
+aUpdateInd 2
+aName      GetDomainLength
+
+eW_MetaDef 3
+aCPLR_ZKey 354012882
+aStatus    1
+aUpdateInd 2
+aName      GetDOWNumber
+
+eW_MetaDef 3
+aCPLR_ZKey 110276405
+aStatus    1
+aUpdateInd 2
+aName      GetEntityNameFromStructure
+
+eW_MetaDef 3
+aCPLR_ZKey 110276480
+aStatus    1
+aUpdateInd 2
+aName      GetEnvVariable
+
+eW_MetaDef 3
+aCPLR_ZKey 110276298
+aStatus    1
+aUpdateInd 2
+aName      GetGeneralPath
+
+eW_MetaDef 3
+aCPLR_ZKey 110276538
+aStatus    1
+aUpdateInd 2
+aName      GetHexHash
+
+eW_MetaDef 3
+aCPLR_ZKey 110276343
+aStatus    1
+aUpdateInd 2
+aName      GetHTMLPath
+
+eW_MetaDef 3
+aCPLR_ZKey 110276350
+aStatus    1
+aUpdateInd 2
+aName      GetImagingPath
+
+eW_MetaDef 3
+aCPLR_ZKey 110276509
+aStatus    1
+aUpdateInd 2
+aName      GetIntFromAttrByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 354013164
+aStatus    1
+aUpdateInd 2
+aName      GetIPEDS_Ethnicity
+
+eW_MetaDef 3
+aCPLR_ZKey 621131545
+aStatus    1
+aUpdateInd 2
+aName      GetLPLR_SourceDirectory
+
+eW_MetaDef 3
+aCPLR_ZKey 110276543
+aStatus    1
+aUpdateInd 2
+aName      GetPasswordHash
+
+eW_MetaDef 3
+aCPLR_ZKey 354013072
+aStatus    1
+aUpdateInd 2
+aName      GetPersonCombinedGreetingFirst
+
+eW_MetaDef 3
+aCPLR_ZKey 354013068
+aStatus    1
+aUpdateInd 2
+aName      GetPersonCombinedGreetingMrMrs
+
+eW_MetaDef 3
+aCPLR_ZKey 354012910
+aStatus    1
+aUpdateInd 2
+aName      GetPersonCombinedNameLFM
+
+eW_MetaDef 3
+aCPLR_ZKey 354013076
+aStatus    1
+aUpdateInd 2
+aName      GetPersonCombinedNameMrAndMrs
+
+eW_MetaDef 3
+aCPLR_ZKey 354013061
+aStatus    1
+aUpdateInd 2
+aName      GetPersonCombinedNameRanking
+
+eW_MetaDef 3
+aCPLR_ZKey 354012977
+aStatus    1
+aUpdateInd 2
+aName      GetPersonCombinedNameSalErr
+
+eW_MetaDef 3
+aCPLR_ZKey 354013064
+aStatus    1
+aUpdateInd 2
+aName      GetPersonCombinedNameSalutation
+
+eW_MetaDef 3
+aCPLR_ZKey 354013080
+aStatus    1
+aUpdateInd 2
+aName      GetPersonCombinedNameWithFirst
+
+eW_MetaDef 3
+aCPLR_ZKey 354013104
+aStatus    1
+aUpdateInd 2
+aName      GetPersonFullName
+
+eW_MetaDef 3
+aCPLR_ZKey 354013016
+aStatus    1
+aUpdateInd 2
+aName      GetPersonFullNameLFM
+
+eW_MetaDef 3
+aCPLR_ZKey 354012894
+aStatus    1
+aUpdateInd 2
+aName      GetPersonFullNameSalutation
+
+eW_MetaDef 3
+aCPLR_ZKey 354012937
+aStatus    1
+aUpdateInd 2
+aName      GetPersonGreetingMrOrMs
+
+eW_MetaDef 3
+aCPLR_ZKey 354012902
+aStatus    1
+aUpdateInd 2
+aName      GetPersonGreetingSalutation
+
+eW_MetaDef 3
+aCPLR_ZKey 354012898
+aStatus    1
+aUpdateInd 2
+aName      GetPersonNameMrOrMs
+
+eW_MetaDef 3
+aCPLR_ZKey 110276347
+aStatus    1
+aUpdateInd 2
+aName      GetRegistryCLSID
+
+eW_MetaDef 3
+aCPLR_ZKey 110276738
+aStatus    1
+aUpdateInd 2
+aName      GetReportNameBySchoolOrLang
+
+eW_MetaDef 3
+aCPLR_ZKey 110276287
+aStatus    1
+aUpdateInd 2
+aName      GetRTFPath
+
+eW_MetaDef 3
+aCPLR_ZKey 110276502
+aStatus    1
+aUpdateInd 2
+aName      GetStrFromAttrByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 354013002
+aStatus    1
+aUpdateInd 2
+aName      GetTimeDifferenceInMinutes
+
+eW_MetaDef 3
+aCPLR_ZKey 354013138
+aStatus    1
+aUpdateInd 2
+aName      GetUserLanguage
+
+eW_MetaDef 3
+aCPLR_ZKey 110276416
+aStatus    1
+aUpdateInd 2
+aName      GetViewFromBlobAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276362
+aStatus    1
+aUpdateInd 2
+aName      GetWindowsUserName
+
+eW_MetaDef 3
+aCPLR_ZKey 354013122
+aStatus    1
+aUpdateInd 2
+aName      GetZipLatLong
+
+eW_MetaDef 3
+aCPLR_ZKey 110276696
+aStatus    1
+aUpdateInd 2
+aName      HideMenuOption
+
+eW_MetaDef 3
+aCPLR_ZKey 354013098
+aStatus    1
+aUpdateInd 2
+aName      InitializeDynamicDomain
+
+eW_MetaDef 3
+aCPLR_ZKey 354013116
+aStatus    1
+aUpdateInd 2
+aName      InitializeDynamicDomains
+
+eW_MetaDef 3
+aCPLR_ZKey 621131631
+aStatus    1
+aUpdateInd 2
+aName      InitializeQueryFrameForLOD
+
+eW_MetaDef 3
+aCPLR_ZKey 621131580
+aStatus    1
+aUpdateInd 2
+aName      InitializeQueryGraphMapping
+
+eW_MetaDef 3
+aCPLR_ZKey 621131645
+aStatus    1
+aUpdateInd 2
+aName      InsertOI_DataIntoDOCX_Template
+
+eW_MetaDef 3
+aCPLR_ZKey 110276274
+aStatus    1
+aUpdateInd 2
+aName      InsertOI_DataIntoEmailTemplate
+
+eW_MetaDef 3
+aCPLR_ZKey 621131601
+aStatus    1
+aUpdateInd 2
+aName      InsertOI_DataIntoODT_Template
+
+eW_MetaDef 3
+aCPLR_ZKey 621131587
+aStatus    1
+aUpdateInd 2
+aName      InsertOI_DataIntoTemplateFile
+
+eW_MetaDef 3
+aCPLR_ZKey 110276318
+aStatus    1
+aUpdateInd 2
+aName      InsertOI_DataIntoTemplateFileX
+
+eW_MetaDef 3
+aCPLR_ZKey 110276637
+aStatus    1
+aUpdateInd 2
+aName      IntToDecimal
+
+eW_MetaDef 3
+aCPLR_ZKey 110276589
+aStatus    1
+aUpdateInd 2
+aName      IsNumber
+
+eW_MetaDef 3
+aCPLR_ZKey 210094683
+aStatus    1
+aUpdateInd 2
+aName      LOAD_PropChangeToContactRequest
+
+eW_MetaDef 3
+aCPLR_ZKey 110276677
+aStatus    1
+aUpdateInd 2
+aName      LodContainsAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276674
+aStatus    1
+aUpdateInd 2
+aName      LodContainsEntity
+
+eW_MetaDef 3
+aCPLR_ZKey 210094667
+aStatus    1
+aUpdateInd 2
+aName      MarkTaskComplete
+
+eW_MetaDef 3
+aCPLR_ZKey 210094671
+aStatus    1
+aUpdateInd 2
+aName      MarkTaskSkipped
+
+eW_MetaDef 3
+aCPLR_ZKey 210094675
+aStatus    1
+aUpdateInd 2
+aName      MarkTaskSuspended
+
+eW_MetaDef 3
+aCPLR_ZKey 110276266
+aStatus    1
+aUpdateInd 2
+aName      MergeSingleRS_EntryWithTemplate
+
+eW_MetaDef 3
+aCPLR_ZKey 354012928
+aStatus    1
+aUpdateInd 2
+aName      MergeTemplateText
+
+eW_MetaDef 3
+aCPLR_ZKey 354013185
+aStatus    1
+aUpdateInd 2
+aName      NeedsSchoolContentTranslation
+
+eW_MetaDef 3
+aCPLR_ZKey 110276752
+aStatus    1
+aUpdateInd 2
+aName      NumericDayOfWeek
+
+eW_MetaDef 3
+aCPLR_ZKey 354013112
+aStatus    1
+aUpdateInd 2
+aName      OperatorErrorResponse
+
+eW_MetaDef 3
+aCPLR_ZKey 354013108
+aStatus    1
+aUpdateInd 2
+aName      OperatorWebPrompt
+
+eW_MetaDef 3
+aCPLR_ZKey 110276291
+aStatus    1
+aUpdateInd 2
+aName      ParseBooleanExpression
+
+eW_MetaDef 3
+aCPLR_ZKey 621131582
+aStatus    1
+aUpdateInd 2
+aName      ParseOutEntityAttribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276382
+aStatus    1
+aUpdateInd 2
+aName      PersonName_FirstMiddleLast
+
+eW_MetaDef 3
+aCPLR_ZKey 110276387
+aStatus    1
+aUpdateInd 2
+aName      PersonName_LastFirstMiddle
+
+eW_MetaDef 3
+aCPLR_ZKey 210094643
+aStatus    1
+aUpdateInd 2
+aName      PICK_PrePerson_G
+
+eW_MetaDef 3
+aCPLR_ZKey 110276654
+aStatus    1
+aUpdateInd 2
+aName      Print1098TMultiple
+
+eW_MetaDef 3
+aCPLR_ZKey 110276582
+aStatus    1
+aUpdateInd 2
+aName      PRINT_ExcelReport_Jasper
+
+eW_MetaDef 3
+aCPLR_ZKey 354013009
+aStatus    1
+aUpdateInd 2
+aName      PrintLegacyTranscript
+
+eW_MetaDef 3
+aCPLR_ZKey 110276641
+aStatus    1
+aUpdateInd 2
+aName      PrintStudentBillMultiple
+
+eW_MetaDef 3
+aCPLR_ZKey 110276754
+aStatus    1
+aUpdateInd 2
+aName      PrintTranscriptDegreeMultiple
+
+eW_MetaDef 3
+aCPLR_ZKey 110276656
+aStatus    1
+aUpdateInd 2
+aName      PrintTranscriptMultiple
+
+eW_MetaDef 3
+aCPLR_ZKey 110276688
+aStatus    1
+aUpdateInd 2
+aName      PrintTranscriptMultipleFA
+
+eW_MetaDef 3
+aCPLR_ZKey 621131650
+aStatus    1
+aUpdateInd 2
+aName      QueryConvLangDomain
+
+eW_MetaDef 3
+aCPLR_ZKey 110276314
+aStatus    1
+aUpdateInd 2
+aName      ReadLine5000
+
+eW_MetaDef 3
+aCPLR_ZKey 110276430
+aStatus    1
+aUpdateInd 2
+aName      ReadLineIntoGlobalBuffer
+
+eW_MetaDef 3
+aCPLR_ZKey 621131619
+aStatus    1
+aUpdateInd 2
+aName      RebuildQueryFrameAttr
+
+eW_MetaDef 3
+aCPLR_ZKey 621131622
+aStatus    1
+aUpdateInd 2
+aName      RebuildQueryFrameAttrRecur
+
+eW_MetaDef 3
+aCPLR_ZKey 110276365
+aStatus    1
+aUpdateInd 2
+aName      RemoveLeadingBlanksFromAttrib
+
+eW_MetaDef 3
+aCPLR_ZKey 110276145
+aStatus    1
+aUpdateInd 2
+aName      RemoveLeadingZerosFromAttrib
+
+eW_MetaDef 3
+aCPLR_ZKey 210094679
+aStatus    1
+aUpdateInd 2
+aName      RemoveTaskStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 110276735
+aStatus    1
+aUpdateInd 2
+aName      RENAME_File
+
+eW_MetaDef 3
+aCPLR_ZKey 354013045
+aStatus    1
+aUpdateInd 2
+aName      RetrieveCommaDeliminatedValue
+
+eW_MetaDef 3
+aCPLR_ZKey 110276792
+aStatus    1
+aUpdateInd 2
+aName      RetrieveCommaDeliminatedValueN
+
+eW_MetaDef 3
+aCPLR_ZKey 110276597
+aStatus    1
+aUpdateInd 2
+aName      ReturnFileNameFromPath
+
+eW_MetaDef 3
+aCPLR_ZKey 110276253
+aStatus    1
+aUpdateInd 2
+aName      ReturnSuffixOfFileName
+
+eW_MetaDef 3
+aCPLR_ZKey 110276747
+aStatus    1
+aUpdateInd 2
+aName      ReturnUUID
+
+eW_MetaDef 3
+aCPLR_ZKey 210094649
+aStatus    1
+aUpdateInd 2
+aName      SAVE_Person_G
+
+eW_MetaDef 3
+aCPLR_ZKey 210094640
+aStatus    1
+aUpdateInd 2
+aName      SAVE_PersonData_G
+
+eW_MetaDef 3
+aCPLR_ZKey 210094651
+aStatus    1
+aUpdateInd 2
+aName      SAVE_VehicleRegistration
+
+eW_MetaDef 3
+aCPLR_ZKey 110276729
+aStatus    1
+aUpdateInd 2
+aName      SearchAndReplace
+
+eW_MetaDef 3
+aCPLR_ZKey 110276566
+aStatus    1
+aUpdateInd 2
+aName      SendEmail
+
+eW_MetaDef 3
+aCPLR_ZKey 354012973
+aStatus    1
+aUpdateInd 2
+aName      SendSDO_NonresPetitionEmail
+
+eW_MetaDef 3
+aCPLR_ZKey 354013175
+aStatus    1
+aUpdateInd 2
+aName      SendSecureEmail
+
+eW_MetaDef 3
+aCPLR_ZKey 110276426
+aStatus    1
+aUpdateInd 2
+aName      SeparateName
+
+eW_MetaDef 3
+aCPLR_ZKey 354013092
+aStatus    1
+aUpdateInd 2
+aName      SetAddressLongitudeLatitude
+
+eW_MetaDef 3
+aCPLR_ZKey 110276490
+aStatus    1
+aUpdateInd 2
+aName      SetAttrFromIntByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 110276484
+aStatus    1
+aUpdateInd 2
+aName      SetAttrFromStrByContext
+
+eW_MetaDef 3
+aCPLR_ZKey 354012947
+aStatus    1
+aUpdateInd 2
+aName      SetAttributeByCL_PositionalValue
+
+eW_MetaDef 3
+aCPLR_ZKey 354012967
+aStatus    1
+aUpdateInd 2
+aName      SetAttributeByCommaDelimitValue
+
+eW_MetaDef 3
+aCPLR_ZKey 110276519
+aStatus    1
+aUpdateInd 2
+aName      SetAttributeFromCurrentDateTime
+
+eW_MetaDef 3
+aCPLR_ZKey 110276433
+aStatus    1
+aUpdateInd 2
+aName      SetAttributeFromTabField
+
+eW_MetaDef 3
+aCPLR_ZKey 110276060
+aStatus    1
+aUpdateInd 2
+aName      SetAttributeFromUC_Attribute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276067
+aStatus    1
+aUpdateInd 2
+aName      SetAttributeFromUC_String
+
+eW_MetaDef 3
+aCPLR_ZKey 110276421
+aStatus    1
+aUpdateInd 2
+aName      SetBlobAttributeFromView
+
+eW_MetaDef 3
+aCPLR_ZKey 354012889
+aStatus    1
+aUpdateInd 2
+aName      SetCheckOI_ForUpdate
+
+eW_MetaDef 3
+aCPLR_ZKey 354012941
+aStatus    1
+aUpdateInd 2
+aName      SetCL_PositionalValue
+
+eW_MetaDef 3
+aCPLR_ZKey 211101240
+aStatus    1
+aUpdateInd 2
+aName      SetCtrlState
+
+eW_MetaDef 3
+aCPLR_ZKey 211101266
+aStatus    1
+aUpdateInd 2
+aName      SetCtrlStateOverride
+
+eW_MetaDef 3
+aCPLR_ZKey 110276515
+aStatus    1
+aUpdateInd 2
+aName      SetCursorLatestEntity
+
+eW_MetaDef 3
+aCPLR_ZKey 354013049
+aStatus    1
+aUpdateInd 2
+aName      SetDateFromLegacyDate
+
+eW_MetaDef 3
+aCPLR_ZKey 110276377
+aStatus    1
+aUpdateInd 2
+aName      SetDecimalPrecisionRounded
+
+eW_MetaDef 3
+aCPLR_ZKey 110276149
+aStatus    1
+aUpdateInd 2
+aName      SetEntityCursorByInteger
+
+eW_MetaDef 3
+aCPLR_ZKey 354012926
+aStatus    1
+aUpdateInd 2
+aName      SetIPEDS_Ethnicity
+
+eW_MetaDef 3
+aCPLR_ZKey 354012981
+aStatus    1
+aUpdateInd 2
+aName      SetSA_ProfileBalance
+
+eW_MetaDef 3
+aCPLR_ZKey 110276072
+aStatus    1
+aUpdateInd 2
+aName      SetStringUpperLowerCase
+
+eW_MetaDef 3
+aCPLR_ZKey 354013056
+aStatus    1
+aUpdateInd 2
+aName      SetUpAndStartEmailClientForList
+
+eW_MetaDef 3
+aCPLR_ZKey 354013024
+aStatus    1
+aUpdateInd 2
+aName      SetUpAndStartEmailClientForListR
+
+eW_MetaDef 3
+aCPLR_ZKey 354013130
+aStatus    1
+aUpdateInd 2
+aName      SetWebErrorMessage
+
+eW_MetaDef 3
+aCPLR_ZKey 211101253
+aStatus    1
+aUpdateInd 2
+aName      ShowHideAppUsingSecurity
+
+eW_MetaDef 3
+aCPLR_ZKey 211101249
+aStatus    1
+aUpdateInd 2
+aName      ShowHideDisableUsingSecurity
+
+eW_MetaDef 3
+aCPLR_ZKey 211101261
+aStatus    1
+aUpdateInd 2
+aName      ShowHideMenuOption
+
+eW_MetaDef 3
+aCPLR_ZKey 211101251
+aStatus    1
+aUpdateInd 2
+aName      ShowHideMenuUsingSecurity
+
+eW_MetaDef 3
+aCPLR_ZKey 110276699
+aStatus    1
+aUpdateInd 2
+aName      ShowMenuOption
+
+eW_MetaDef 3
+aCPLR_ZKey 110276203
+aStatus    1
+aUpdateInd 2
+aName      StartBlindEmailClientForList
+
+eW_MetaDef 3
+aCPLR_ZKey 110276223
+aStatus    1
+aUpdateInd 2
+aName      StartEmailClientForList
+
+eW_MetaDef 3
+aCPLR_ZKey 110276187
+aStatus    1
+aUpdateInd 2
+aName      StartEmailClientForListReus
+
+eW_MetaDef 3
+aCPLR_ZKey 110276256
+aStatus    1
+aUpdateInd 2
+aName      StartEmailClientWithFiles
+
+eW_MetaDef 3
+aCPLR_ZKey 110276578
+aStatus    1
+aUpdateInd 2
+aName      strFirstWord
+
+eW_MetaDef 3
+aCPLR_ZKey 110276606
+aStatus    1
+aUpdateInd 2
+aName      strIsInteger
+
+eW_MetaDef 3
+aCPLR_ZKey 110276604
+aStatus    1
+aUpdateInd 2
+aName      strIsNumber
+
+eW_MetaDef 3
+aCPLR_ZKey 110276575
+aStatus    1
+aUpdateInd 2
+aName      strLeft
+
+eW_MetaDef 3
+aCPLR_ZKey 110276584
+aStatus    1
+aUpdateInd 2
+aName      strLen
+
+eW_MetaDef 3
+aCPLR_ZKey 110276580
+aStatus    1
+aUpdateInd 2
+aName      strLower
+
+eW_MetaDef 3
+aCPLR_ZKey 110276756
+aStatus    1
+aUpdateInd 2
+aName      strReplace
+
+eW_MetaDef 3
+aCPLR_ZKey 110276744
+aStatus    1
+aUpdateInd 2
+aName      strRight
+
+eW_MetaDef 3
+aCPLR_ZKey 110276586
+aStatus    1
+aUpdateInd 2
+aName      strSubstringCompareIgnoreCase
+
+eW_MetaDef 3
+aCPLR_ZKey 110276471
+aStatus    1
+aUpdateInd 2
+aName      StrToDecimal
+
+eW_MetaDef 3
+aCPLR_ZKey 110276478
+aStatus    1
+aUpdateInd 2
+aName      StrToInt
+
+eW_MetaDef 3
+aCPLR_ZKey 110276602
+aStatus    1
+aUpdateInd 2
+aName      strUpper
+
+eW_MetaDef 3
+aCPLR_ZKey 211101245
+aStatus    1
+aUpdateInd 2
+aName      SubSectionShowHideDisableTabs
+
+eW_MetaDef 3
+aCPLR_ZKey 354013148
+aStatus    1
+aUpdateInd 2
+aName      TestingOperation
+
+eW_MetaDef 3
+aCPLR_ZKey 110276681
+aStatus    1
+aUpdateInd 2
+aName      UnZipFile
+
+eW_MetaDef 3
+aCPLR_ZKey 210094647
+aStatus    1
+aUpdateInd 2
+aName      UPDATE_PersonDetail_G
+
+eW_MetaDef 3
+aCPLR_ZKey 210094685
+aStatus    1
+aUpdateInd 2
+aName      UPDATE_PropChange
+
+eW_MetaDef 3
+aCPLR_ZKey 110276074
+aStatus    1
+aUpdateInd 2
+aName      ValidateAndSetState
+
+eW_MetaDef 3
+aCPLR_ZKey 110276671
+aStatus    1
+aUpdateInd 2
+aName      ValidateDateString
+
+eW_MetaDef 3
+aCPLR_ZKey 110276600
+aStatus    1
+aUpdateInd 2
+aName      ValidateEmailAddress
+
+eW_MetaDef 3
+aCPLR_ZKey 110276293
+aStatus    1
+aUpdateInd 2
+aName      WinShellExecute
+
+eW_MetaDef 3
+aCPLR_ZKey 110276218
+aStatus    1
+aUpdateInd 2
+aName      WL_QC
+
+eW_MetaDef 3
+aCPLR_ZKey 110276175
+aStatus    1
+aUpdateInd 2
+aName      WriteLibraryOLCN
+
+eW_MetaDef 3
+aCPLR_ZKey 110276684
+aStatus    1
+aUpdateInd 2
+aName      ZipDirectory
+
+eW_MetaDef 3
+aCPLR_ZKey 110276380
+aStatus    1
+aUpdateInd 2
+aName      zTrim
+
+eW_MetaType 2
+aType      3
+
+eW_MetaDef 3
+aCPLR_ZKey 110000002
+aStatus    1
+aUpdateInd 2
+aName      Blob
+
+eW_MetaDef 3
+aCPLR_ZKey 110004880
+aStatus    1
+aUpdateInd 2
+aName      PhoneAreaCodeExchange
+
+eW_MetaDef 3
+aCPLR_ZKey 110005270
+aStatus    1
+aUpdateInd 2
+aName      SchoolYear
+
+eW_MetaDef 3
+aCPLR_ZKey 110005265
+aStatus    1
+aUpdateInd 2
+aName      DonorType
+
+eW_MetaDef 3
+aCPLR_ZKey 110005263
+aStatus    1
+aUpdateInd 2
+aName      FinancialHold
+
+eW_MetaDef 3
+aCPLR_ZKey 110005259
+aStatus    1
+aUpdateInd 2
+aName      ContactListRecurringFilter
+
+eW_MetaDef 3
+aCPLR_ZKey 110005240
+aStatus    1
+aUpdateInd 2
+aName      PinType
+
+eW_MetaDef 3
+aCPLR_ZKey 110005235
+aStatus    1
+aUpdateInd 2
+aName      ReferenceRelationshipType
+
+eW_MetaDef 3
+aCPLR_ZKey 110005147
+aStatus    1
+aUpdateInd 2
+aName      ContactListType
+
+eW_MetaDef 3
+aCPLR_ZKey 90000129
+aStatus    1
+aUpdateInd 2
+aName      Decimal
+
+eW_MetaDef 3
+aCPLR_ZKey 110002440
+aStatus    1
+aUpdateInd 2
+aName      Percent
+
+eW_MetaDef 3
+aCPLR_ZKey 91004756
+aStatus    1
+aUpdateInd 2
+aName      DecimalKey0
+
+eW_MetaDef 3
+aCPLR_ZKey 90359337
+aStatus    1
+aUpdateInd 2
+aName      Decimal9
+
+eW_MetaDef 3
+aCPLR_ZKey 90359335
+aStatus    1
+aUpdateInd 2
+aName      Decimal8
+
+eW_MetaDef 3
+aCPLR_ZKey 90359333
+aStatus    1
+aUpdateInd 2
+aName      Decimal7
+
+eW_MetaDef 3
+aCPLR_ZKey 90359331
+aStatus    1
+aUpdateInd 2
+aName      Decimal6
+
+eW_MetaDef 3
+aCPLR_ZKey 90359329
+aStatus    1
+aUpdateInd 2
+aName      Decimal5
+
+eW_MetaDef 3
+aCPLR_ZKey 90000152
+aStatus    1
+aUpdateInd 2
+aName      Decimal4
+
+eW_MetaDef 3
+aCPLR_ZKey 90000175
+aStatus    1
+aUpdateInd 2
+aName      Decimal3
+
+eW_MetaDef 3
+aCPLR_ZKey 90000198
+aStatus    1
+aUpdateInd 2
+aName      Decimal2
+
+eW_MetaDef 3
+aCPLR_ZKey 90000221
+aStatus    1
+aUpdateInd 2
+aName      Decimal1
+
+eW_MetaDef 3
+aCPLR_ZKey 90000244
+aStatus    1
+aUpdateInd 2
+aName      Decimal0
+
+eW_MetaDef 3
+aCPLR_ZKey 90000052
+aStatus    1
+aUpdateInd 2
+aName      Date
+
+eW_MetaDef 3
+aCPLR_ZKey 110002614
+aStatus    1
+aUpdateInd 2
+aName      YearMonth
+
+eW_MetaDef 3
+aCPLR_ZKey 110001943
+aStatus    1
+aUpdateInd 2
+aName      MonthDay
+
+eW_MetaDef 3
+aCPLR_ZKey 1051178
+aStatus    1
+aUpdateInd 2
+aName      Month
+
+eW_MetaDef 3
+aCPLR_ZKey 90000078
+aStatus    1
+aUpdateInd 2
+aName      Time
+
+eW_MetaDef 3
+aCPLR_ZKey 90000089
+aStatus    1
+aUpdateInd 2
+aName      DateTime
+
+eW_MetaDef 3
+aCPLR_ZKey 90000028
+aStatus    1
+aUpdateInd 2
+aName      AlphaNumeric
+
+eW_MetaDef 3
+aCPLR_ZKey 110007685
+aStatus    1
+aUpdateInd 2
+aName      DataTypeDomain
+
+eW_MetaDef 3
+aCPLR_ZKey 110007678
+aStatus    1
+aUpdateInd 2
+aName      DM_DomainType
+
+eW_MetaDef 3
+aCPLR_ZKey 110007676
+aStatus    1
+aUpdateInd 2
+aName      ZKey
+
+eW_MetaDef 3
+aCPLR_ZKey 110007673
+aStatus    1
+aUpdateInd 2
+aName      JavaPassword
+
+eW_MetaDef 3
+aCPLR_ZKey 110005250
+aStatus    1
+aUpdateInd 2
+aName      Day
+
+eW_MetaDef 3
+aCPLR_ZKey 1158059
+aStatus    1
+aUpdateInd 2
+aName      Note
+
+eW_MetaDef 3
+aCPLR_ZKey 1084699
+aStatus    1
+aUpdateInd 2
+aName      PasswordUL
+
+eW_MetaDef 3
+aCPLR_ZKey 1005026
+aStatus    1
+aUpdateInd 2
+aName      XRA_YNA
+
+eW_MetaDef 3
+aCPLR_ZKey 1178141
+aStatus    1
+aUpdateInd 2
+aName      XRA_Text
+
+eW_MetaDef 3
+aCPLR_ZKey 1178138
+aStatus    1
+aUpdateInd 2
+aName      XRA_Tag
+
+eW_MetaDef 3
+aCPLR_ZKey 1165598
+aStatus    1
+aUpdateInd 2
+aName      QSFullPathName
+
+eW_MetaDef 3
+aCPLR_ZKey 90145848
+aStatus    1
+aUpdateInd 2
+aName      MetaName
+
+eW_MetaDef 3
+aCPLR_ZKey 90000030
+aStatus    1
+aUpdateInd 2
+aName      Description
+
+eW_MetaDef 3
+aCPLR_ZKey 90000032
+aStatus    1
+aUpdateInd 2
+aName      Text
+
+eW_MetaDef 3
+aCPLR_ZKey 90000034
+aStatus    1
+aUpdateInd 2
+aName      QSNameUpper
+
+eW_MetaDef 3
+aCPLR_ZKey 90000036
+aStatus    1
+aUpdateInd 2
+aName      QSNameLJNS
+
+eW_MetaDef 3
+aCPLR_ZKey 90000038
+aStatus    1
+aUpdateInd 2
+aName      QSName
+
+eW_MetaDef 3
+aCPLR_ZKey 90000040
+aStatus    1
+aUpdateInd 2
+aName      QSFileName
+
+eW_MetaDef 3
+aCPLR_ZKey 90000042
+aStatus    1
+aUpdateInd 2
+aName      Password
+
+eW_MetaDef 3
+aCPLR_ZKey 90000044
+aStatus    1
+aUpdateInd 2
+aName      Integer
+
+eW_MetaDef 3
+aCPLR_ZKey 110001812
+aStatus    1
+aUpdateInd 2
+aName      MiddleName
+
+eW_MetaDef 3
+aCPLR_ZKey 110001814
+aStatus    1
+aUpdateInd 2
+aName      FirstName
+
+eW_MetaDef 3
+aCPLR_ZKey 110001816
+aStatus    1
+aUpdateInd 2
+aName      LastName
+
+eW_MetaDef 3
+aCPLR_ZKey 110001820
+aStatus    1
+aUpdateInd 2
+aName      ShortDescription
+
+eW_MetaDef 3
+aCPLR_ZKey 110001823
+aStatus    1
+aUpdateInd 2
+aName      EMailAddress
+
+eW_MetaDef 3
+aCPLR_ZKey 110001825
+aStatus    1
+aUpdateInd 2
+aName      ZipCode
+
+eW_MetaDef 3
+aCPLR_ZKey 110001828
+aStatus    1
+aUpdateInd 2
+aName      Gender
+
+eW_MetaDef 3
+aCPLR_ZKey 110001832
+aStatus    1
+aUpdateInd 2
+aName      PhoneNumber
+
+eW_MetaDef 3
+aCPLR_ZKey 110001835
+aStatus    1
+aUpdateInd 2
+aName      GeneralName_Address
+
+eW_MetaDef 3
+aCPLR_ZKey 110000052
+aStatus    1
+aUpdateInd 2
+aName      State
+
+eW_MetaDef 3
+aCPLR_ZKey 110000684
+aStatus    1
+aUpdateInd 2
+aName      ProspectType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000682
+aStatus    1
+aUpdateInd 2
+aName      ActivityStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 110000681
+aStatus    1
+aUpdateInd 2
+aName      ChurchDenomination
+
+eW_MetaDef 3
+aCPLR_ZKey 110000678
+aStatus    1
+aUpdateInd 2
+aName      DegreeEarned
+
+eW_MetaDef 3
+aCPLR_ZKey 110000674
+aStatus    1
+aUpdateInd 2
+aName      MailType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000669
+aStatus    1
+aUpdateInd 2
+aName      SecurityQuestions
+
+eW_MetaDef 3
+aCPLR_ZKey 110000183
+aStatus    1
+aUpdateInd 2
+aName      BooleanTrueFalse
+
+eW_MetaDef 3
+aCPLR_ZKey 110000195
+aStatus    1
+aUpdateInd 2
+aName      UserAuthorizationLevel
+
+eW_MetaDef 3
+aCPLR_ZKey 110000202
+aStatus    1
+aUpdateInd 2
+aName      UserLoginAuthenticationType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000226
+aStatus    1
+aUpdateInd 2
+aName      Year
+
+eW_MetaDef 3
+aCPLR_ZKey 110000251
+aStatus    1
+aUpdateInd 2
+aName      UserStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 110000271
+aStatus    1
+aUpdateInd 2
+aName      BooleanOperator
+
+eW_MetaDef 3
+aCPLR_ZKey 110000280
+aStatus    1
+aUpdateInd 2
+aName      StandardTimes
+
+eW_MetaDef 3
+aCPLR_ZKey 110000357
+aStatus    1
+aUpdateInd 2
+aName      Ethnicity
+
+eW_MetaDef 3
+aCPLR_ZKey 110000370
+aStatus    1
+aUpdateInd 2
+aName      PrimaryLanguage
+
+eW_MetaDef 3
+aCPLR_ZKey 110000533
+aStatus    1
+aUpdateInd 2
+aName      DayOfWeek
+
+eW_MetaDef 3
+aCPLR_ZKey 110000544
+aStatus    1
+aUpdateInd 2
+aName      FunctionalArea
+
+eW_MetaDef 3
+aCPLR_ZKey 110000609
+aStatus    1
+aUpdateInd 2
+aName      PersonnelSalutation
+
+eW_MetaDef 3
+aCPLR_ZKey 110000650
+aStatus    1
+aUpdateInd 2
+aName      MaritalStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 110000657
+aStatus    1
+aUpdateInd 2
+aName      Country
+
+eW_MetaDef 3
+aCPLR_ZKey 513565564
+aStatus    1
+aUpdateInd 2
+aName      CollegeTermSemester
+
+eW_MetaDef 3
+aCPLR_ZKey 513565566
+aStatus    1
+aUpdateInd 2
+aName      ProposedChangeType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565569
+aStatus    1
+aUpdateInd 2
+aName      MisconductStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565571
+aStatus    1
+aUpdateInd 2
+aName      MisconductAction
+
+eW_MetaDef 3
+aCPLR_ZKey 513565573
+aStatus    1
+aUpdateInd 2
+aName      MisconductType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565575
+aStatus    1
+aUpdateInd 2
+aName      SA_FundingType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565577
+aStatus    1
+aUpdateInd 2
+aName      StudentFinancialStandingEval
+
+eW_MetaDef 3
+aCPLR_ZKey 513565579
+aStatus    1
+aUpdateInd 2
+aName      ChapelStudentOverrideReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565582
+aStatus    1
+aUpdateInd 2
+aName      InternalInsuranceStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565588
+aStatus    1
+aUpdateInd 2
+aName      ResidencyOffCampusReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565592
+aStatus    1
+aUpdateInd 2
+aName      NonresidencyPetitionReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565595
+aStatus    1
+aUpdateInd 2
+aName      NonresidencyPetitionStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565600
+aStatus    1
+aUpdateInd 2
+aName      StudentAdvisorRegiApprovalStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565608
+aStatus    1
+aUpdateInd 2
+aName      EnrollmentHistoryStudentType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565614
+aStatus    1
+aUpdateInd 2
+aName      CourseSubsectionType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565617
+aStatus    1
+aUpdateInd 2
+aName      AdviseeListType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565623
+aStatus    1
+aUpdateInd 2
+aName      TranscriptCreditCEU_Unit
+
+eW_MetaDef 3
+aCPLR_ZKey 513565628
+aStatus    1
+aUpdateInd 2
+aName      ClassAttendanceStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565634
+aStatus    1
+aUpdateInd 2
+aName      StudentSourceOfWithdrawal
+
+eW_MetaDef 3
+aCPLR_ZKey 513565639
+aStatus    1
+aUpdateInd 2
+aName      StudentGradeChangeReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565643
+aStatus    1
+aUpdateInd 2
+aName      ClassroomType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565651
+aStatus    1
+aUpdateInd 2
+aName      TranscriptRequestHeldReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565657
+aStatus    1
+aUpdateInd 2
+aName      TranscriptRequestType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565662
+aStatus    1
+aUpdateInd 2
+aName      DegreeMajorCLH_Type
+
+eW_MetaDef 3
+aCPLR_ZKey 513565665
+aStatus    1
+aUpdateInd 2
+aName      StudentPayTypeClassification
+
+eW_MetaDef 3
+aCPLR_ZKey 513565674
+aStatus    1
+aUpdateInd 2
+aName      StudentHS_TranscriptStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565676
+aStatus    1
+aUpdateInd 2
+aName      TransferDeniedReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565684
+aStatus    1
+aUpdateInd 2
+aName      TransferGroupType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565688
+aStatus    1
+aUpdateInd 2
+aName      DegreeCandidacyLateSubmission
+
+eW_MetaDef 3
+aCPLR_ZKey 513565692
+aStatus    1
+aUpdateInd 2
+aName      StudentTestingStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565694
+aStatus    1
+aUpdateInd 2
+aName      StudentWithdrawalReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565699
+aStatus    1
+aUpdateInd 2
+aName      StudentHS_CourseGrade
+
+eW_MetaDef 3
+aCPLR_ZKey 513565701
+aStatus    1
+aUpdateInd 2
+aName      StudentHS_RequirementType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565706
+aStatus    1
+aUpdateInd 2
+aName      StudentHS_Classification
+
+eW_MetaDef 3
+aCPLR_ZKey 513565713
+aStatus    1
+aUpdateInd 2
+aName      StudentHS_CourseSubject
+
+eW_MetaDef 3
+aCPLR_ZKey 513565719
+aStatus    1
+aUpdateInd 2
+aName      StudentFinancialStanding
+
+eW_MetaDef 3
+aCPLR_ZKey 513565728
+aStatus    1
+aUpdateInd 2
+aName      StudentAcademicStanding
+
+eW_MetaDef 3
+aCPLR_ZKey 513565734
+aStatus    1
+aUpdateInd 2
+aName      DegreeTrackComprehensiveScore
+
+eW_MetaDef 3
+aCPLR_ZKey 513565744
+aStatus    1
+aUpdateInd 2
+aName      StudentGradPetitionState
+
+eW_MetaDef 3
+aCPLR_ZKey 513565749
+aStatus    1
+aUpdateInd 2
+aName      StudentGownCut
+
+eW_MetaDef 3
+aCPLR_ZKey 513565753
+aStatus    1
+aUpdateInd 2
+aName      CohortMemberType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565758
+aStatus    1
+aUpdateInd 2
+aName      DegreeTrackStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565760
+aStatus    1
+aUpdateInd 2
+aName      CourseStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565767
+aStatus    1
+aUpdateInd 2
+aName      CampusID
+
+eW_MetaDef 3
+aCPLR_ZKey 513565769
+aStatus    1
+aUpdateInd 2
+aName      ChapelTimePeriod
+
+eW_MetaDef 3
+aCPLR_ZKey 513565773
+aStatus    1
+aUpdateInd 2
+aName      TranscriptRequestReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565775
+aStatus    1
+aUpdateInd 2
+aName      RetentionRiskType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565777
+aStatus    1
+aUpdateInd 2
+aName      BuckleyDataRelationship
+
+eW_MetaDef 3
+aCPLR_ZKey 513565782
+aStatus    1
+aUpdateInd 2
+aName      WaiverReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565784
+aStatus    1
+aUpdateInd 2
+aName      StudentStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565792
+aStatus    1
+aUpdateInd 2
+aName      RoomResidentBillingCode
+
+eW_MetaDef 3
+aCPLR_ZKey 513565800
+aStatus    1
+aUpdateInd 2
+aName      ResidencyStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565806
+aStatus    1
+aUpdateInd 2
+aName      CollegeSemester
+
+eW_MetaDef 3
+aCPLR_ZKey 513565812
+aStatus    1
+aUpdateInd 2
+aName      RoomFlexibilityLevel
+
+eW_MetaDef 3
+aCPLR_ZKey 513565816
+aStatus    1
+aUpdateInd 2
+aName      RoomBoardSize
+
+eW_MetaDef 3
+aCPLR_ZKey 513565820
+aStatus    1
+aUpdateInd 2
+aName      RoomConfiguration
+
+eW_MetaDef 3
+aCPLR_ZKey 513565825
+aStatus    1
+aUpdateInd 2
+aName      StudyOptionGroupType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565830
+aStatus    1
+aUpdateInd 2
+aName      DegreeTrackGroupType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565838
+aStatus    1
+aUpdateInd 2
+aName      DegreeTrackType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565842
+aStatus    1
+aUpdateInd 2
+aName      EnrollmentTakingClassType
+
+eW_MetaDef 3
+aCPLR_ZKey 513565851
+aStatus    1
+aUpdateInd 2
+aName      DegreeMajorCode
+
+eW_MetaDef 3
+aCPLR_ZKey 513565853
+aStatus    1
+aUpdateInd 2
+aName      CourseTopicNumber
+
+eW_MetaDef 3
+aCPLR_ZKey 513565855
+aStatus    1
+aUpdateInd 2
+aName      CourseNumber
+
+eW_MetaDef 3
+aCPLR_ZKey 513565857
+aStatus    1
+aUpdateInd 2
+aName      RegistrationForeignClass
+
+eW_MetaDef 3
+aCPLR_ZKey 513565885
+aStatus    1
+aUpdateInd 2
+aName      CourseTitle
+
+eW_MetaDef 3
+aCPLR_ZKey 513565887
+aStatus    1
+aUpdateInd 2
+aName      HonorsGraduationLevel
+
+eW_MetaDef 3
+aCPLR_ZKey 513565892
+aStatus    1
+aUpdateInd 2
+aName      StudentAcademicLevel
+
+eW_MetaDef 3
+aCPLR_ZKey 513565918
+aStatus    1
+aUpdateInd 2
+aName      ClassSection
+
+eW_MetaDef 3
+aCPLR_ZKey 513565920
+aStatus    1
+aUpdateInd 2
+aName      ClassEnrollmentStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 513565925
+aStatus    1
+aUpdateInd 2
+aName      ClassCancelledReason
+
+eW_MetaDef 3
+aCPLR_ZKey 513565927
+aStatus    1
+aUpdateInd 2
+aName      ClassGrade
+
+eW_MetaDef 3
+aCPLR_ZKey 513565929
+aStatus    1
+aUpdateInd 2
+aName      RoomType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000662
+aStatus    1
+aUpdateInd 2
+aName      QueryResultType
+
+eW_MetaDef 3
+aCPLR_ZKey 110005224
+aStatus    1
+aUpdateInd 2
+aName      ReportType
+
+eW_MetaDef 3
+aCPLR_ZKey 111000799
+aStatus    1
+aUpdateInd 2
+aName      DashboardEntryDefinitionType
+
+eW_MetaDef 3
+aCPLR_ZKey 111000796
+aStatus    1
+aUpdateInd 2
+aName      QueryLanguageConversion
+
+eW_MetaDef 3
+aCPLR_ZKey 111000784
+aStatus    1
+aUpdateInd 2
+aName      QueryObjSummaryAttributeType
+
+eW_MetaDef 3
+aCPLR_ZKey 111000780
+aStatus    1
+aUpdateInd 2
+aName      QueryObjSummaryCriteriaType
+
+eW_MetaDef 3
+aCPLR_ZKey 110005203
+aStatus    1
+aUpdateInd 2
+aName      DocumentType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000761
+aStatus    1
+aUpdateInd 2
+aName      QueryComboUpd
+
+eW_MetaDef 3
+aCPLR_ZKey 110000671
+aStatus    1
+aUpdateInd 2
+aName      QueryDataType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000675
+aStatus    1
+aUpdateInd 2
+aName      QueryBreakpointType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000680
+aStatus    1
+aUpdateInd 2
+aName      QueryBreakpointSummationType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000688
+aStatus    1
+aUpdateInd 2
+aName      QueryPivotFunction
+
+eW_MetaDef 3
+aCPLR_ZKey 110000692
+aStatus    1
+aUpdateInd 2
+aName      ZeidonMetaName
+
+eW_MetaDef 3
+aCPLR_ZKey 110000694
+aStatus    1
+aUpdateInd 2
+aName      ZeidonEntityName
+
+eW_MetaDef 3
+aCPLR_ZKey 110000696
+aStatus    1
+aUpdateInd 2
+aName      SortOrderAscendingType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000701
+aStatus    1
+aUpdateInd 2
+aName      QuerySubgroupSelectType
+
+eW_MetaDef 3
+aCPLR_ZKey 110000710
+aStatus    1
+aUpdateInd 2
+aName      QuerySearchType
+
+eW_MetaDef 3
+aCPLR_ZKey 110002042
+aStatus    1
+aUpdateInd 2
+aName      AddressType
+
+eW_MetaDef 3
+aCPLR_ZKey 110002047
+aStatus    1
+aUpdateInd 2
+aName      AcademicHold
+
+eW_MetaDef 3
+aCPLR_ZKey 110001639
+aStatus    1
+aUpdateInd 2
+aName      Local
+
+eW_MetaDef 3
+aCPLR_ZKey 514031633
+aStatus    1
+aUpdateInd 2
+aName      HR_EmployeeClassification
+
+eW_MetaDef 3
+aCPLR_ZKey 514031645
+aStatus    1
+aUpdateInd 2
+aName      HR_IPEDS_OccupationalCategory
+
+eW_MetaDef 3
+aCPLR_ZKey 514031649
+aStatus    1
+aUpdateInd 2
+aName      HR_SOC_Code
+
+eW_MetaDef 3
+aCPLR_ZKey 514031653
+aStatus    1
+aUpdateInd 2
+aName      HR_TuitionDiscountApplStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 514031658
+aStatus    1
+aUpdateInd 2
+aName      HR_IPEDS_Category
+
+eW_MetaDef 3
+aCPLR_ZKey 514031674
+aStatus    1
+aUpdateInd 2
+aName      HR_PositionStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 514031678
+aStatus    1
+aUpdateInd 2
+aName      HR_InsuranceType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031682
+aStatus    1
+aUpdateInd 2
+aName      HR_DoctorateFirstProfessionalOpt
+
+eW_MetaDef 3
+aCPLR_ZKey 514031686
+aStatus    1
+aUpdateInd 2
+aName      HR_HighestEmployeeDegree
+
+eW_MetaDef 3
+aCPLR_ZKey 514031691
+aStatus    1
+aUpdateInd 2
+aName      FacultyTenure
+
+eW_MetaDef 3
+aCPLR_ZKey 514031694
+aStatus    1
+aUpdateInd 2
+aName      HR_TenureTrack
+
+eW_MetaDef 3
+aCPLR_ZKey 514031701
+aStatus    1
+aUpdateInd 2
+aName      HR_OccupationalActivity
+
+eW_MetaDef 3
+aCPLR_ZKey 514031706
+aStatus    1
+aUpdateInd 2
+aName      HR_BudgetReportDetailLevel
+
+eW_MetaDef 3
+aCPLR_ZKey 514031711
+aStatus    1
+aUpdateInd 2
+aName      GL_ReportType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031728
+aStatus    1
+aUpdateInd 2
+aName      HR_PaymentMode
+
+eW_MetaDef 3
+aCPLR_ZKey 514031734
+aStatus    1
+aUpdateInd 2
+aName      HR_NewContractReason
+
+eW_MetaDef 3
+aCPLR_ZKey 514031738
+aStatus    1
+aUpdateInd 2
+aName      HR_TerminationReason
+
+eW_MetaDef 3
+aCPLR_ZKey 514031742
+aStatus    1
+aUpdateInd 2
+aName      HR_EmployeeClassFeeType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031747
+aStatus    1
+aUpdateInd 2
+aName      HR_ContractDistributionType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031751
+aStatus    1
+aUpdateInd 2
+aName      EmployeeType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031754
+aStatus    1
+aUpdateInd 2
+aName      VehicleRegistrationType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031763
+aStatus    1
+aUpdateInd 2
+aName      HR_DistributionDeptCode
+
+eW_MetaDef 3
+aCPLR_ZKey 514031765
+aStatus    1
+aUpdateInd 2
+aName      HR_ContractYear
+
+eW_MetaDef 3
+aCPLR_ZKey 514031767
+aStatus    1
+aUpdateInd 2
+aName      HR_ContractStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 514031777
+aStatus    1
+aUpdateInd 2
+aName      EmployeeStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 514031783
+aStatus    1
+aUpdateInd 2
+aName      HR_RetirementsBenefitsType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031788
+aStatus    1
+aUpdateInd 2
+aName      HR_MedicalCode
+
+eW_MetaDef 3
+aCPLR_ZKey 514031797
+aStatus    1
+aUpdateInd 2
+aName      HR_FacultyRank
+
+eW_MetaDef 3
+aCPLR_ZKey 514031804
+aStatus    1
+aUpdateInd 2
+aName      HR_FacultyDegree
+
+eW_MetaDef 3
+aCPLR_ZKey 514031383
+aStatus    1
+aUpdateInd 2
+aName      FA_RuleType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031387
+aStatus    1
+aUpdateInd 2
+aName      FA_RuleCode
+
+eW_MetaDef 3
+aCPLR_ZKey 514031389
+aStatus    1
+aUpdateInd 2
+aName      FAISIR_AssumeYesNo
+
+eW_MetaDef 3
+aCPLR_ZKey 514031393
+aStatus    1
+aUpdateInd 2
+aName      SA_FISAP_TransactionType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031399
+aStatus    1
+aUpdateInd 2
+aName      FA_HS_DiplomaOrGED
+
+eW_MetaDef 3
+aCPLR_ZKey 514031406
+aStatus    1
+aUpdateInd 2
+aName      FA_ReportingType3
+
+eW_MetaDef 3
+aCPLR_ZKey 514031408
+aStatus    1
+aUpdateInd 2
+aName      FA_ReportingType2
+
+eW_MetaDef 3
+aCPLR_ZKey 514031410
+aStatus    1
+aUpdateInd 2
+aName      FA_ReportingType1
+
+eW_MetaDef 3
+aCPLR_ZKey 514031412
+aStatus    1
+aUpdateInd 2
+aName      FA_ScannelKurzReportType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031414
+aStatus    1
+aUpdateInd 2
+aName      FA_COAItemReportType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031419
+aStatus    1
+aUpdateInd 2
+aName      FA_TEACH_ATS_StatusCode
+
+eW_MetaDef 3
+aCPLR_ZKey 514031426
+aStatus    1
+aUpdateInd 2
+aName      FA_COD_CreditOverrideCode
+
+eW_MetaDef 3
+aCPLR_ZKey 514031432
+aStatus    1
+aUpdateInd 2
+aName      FA_COD_DocumentTypeCode
+
+eW_MetaDef 3
+aCPLR_ZKey 514031445
+aStatus    1
+aUpdateInd 2
+aName      FA_AdmissionsPetitionResolution
+
+eW_MetaDef 3
+aCPLR_ZKey 514031451
+aStatus    1
+aUpdateInd 2
+aName      FA_AdmissionsPetitionReason
+
+eW_MetaDef 3
+aCPLR_ZKey 514031460
+aStatus    1
+aUpdateInd 2
+aName      IPEDS_CollegeDegreeLevelCode
+
+eW_MetaDef 3
+aCPLR_ZKey 514031471
+aStatus    1
+aUpdateInd 2
+aName      FA_COD_AwardType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031480
+aStatus    1
+aUpdateInd 2
+aName      RegistrationTrack
+
+eW_MetaDef 3
+aCPLR_ZKey 514031493
+aStatus    1
+aUpdateInd 2
+aName      FA_Title4SATransactionType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031497
+aStatus    1
+aUpdateInd 2
+aName      FA_FinancialRegistrationStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 514031505
+aStatus    1
+aUpdateInd 2
+aName      FA_RequirementClassification
+
+eW_MetaDef 3
+aCPLR_ZKey 514031509
+aStatus    1
+aUpdateInd 2
+aName      FA_ProfileRequirementType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031514
+aStatus    1
+aUpdateInd 2
+aName      EnrollmentReportChargeType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031519
+aStatus    1
+aUpdateInd 2
+aName      FinAidStackableAwardType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031525
+aStatus    1
+aUpdateInd 2
+aName      SA_TransactionFrequencyType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031529
+aStatus    1
+aUpdateInd 2
+aName      FinAidSourceStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 514031534
+aStatus    1
+aUpdateInd 2
+aName      SA_MealPlanGeneralType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031546
+aStatus    1
+aUpdateInd 2
+aName      FA_DisbursementRevisionType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031550
+aStatus    1
+aUpdateInd 2
+aName      FA_CDS_ReportingType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031560
+aStatus    1
+aUpdateInd 2
+aName      FA_IPEDS_ReportingType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031567
+aStatus    1
+aUpdateInd 2
+aName      FA_CCCU_ReportingType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031571
+aStatus    1
+aUpdateInd 2
+aName      FA_USNEWS_ReportingType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031575
+aStatus    1
+aUpdateInd 2
+aName      FA_StateReportingType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031579
+aStatus    1
+aUpdateInd 2
+aName      FA_FISAP_ReportingType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031589
+aStatus    1
+aUpdateInd 2
+aName      FA_NCAA_ReportingType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031599
+aStatus    1
+aUpdateInd 2
+aName      FAISIR_YesNo
+
+eW_MetaDef 3
+aCPLR_ZKey 514031605
+aStatus    1
+aUpdateInd 2
+aName      FA_FundedType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031614
+aStatus    1
+aUpdateInd 2
+aName      FA_GenReceiveSubdialog
+
+eW_MetaDef 3
+aCPLR_ZKey 514031618
+aStatus    1
+aUpdateInd 2
+aName      SAJournal
+
+eW_MetaDef 3
+aCPLR_ZKey 514031626
+aStatus    1
+aUpdateInd 2
+aName      SAPaymentPlan
+
+eW_MetaDef 3
+aCPLR_ZKey 514031632
+aStatus    1
+aUpdateInd 2
+aName      SABillType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031642
+aStatus    1
+aUpdateInd 2
+aName      AdjustmentType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031647
+aStatus    1
+aUpdateInd 2
+aName      SA_ApplyRule
+
+eW_MetaDef 3
+aCPLR_ZKey 514031651
+aStatus    1
+aUpdateInd 2
+aName      FinancialInstrumentType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031683
+aStatus    1
+aUpdateInd 2
+aName      FTransType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031687
+aStatus    1
+aUpdateInd 2
+aName      StatementType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031692
+aStatus    1
+aUpdateInd 2
+aName      FA_ProviderType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031698
+aStatus    1
+aUpdateInd 2
+aName      ISIRPersonType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031703
+aStatus    1
+aUpdateInd 2
+aName      ISIRImportStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 514031708
+aStatus    1
+aUpdateInd 2
+aName      FA_PaymentMethod
+
+eW_MetaDef 3
+aCPLR_ZKey 514031718
+aStatus    1
+aUpdateInd 2
+aName      FA_SourceType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031724
+aStatus    1
+aUpdateInd 2
+aName      FA_RequirementType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031727
+aStatus    1
+aUpdateInd 2
+aName      FA_COAItemType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031733
+aStatus    1
+aUpdateInd 2
+aName      FA_AwardedStatus
+
+eW_MetaDef 3
+aCPLR_ZKey 514031740
+aStatus    1
+aUpdateInd 2
+aName      FA_AidType
+
+eW_MetaDef 3
+aCPLR_ZKey 514031746
+aStatus    1
+aUpdateInd 2
+aName      FA_AmountDetereminedBy
+
+eW_MetaDef 3
+aCPLR_ZKey 514031750
+aStatus    1
+aUpdateInd 2
+aName      ScholarshipAwardedBy
+
+eW_MetaDef 3
+aCPLR_ZKey 514031755
+aStatus    1
+aUpdateInd 2
+aName      FullTimeCalculatedAs
+
+eW_MetaDef 3
+aCPLR_ZKey 514031762
+aStatus    1
+aUpdateInd 2
+aName      FA_RuleApply
+
+eW_MetaDef 3
+aCPLR_ZKey 110000026
+aStatus    1
+aUpdateInd 2
+aName      Revenue
+
+eW_MetaDef 3
+aCPLR_ZKey 110000031
+aStatus    1
+aUpdateInd 2
+aName      SocialSecurityNumber
+
+eW_MetaDef 3
+aCPLR_ZKey 110000035
+aStatus    1
+aUpdateInd 2
+aName      CommonLineZipCode
+
+eW_MetaDef 3
+aCPLR_ZKey 110000037
+aStatus    1
+aUpdateInd 2
+aName      CommonLineText
+
+eW_MetaDef 3
+aCPLR_ZKey 110000043
+aStatus    1
+aUpdateInd 2
+aName      AlphaNumericUpperStrip
+
+eW_MetaDef 3
+aCPLR_ZKey 110000004
+aStatus    1
+aUpdateInd 2
+aName      XML_SubentityPosition
+
+eW_MetaDef 3
+aCPLR_ZKey 110000006
+aStatus    1
+aUpdateInd 2
+aName      Y/N
+
+eW_MetaType 2
+aType      4
+
+eW_MetaDef 3
+aCPLR_ZKey 110001837
+aStatus    1
+aUpdateInd 2
+aName      CRMbase
+aDesc      Zencas Support App
+aLastSyncDate 20230103135444867
+aLastUpdateDate 20230103135444867
+
+eW_MetaType 2
+aType      5
+
+eW_MetaType 2
+aType      6
+
+eW_MetaDef 3
+aCPLR_ZKey 110010888
+aStatus    1
+aUpdateInd 2
+aName      CRMbase
+aDesc      OakTree Support App
+aLastSyncDate 20230103135512208
+aLastUpdateDate 20230103135512208
+
+eW_MetaType 2
+aType      7
+
+eW_MetaDef 3
+aCPLR_ZKey 116053943
+aStatus    1
+aUpdateInd 2
+aName      DomainT
+aDesc      Zeidon Dynamic Table Domain Object
+aLastSyncDate 20220921200539546
+aLastUpdateDate 20220921200539546
+
+eW_MetaDef 3
+aCPLR_ZKey 116054119
+aStatus    1
+aUpdateInd 2
+aName      DOMAINTL
+aDesc      Dynamic Domain List
+aLastSyncDate 20220921200541184
+aLastUpdateDate 20220921200541184
+
+eW_MetaDef 3
+aCPLR_ZKey 116054274
+aStatus    1
+aUpdateInd 2
+aName      fPerson
+aDesc      Person Find Object
+aLastSyncDate 20230103135637365
+aLastUpdateDate 20230103135637365
+
+eW_MetaDef 3
+aCPLR_ZKey 116065014
+aStatus    1
+aUpdateInd 2
+aName      fUser
+aLastSyncDate 20230103135658699
+aLastUpdateDate 20230103135658699
+
+eW_MetaDef 3
+aCPLR_ZKey 116071249
+aStatus    1
+aUpdateInd 2
+aName      KZMSGQOO
+aDesc      Message Queue Handler
+aLastSyncDate 20220921200712502
+aLastUpdateDate 20220921200712502
+
+eW_MetaDef 3
+aCPLR_ZKey 116065175
+aStatus    1
+aUpdateInd 2
+aName      lConList
+aLastSyncDate 20221026135838044
+aLastUpdateDate 20221026135838044
+
+eW_MetaDef 3
+aCPLR_ZKey 116065337
+aStatus    1
+aUpdateInd 2
+aName      lPerson
+aDesc      Person Select List
+aLastSyncDate 20230104155717094
+aLastUpdateDate 20230104155717094
+
+eW_MetaDef 3
+aCPLR_ZKey 116075941
+aStatus    1
+aUpdateInd 2
+aName      mChart
+aLastSyncDate 20220921200759484
+aLastUpdateDate 20220921200759484
+
+eW_MetaDef 3
+aCPLR_ZKey 116080108
+aStatus    1
+aUpdateInd 2
+aName      mConList
+aDesc      Contact List
+aLastSyncDate 20221228155029160
+aLastUpdateDate 20221228155029160
+
+eW_MetaDef 3
+aCPLR_ZKey 116080276
+aStatus    1
+aUpdateInd 2
+aName      mDashBDf
+aLastSyncDate 20220921200802782
+aLastUpdateDate 20220921200802782
+
+eW_MetaDef 3
+aCPLR_ZKey 116080464
+aStatus    1
+aUpdateInd 2
+aName      mDashBEn
+aLastSyncDate 20220921200804643
+aLastUpdateDate 20220921200804643
+
+eW_MetaDef 3
+aCPLR_ZKey 116094788
+aStatus    1
+aUpdateInd 2
+aName      mPerson
+aDesc      Person 
+aLastSyncDate 20230103135604035
+aLastUpdateDate 20230103135604035
+
+eW_MetaDef 3
+aCPLR_ZKey 116094970
+aStatus    1
+aUpdateInd 2
+aName      mQryObEx
+aDesc      Query Object Extension entity for holding a Query Object Extension object as a blob.
+aLastSyncDate 20220921200949712
+aLastUpdateDate 20220921200949712
+
+eW_MetaDef 3
+aCPLR_ZKey 116095130
+aStatus    1
+aUpdateInd 2
+aName      mQryObj
+aLastSyncDate 20220921200951309
+aLastUpdateDate 20220921200951309
+
+eW_MetaDef 3
+aCPLR_ZKey 714274207
+aStatus    1
+aUpdateInd 2
+aName      mReport
+aDesc      Report maintenance object
+aLastSyncDate 20221012224308771
+aLastUpdateDate 20221012224308771
+
+eW_MetaDef 3
+aCPLR_ZKey 714261939
+aStatus    1
+aUpdateInd 2
+aName      mReportG
+aDesc      Report Group Maintenance
+aLastSyncDate 20220927182627357
+aLastUpdateDate 20220927182627357
+
+eW_MetaDef 3
+aCPLR_ZKey 714545988
+aStatus    1
+aUpdateInd 2
+aName      mUGroups
+aDesc      User Groups
+aLastSyncDate 20220927185459912
+aLastUpdateDate 20220927185459912
+
+eW_MetaDef 3
+aCPLR_ZKey 714550150
+aStatus    1
+aUpdateInd 2
+aName      mUser
+aDesc      User logins
+aLastSyncDate 20230103135734739
+aLastUpdateDate 20230103135734739
+
+eW_MetaDef 3
+aCPLR_ZKey 715265729
+aStatus    1
+aUpdateInd 2
+aName      sAppMgr
+aDesc      System Application Manager
+aLastSyncDate 20220927192657444
+aLastUpdateDate 20220927192657444
+
+eW_MetaDef 3
+aCPLR_ZKey 715265903
+aStatus    1
+aUpdateInd 2
+aName      TZZOLFLO
+aDesc      The list of Query Views (LODs) from Zeidon Tools named TZZOLFLO
+aLastSyncDate 20220927192659050
+aLastUpdateDate 20220927192659050
+
+eW_MetaDef 3
+aCPLR_ZKey 715270063
+aStatus    1
+aUpdateInd 2
+aName      wQueryWk
+aLastSyncDate 20220927192700656
+aLastUpdateDate 20220927192700656
+
+eW_MetaDef 3
+aCPLR_ZKey 334015621
+aStatus    1
+aUpdateInd 2
+aName      wWebXfer
+aDesc      Web Transfer Work object
+aLastSyncDate 20221231021349247
+aLastUpdateDate 20221231021349247
+
+eW_MetaDef 3
+aCPLR_ZKey 715270254
+aStatus    1
+aUpdateInd 2
+aName      wXferO
+aDesc      Transfer Work Area
+aLastSyncDate 20220927192702811
+aLastUpdateDate 20220927192702811
+
+eW_MetaDef 3
+aCPLR_ZKey 715592024
+aStatus    1
+aUpdateInd 2
+aName      zqCDocO
+aDesc      Categories for Documents
+aLastSyncDate 20220927195920342
+aLastUpdateDate 20220927195920342
+
+eW_MetaDef 3
+aCPLR_ZKey 715592193
+aStatus    1
+aUpdateInd 2
+aName      zqFrame
+aDesc      Query frame for specifying query parameters
+aLastSyncDate 20220927195922120
+aLastUpdateDate 20220927195922120
+
+eW_MetaDef 3
+aCPLR_ZKey 715592371
+aStatus    1
+aUpdateInd 2
+aName      zqMDocO
+aDesc      Query Merge Document
+aLastSyncDate 20220927195923739
+aLastUpdateDate 20220927195923739
+
+eW_MetaDef 3
+aCPLR_ZKey 715592547
+aStatus    1
+aUpdateInd 2
+aName      zqObjExt
+aDesc      Query object extension
+aLastSyncDate 20220927195925525
+aLastUpdateDate 20220927195925525
+
+eW_MetaDef 3
+aCPLR_ZKey 715592737
+aStatus    1
+aUpdateInd 2
+aName      zqSCatag
+aDesc      Query Category
+aLastSyncDate 20220927195927376
+aLastUpdateDate 20220927195927376
+
+eW_MetaDef 3
+aCPLR_ZKey 715592925
+aStatus    1
+aUpdateInd 2
+aName      zqSQuery
+aDesc      Query - Stored Query
+aLastSyncDate 20220927195929310
+aLastUpdateDate 20220927195929310
+
+eW_MetaDef 3
+aCPLR_ZKey 715593133
+aStatus    1
+aUpdateInd 2
+aName      zResultSet
+aLastSyncDate 20220927195931342
+aLastUpdateDate 20220927195931342
+
+eW_MetaType 2
+aType      8
+
+eW_MetaType 2
+aType      9
+
+eW_MetaDef 3
+aCPLR_ZKey 308570027
+aStatus    1
+aUpdateInd 2
+aName      fUser
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20230103135700262
+aLastUpdateDate 20230103135700262
+
+eW_MetaDef 3
+aCPLR_ZKey 519485509
+aStatus    1
+aUpdateInd 2
+aName      mConListUpdate
+aLastSyncDate 20221025234855086
+aLastUpdateDate 20221025234855086
+
+eW_MetaDef 3
+aCPLR_ZKey 522015793
+aStatus    1
+aUpdateInd 2
+aName      lConList
+aLastSyncDate 20221026020216889
+aLastUpdateDate 20221026020216889
+
+eW_MetaDef 3
+aCPLR_ZKey 522022129
+aStatus    1
+aUpdateInd 2
+aName      lConListLST
+aLastSyncDate 20221026020236835
+aLastUpdateDate 20221026020236835
+
+eW_MetaDef 3
+aCPLR_ZKey 522035396
+aStatus    1
+aUpdateInd 2
+aName      mConListSLST
+aLastSyncDate 20221026020353957
+aLastUpdateDate 20221026020353957
+
+eW_MetaDef 3
+aCPLR_ZKey 611115961
+aStatus    1
+aUpdateInd 2
+aName      sAppMgrMenu
+aLastSyncDate 20221026151159623
+aLastUpdateDate 20221026151159623
+
+eW_MetaDef 3
+aCPLR_ZKey 616361853
+aStatus    1
+aUpdateInd 2
+aName      lPerson
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20221106213618526
+aLastUpdateDate 20221106213618526
+
+eW_MetaDef 3
+aCPLR_ZKey 719055943
+aStatus    1
+aUpdateInd 2
+aName      fPerson
+aLastSyncDate 20220927230559579
+aLastUpdateDate 20220927230559579
+
+eW_MetaDef 3
+aCPLR_ZKey 719060096
+aStatus    1
+aUpdateInd 2
+aName      mConListR
+aLastSyncDate 20220927230600969
+aLastUpdateDate 20220927230600969
+
+eW_MetaDef 3
+aCPLR_ZKey 719060235
+aStatus    1
+aUpdateInd 2
+aName      mConListRLST
+aLastSyncDate 20220927230602360
+aLastUpdateDate 20220927230602360
+
+eW_MetaDef 3
+aCPLR_ZKey 719060392
+aStatus    1
+aUpdateInd 2
+aName      mUserCat
+aLastSyncDate 20220927230603947
+aLastUpdateDate 20220927230603947
+
+eW_MetaDef 3
+aCPLR_ZKey 719060550
+aStatus    1
+aUpdateInd 2
+aName      sAppMgr
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230605510
+aLastUpdateDate 20220927230605510
+
+eW_MetaDef 3
+aCPLR_ZKey 719060704
+aStatus    1
+aUpdateInd 2
+aName      wXferO
+aLastSyncDate 20220927230607065
+aLastUpdateDate 20220927230607065
+
+eW_MetaDef 3
+aCPLR_ZKey 719075139
+aStatus    1
+aUpdateInd 2
+aName      mConList
+aLastSyncDate 20220927230751524
+aLastUpdateDate 20220927230751524
+
+eW_MetaDef 3
+aCPLR_ZKey 719075293
+aStatus    1
+aUpdateInd 2
+aName      mPerson
+aLastSyncDate 20220927230752955
+aLastUpdateDate 20220927230752955
+
+eW_MetaDef 3
+aCPLR_ZKey 719075439
+aStatus    1
+aUpdateInd 2
+aName      mQryObExLST
+aLastSyncDate 20220927230754380
+aLastUpdateDate 20220927230754380
+
+eW_MetaDef 3
+aCPLR_ZKey 719075576
+aStatus    1
+aUpdateInd 2
+aName      mReport
+aLastSyncDate 20220927230808985
+aLastUpdateDate 20220927230808985
+
+eW_MetaDef 3
+aCPLR_ZKey 719081036
+aStatus    1
+aUpdateInd 2
+aName      mReportLST
+aLastSyncDate 20220927230810371
+aLastUpdateDate 20220927230810371
+
+eW_MetaDef 3
+aCPLR_ZKey 719081175
+aStatus    1
+aUpdateInd 2
+aName      mUGroupsLST
+aLastSyncDate 20220927230811761
+aLastUpdateDate 20220927230811761
+
+eW_MetaDef 3
+aCPLR_ZKey 719081315
+aStatus    1
+aUpdateInd 2
+aName      mUserLST
+aLastSyncDate 20220927230813161
+aLastUpdateDate 20220927230813161
+
+eW_MetaDef 3
+aCPLR_ZKey 719081470
+aStatus    1
+aUpdateInd 2
+aName      wQueryWk
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230814711
+aLastUpdateDate 20220927230814711
+
+eW_MetaDef 3
+aCPLR_ZKey 719081615
+aStatus    1
+aUpdateInd 2
+aName      zqCDocO
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230816163
+aLastUpdateDate 20220927230816163
+
+eW_MetaDef 3
+aCPLR_ZKey 719081754
+aStatus    1
+aUpdateInd 2
+aName      zqCDocOLST
+aLastSyncDate 20220927230817537
+aLastUpdateDate 20220927230817537
+
+eW_MetaDef 3
+aCPLR_ZKey 719081893
+aStatus    1
+aUpdateInd 2
+aName      zqFrame
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230818941
+aLastUpdateDate 20220927230818941
+
+eW_MetaDef 3
+aCPLR_ZKey 719082036
+aStatus    1
+aUpdateInd 2
+aName      zqMDocO
+aLastSyncDate 20220927230820366
+aLastUpdateDate 20220927230820366
+
+eW_MetaDef 3
+aCPLR_ZKey 719082175
+aStatus    1
+aUpdateInd 2
+aName      zqMDocOLST
+aLastSyncDate 20220927230821743
+aLastUpdateDate 20220927230821743
+
+eW_MetaDef 3
+aCPLR_ZKey 719082316
+aStatus    1
+aUpdateInd 2
+aName      zqObjExt
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230823150
+aLastUpdateDate 20220927230823150
+
+eW_MetaDef 3
+aCPLR_ZKey 719082457
+aStatus    1
+aUpdateInd 2
+aName      zqSCatag
+aLastSyncDate 20220927230824576
+aLastUpdateDate 20220927230824576
+
+eW_MetaDef 3
+aCPLR_ZKey 719082598
+aStatus    1
+aUpdateInd 2
+aName      zqSCatagLST
+aLastSyncDate 20220927230825972
+aLastUpdateDate 20220927230825972
+
+eW_MetaDef 3
+aCPLR_ZKey 719082739
+aStatus    1
+aUpdateInd 2
+aName      zqSQuery
+aLastSyncDate 20220927230827395
+aLastUpdateDate 20220927230827395
+
+eW_MetaDef 3
+aCPLR_ZKey 719082878
+aStatus    1
+aUpdateInd 2
+aName      zqSQueryLST
+aLastSyncDate 20220927230828774
+aLastUpdateDate 20220927230828774
+
+eW_MetaDef 3
+aCPLR_ZKey 719083019
+aStatus    1
+aUpdateInd 2
+aName      zResultSet
+aLastSyncDate 20220927230830181
+aLastUpdateDate 20220927230830181
+
+eW_MetaDef 3
+aCPLR_ZKey 719083467
+aStatus    1
+aUpdateInd 2
+aName      mChart
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230834686
+aLastUpdateDate 20220927230834686
+
+eW_MetaDef 3
+aCPLR_ZKey 719083608
+aStatus    1
+aUpdateInd 2
+aName      mDashBDf
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230836078
+aLastUpdateDate 20220927230836078
+
+eW_MetaDef 3
+aCPLR_ZKey 719083749
+aStatus    1
+aUpdateInd 2
+aName      mDashBEn
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230837504
+aLastUpdateDate 20220927230837504
+
+eW_MetaDef 3
+aCPLR_ZKey 719083891
+aStatus    1
+aUpdateInd 2
+aName      mDashBEnLST
+aLastSyncDate 20220927230838923
+aLastUpdateDate 20220927230838923
+
+eW_MetaDef 3
+aCPLR_ZKey 719084044
+aStatus    1
+aUpdateInd 2
+aName      mQryObEx
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20220927230840453
+aLastUpdateDate 20220927230840453
+
+eW_MetaDef 3
+aCPLR_ZKey 719084202
+aStatus    1
+aUpdateInd 2
+aName      mReportG
+aLastSyncDate 20220927230842026
+aLastUpdateDate 20220927230842026
+
+eW_MetaDef 3
+aCPLR_ZKey 719084360
+aStatus    1
+aUpdateInd 2
+aName      mReportGLST
+aLastSyncDate 20220927230843593
+aLastUpdateDate 20220927230843593
+
+eW_MetaDef 3
+aCPLR_ZKey 719084518
+aStatus    1
+aUpdateInd 2
+aName      mUser
+aLastSyncDate 20220927230845175
+aLastUpdateDate 20220927230845175
+
+eW_MetaDef 3
+aCPLR_ZKey 21135082
+aStatus    1
+aUpdateInd 2
+aName      wWebXfer
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20221231021350828
+aLastUpdateDate 20221231021350828
+
+eW_MetaType 2
+aType      10
+
+eW_MetaDef 3
+aCPLR_ZKey 334001252
+aStatus    1
+aUpdateInd 2
+aName      ZEIDON
+aLastSyncDate 20220317191959460
+aLastUpdateDate 20220317191959460
+
+eW_MetaType 2
+aType      11
+
+eW_MetaDef 3
+aCPLR_ZKey 110239525
+aStatus    1
+aUpdateInd 2
+aName      AD_Base
+aLastSyncDate 20230203140732020
+aLastUpdateDate 20230203140732020
+
+eW_MetaDef 3
+aCPLR_ZKey 819322516
+aStatus    1
+aUpdateInd 2
+aName      CRMBase
+aLastSyncDate 20230113002043427
+aLastUpdateDate 20230113002043427
+
+eW_MetaDef 3
+aCPLR_ZKey 719055807
+aStatus    1
+aUpdateInd 2
+aName      wFindD
+aLastSyncDate 20221101141533423
+aLastUpdateDate 20221101141533423
+
+eW_MetaDef 3
+aCPLR_ZKey 719075001
+aStatus    1
+aUpdateInd 2
+aName      wQuery
+aLastSyncDate 20221231160243308
+aLastUpdateDate 20221231160243308
+
+eW_MetaDef 3
+aCPLR_ZKey 817121182
+aStatus    1
+aUpdateInd 2
+aName      wQueryR
+aDesc      Queries packaged as Reports (Documents, CSV Files, Graphs)
+aLastSyncDate 20230111160409629
+aLastUpdateDate 20230111160409629
+
+eW_MetaType 2
+aType      12
+
+eW_MetaType 2
+aType      13
+
+eW_MetaDef 3
+aCPLR_ZKey 110000001
+aStatus    1
+aUpdateInd 2
+aName      Base
+aLastSyncDate 20220317191959381
+aLastUpdateDate 20220317191959381
+
+eW_MetaDef 3
+aCPLR_ZKey 110000016
+aStatus    1
+aUpdateInd 2
+aName      DomainC
+aLastSyncDate 20220317191959397
+aLastUpdateDate 20220317191959397
+
+eW_MetaDef 3
+aCPLR_ZKey 514031381
+aStatus    1
+aUpdateInd 2
+aName      FinAid
+aDesc      Financial Aid Domains
+aLastSyncDate 20220915180314699
+aLastUpdateDate 20220915180314699
+
+eW_MetaDef 3
+aCPLR_ZKey 110000660
+aStatus    1
+aUpdateInd 2
+aName      FormatsA
+aDesc      Initial grouping of format and financial entries
+aLastSyncDate 20220317191959413
+aLastUpdateDate 20220317191959413
+
+eW_MetaDef 3
+aCPLR_ZKey 514031631
+aStatus    1
+aUpdateInd 2
+aName      HumanR
+aDesc      HumanResources
+aLastSyncDate 20220916133416380
+aLastUpdateDate 20220916133416380
+
+eW_MetaDef 3
+aCPLR_ZKey 110001638
+aStatus    1
+aUpdateInd 2
+aName      Localize
+aDesc      f
+aLastSyncDate 20220317191959413
+aLastUpdateDate 20220317191959413
+
+eW_MetaDef 3
+aCPLR_ZKey 110001641
+aStatus    1
+aUpdateInd 2
+aName      NonSrc
+aLastSyncDate 20220317191959428
+aLastUpdateDate 20220317191959428
+
+eW_MetaDef 3
+aCPLR_ZKey 110001642
+aStatus    1
+aUpdateInd 2
+aName      Numeric
+aDesc      Numeric (TZAP..)
+aLastSyncDate 20220317191959428
+aLastUpdateDate 20220317191959428
+
+eW_MetaDef 3
+aCPLR_ZKey 110001644
+aStatus    1
+aUpdateInd 2
+aName      OpenCUAS
+aLastSyncDate 20220915180316994
+aLastUpdateDate 20220915180316994
+
+eW_MetaDef 3
+aCPLR_ZKey 110000661
+aStatus    1
+aUpdateInd 2
+aName      Query
+aDesc      Query Domains
+aLastSyncDate 20220319140617820
+aLastUpdateDate 20220319140617820
+
+eW_MetaDef 3
+aCPLR_ZKey 513565562
+aStatus    1
+aUpdateInd 2
+aName      Student
+aDesc      Student Records and Academic Record domains
+aLastSyncDate 20220915175656590
+aLastUpdateDate 20220915175656590
+
+eW_MetaDef 3
+aCPLR_ZKey 110001802
+aStatus    1
+aUpdateInd 2
+aName      TableF
+aDesc      Financial Table Values
+aLastSyncDate 20220317191959444
+aLastUpdateDate 20220317191959444
+
+eW_MetaDef 3
+aCPLR_ZKey 110000045
+aStatus    1
+aUpdateInd 2
+aName      TablesA
+aDesc      Initial grouping of simple Tables
+aLastSyncDate 20220915180317050
+aLastUpdateDate 20220915180317050
+
+eW_MetaDef 3
+aCPLR_ZKey 110001804
+aStatus    1
+aUpdateInd 2
+aName      TextsA
+aDesc      Initial grouping of simple Text data
+aLastSyncDate 20220317191959460
+aLastUpdateDate 20220317191959460
+
+eW_MetaDef 3
+aCPLR_ZKey 90000023
+aStatus    1
+aUpdateInd 2
+aName      TZAPDMAA
+aLastSyncDate 20220317191959460
+aLastUpdateDate 20220317191959460
+
+eW_MetaDef 3
+aCPLR_ZKey 90000048
+aStatus    1
+aUpdateInd 2
+aName      TZAPDMAB
+aLastSyncDate 20220317191959460
+aLastUpdateDate 20220317191959460
+
+eW_MetaDef 3
+aCPLR_ZKey 90000127
+aStatus    1
+aUpdateInd 2
+aName      TZAPDMAC
+aLastSyncDate 20220317191959460
+aLastUpdateDate 20220317191959460
+
+eW_MetaDef 3
+aCPLR_ZKey 110004526
+aStatus    1
+aUpdateInd 2
+aName      ZENCAS
+aDesc      Unique Domains for ZENCAS
+aLastSyncDate 20220915180317108
+aLastUpdateDate 20220915180317108
+
+eW_MetaType 2
+aType      14
+
+eW_MetaDef 3
+aCPLR_ZKey 110276032
+aStatus    1
+aUpdateInd 2
+aName      ZGLOBAL1
+aDesc      Global Operations in C
+aLastSyncDate 20220308185739959
+aLastUpdateDate 20220308185739959
+
+eW_MetaDef 3
+aCPLR_ZKey 354012881
+aStatus    1
+aUpdateInd 2
+aName      ZGLOBAL2
+aDesc      VML Operations
+aLastSyncDate 20220308185739959
+aLastUpdateDate 20220308185739959
+
+eW_MetaDef 3
+aCPLR_ZKey 621131516
+aStatus    1
+aUpdateInd 2
+aName      zGLOBALQ
+aDesc      Query Operations
+aLastSyncDate 20220308185740761
+aLastUpdateDate 20220308185740761
+
+eW_MetaDef 3
+aCPLR_ZKey 210094639
+aStatus    1
+aUpdateInd 2
+aName      zGLOBALR
+aDesc      Person Global Operations
+aLastSyncDate 20220308185740762
+aLastUpdateDate 20220308185740762
+
+eW_MetaDef 3
+aCPLR_ZKey 211101239
+aStatus    1
+aUpdateInd 2
+aName      zGLOBALZ
+aDesc      VML Control Action code. This is in zeidon-operation.ZDRVROPR file (with no existing code) but going to put this here so that code can be tested and no new zeidon-operation needs to be pulled.
+aLastSyncDate 20220308185740773
+aLastUpdateDate 20220308185740773
+
+eW_MetaType 2
+aType      15
+
+eW_MetaType 2
+aType      16
+
+eW_MetaType 2
+aType      2000
+
+eW_MetaType 2
+aType      2001
+
+eW_MetaType 2
+aType      2002
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName zGLOBALQ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALZ
+
+eW_MetaDef 3
+aGroupName ZGLOBAL2
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName zGLOBALR
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaDef 3
+aGroupName ZGLOBAL1
+
+eW_MetaType 2
+aType      2003
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName ZENCAS
+
+eW_MetaDef 3
+aGroupName ZENCAS
+
+eW_MetaDef 3
+aGroupName ZENCAS
+
+eW_MetaDef 3
+aGroupName ZENCAS
+
+eW_MetaDef 3
+aGroupName ZENCAS
+
+eW_MetaDef 3
+aGroupName ZENCAS
+
+eW_MetaDef 3
+aGroupName ZENCAS
+
+eW_MetaDef 3
+aGroupName ZENCAS
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAC
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAB
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TextsA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Student
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName Query
+
+eW_MetaDef 3
+aGroupName OpenCUAS
+
+eW_MetaDef 3
+aGroupName OpenCUAS
+
+eW_MetaDef 3
+aGroupName Localize
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName HumanR
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName FinAid
+
+eW_MetaDef 3
+aGroupName DomainC
+
+eW_MetaDef 3
+aGroupName DomainC
+
+eW_MetaDef 3
+aGroupName DomainC
+
+eW_MetaDef 3
+aGroupName DomainC
+
+eW_MetaDef 3
+aGroupName DomainC
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaType 2
+aType      2004
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2005
+
+eW_MetaType 2
+aType      2006
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2007
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2008
+
+eW_MetaType 2
+aType      2009
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2010
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2011
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2012
+
+eW_MetaType 2
+aType      2013
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2014
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2015
+
+eW_MetaType 2
+aType      2016
+
+eDomainJavaClass 2
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.StaticTableDomain
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.nazsis.domains.DynamicTableDomainWContext
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.base.domains.AdminDivisionDynamicTableDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DynamicTableDomain
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.base.domains.DynamicTableDomainWContextAndLang
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.base.domains.RevenueDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.BlobDomain
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.nazsis.attrlangdomains.CollegeTermLangDomain
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DateDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DoubleDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.EmailAddressDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.IntegerDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.PasswordDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.StringDomain
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.nazsis.domains.RevenueDomain
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.nazsis.domains.DynamicTableDomainSortA
+
+eDomainJavaClass 2
+aJavaClassName org.nazarene.base.domains.DynamicTableDomainSortA
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.SSNDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.TimeDomain
+
+i648       4
+i649       5
+i650       6
+i651       7
+i652       8
+i653       9
+i654       10
+i655       11
+i656       12
+i657       13
+i658       14
+i659       15
+i660       16
+i661       17
+i662       18
+i663       19
+i664       20
+i665       21
+i666       22
+i667       23
+i668       24
+i669       25
+i670       26
+i671       27
+i672       28
+i673       29
+i674       30
+i675       31
+i676       32
+i677       33
+i678       34
+i679       35
+i680       36
+i681       37
+i682       38
+i683       39
+i684       40
+i685       41
+i686       42
+i687       43
+i688       44
+i689       45
+i690       46
+i691       47
+i692       48
+i693       49
+i694       50
+i695       51
+i696       52
+i697       53
+i698       54
+i699       55
+i700       56
+i701       57
+i702       58
+i703       59
+i704       60
+i705       61
+i706       62
+i707       63
+i708       64
+i709       65
+i710       66
+i711       67
+i712       68
+i713       69
+i714       70
+i715       71
+i716       72
+i717       73
+i718       74
+i719       75
+i720       76
+i721       77
+i722       78
+i723       79
+i724       80
+i725       81
+i726       82
+i727       83
+i728       84
+i729       85
+i730       86
+i731       87
+i732       88
+i733       89
+i734       90
+i735       91
+i736       92
+i737       93
+i738       94
+i739       95
+i740       96
+i741       97
+i742       98
+i743       99
+i744       100
+i745       101
+i746       102
+i747       103
+i748       104
+i749       105
+i750       106
+i751       107
+i752       108
+i753       109
+i754       110
+i755       111
+i756       112
+i757       113
+i758       114
+i759       115
+i760       116
+i761       117
+i762       118
+i763       119
+i764       120
+i765       121
+i766       122
+i767       123
+i768       124
+i769       125
+i770       126
+i771       127
+i772       128
+i773       129
+i774       130
+i775       131
+i776       132
+i777       133
+i778       134
+i779       135
+i780       136
+i781       137
+i782       138
+i783       139
+i784       140
+i785       141
+i786       142
+i787       143
+i788       144
+i789       145
+i790       146
+i791       147
+i792       148
+i793       149
+i794       150
+i795       151
+i796       152
+i797       153
+i798       154
+i799       155
+i800       156
+i801       157
+i802       158
+i803       159
+i804       160
+i805       161
+i806       162
+i807       163
+i808       164
+i809       165
+i810       166
+i811       167
+i812       168
+i813       169
+i814       170
+i815       171
+i816       172
+i817       173
+i818       174
+i819       175
+i820       176
+i821       177
+i822       178
+i823       179
+i824       180
+i825       181
+i826       182
+i827       183
+i828       184
+i829       185
+i830       186
+i831       187
+i832       188
+i833       189
+i834       190
+i835       191
+i836       192
+i837       193
+i838       194
+i839       195
+i840       196
+i841       197
+i842       198
+i843       199
+i844       200
+i845       201
+i846       202
+i847       203
+i848       204
+i849       205
+i850       206
+i851       207
+i852       208
+i853       209
+i854       210
+i855       211
+i856       212
+i857       213
+i858       214
+i859       215
+i860       216
+i861       217
+i862       218
+i863       219
+i864       220
+i865       221
+i866       222
+i867       223
+i868       224
+i869       225
+i870       226
+i871       227
+i872       228
+i873       229
+i874       230
+i875       231
+i876       232
+i877       233
+i878       234
+i879       235
+i880       236
+i881       237
+i882       238
+i883       239
+i884       240
+i885       241
+i886       242
+i887       243
+i888       244
+i889       245
+i890       246
+i891       247
+i892       248
+i893       249
+i894       250
+i895       251
+i896       252
+i897       253
+i898       254
+i899       255
+i900       256
+i901       257
+i902       258
+i903       259
+i904       260
+i905       261
+i906       262
+i908       264
+i909       265
+i910       266
+i911       267
+i912       268
+i913       269
+i914       270
+i915       271
+i916       272
+i917       273
+i918       274
+i919       275
+i920       276
+i921       277
+i922       278
+i923       279
+i924       280
+i925       281
+i926       282
+i927       283
+i928       284
+i929       285
+i930       286
+i931       287
+i932       288
+i933       289
+i934       290
+i935       291
+i936       292
+i937       293
+i938       294
+i939       295
+i940       296
+i941       297
+i942       298
+i943       299
+i944       300
+i945       301
+i946       302
+i947       303
+i948       304
+i949       305
+i950       306
+i951       307
+i952       308
+i953       309
+i954       310
+i955       311
+i956       312
+i957       313
+i958       314
+i959       315
+i960       316
+i961       317
+i962       318
+i963       319
+i964       320
+i965       321
+i966       322
+i967       323
+i968       324
+i969       325
+i970       326
+i971       327
+i972       328
+i973       329
+i974       330
+i975       331
+i976       332
+i977       333
+i978       334
+i979       335
+i980       336
+i981       337
+i982       338
+i983       339
+i984       340
+i985       341
+i986       342
+i987       343
+i988       344
+i989       345
+i990       346
+i991       347
+i992       348
+i993       349
+i994       350
+i995       351
+i996       352
+i997       353
+i998       354
+i999       355
+i1000      356
+i1001      357
+i1002      358
+i1003      359
+i1004      360
+i1005      361
+i1006      362
+i1007      363
+i1008      364
+i1009      365
+i1010      366
+i1011      367
+i1012      368
+i1013      369
+i1014      370
+i1015      371
+i1016      372
+i1017      373
+i1018      374
+i1019      375
+i1020      376
+i1021      377
+i1022      378
+i1023      379
+i1024      380
+i1025      381
+i1026      382
+i1027      383
+i1028      384
+i1029      385
+i1030      386
+i1031      387
+i1032      388
+i1033      389
+i1034      390
+i1035      391
+i1036      392
+i1037      393
+i1038      394
+i1039      395
+i1040      396
+i1041      397
+i1042      398
+i1043      399
+i1044      400
+i1045      401
+i1046      402
+i1047      403
+i1048      404
+i1049      405
+i1050      406
+i1051      407
+i1052      408
+i1053      409
+i1054      410
+i1055      411
+i1056      412
+i1057      413
+i1058      414
+i1059      415
+i1060      416
+i1061      417
+i1062      418
+i1063      419
+i1064      420
+i1065      421
+i1066      422
+i1067      423
+i1068      424
+i1069      425
+i1070      426
+i1071      427
+i1072      428
+i1073      429
+i1074      430
+i1075      431
+i1076      432
+i1077      433
+i1078      434
+i1079      435
+i1080      436
+i1081      437
+i1082      438
+i1083      439
+i1084      440
+i1085      441
+i1086      442
+i1087      443
+i1088      444
+i1089      445
+i1090      446
+i1091      447
+i1092      448
+i1093      449
+i1094      450
+i1095      451
+i1096      452
+i1097      453
+i1098      454
+i1099      455
+i1100      456
+i1101      457
+i1102      458
+i1103      459
+i1104      460
+i1105      461
+i1106      462
+i1107      463
+i1108      464
+i1109      465
+i1110      466
+i1111      467
+i1112      468
+i1113      469
+i1114      470
+i1115      471
+i1116      472
+i1117      473
+i1118      474
+i1119      475
+i1120      476
+i1121      477
+i1122      478
+i1123      479
+i1124      480
+i1125      481
+i1126      482
+i1127      483
+i1128      484
+i1129      485
+i1130      486
+i1131      487
+i1132      488
+i1133      489
+i1134      490
+i1135      491
+i1136      492
+i1137      493
+i1138      494
+i1139      495
+i1140      496
+i1141      497
+i1142      498
+i1143      499
+i1144      500
+i1145      501
+i1146      502
+i1147      503
+i1148      504
+i1149      505
+i1150      506
+i1151      507
+i1152      508
+i1153      509
+i1154      510
+i1155      511
+i1156      512
+i1157      513
+i1158      514
+i1159      515
+i1160      516
+i1161      517
+i1162      518
+i1163      519
+i1164      520
+i1165      521
+i1166      522
+i1167      523
+i1168      524
+i1169      525
+i1170      526
+i1171      527
+i1172      528
+i1173      529
+i1175      531
+i1178      534
+i1180      536
+i1181      537
+i1182      538
+i1183      539
+i1184      540
+i1185      541
+i1186      542
+i1187      543
+i1188      544
+i1189      545
+i1190      546
+i1191      547
+i1192      548
+i1193      549
+i1194      550
+i1195      551
+i1196      552
+i1197      553
+i1198      554
+i1199      555
+i1200      556
+i1201      557
+i1202      558
+i1203      559
+i1204      560
+i1205      561
+i1206      562
+i1207      563
+i1208      564
+i1209      565
+i1212      568
+i1213      569
+i1214      570
+i1215      571
+i1216      572
+i1217      573
+i1218      574
+i1219      575
+i1220      576
+i1221      577
+i1222      578
+i1223      579
+i1224      580
+i1225      581
+i1226      582
+i1227      583
+i1228      584
+i1229      585
+i1230      586
+i1231      587
+i1232      588
+i1233      589
+i1234      590
+i1235      591
+i1236      592
+i1237      593
+i1238      594
+i1239      595
+i1240      596
+i1241      597
+i1242      598
+i1243      599
+i1244      600
+i1245      601
+i1246      602
+i1247      603
+i1248      604
+i1249      605
+i1250      606
+i1251      607
+i1252      608
+i1254      610
+i1256      612
+i1257      613
+i1258      614
+i1259      615
+i1260      616
+i1263      619
+i1264      620
+i1265      621
+i1266      622
+i1267      623
+i1268      624
+i1269      625
+i1270      626
+i1271      627
+i1272      628
+i1273      629
+i1274      630
+i1275      631
+i1276      632
+i1277      633
+i1278      634
+i1279      635
+i1280      636
+i1282      638
+i1283      639
+i1284      640
+i1285      641
+i1286      642

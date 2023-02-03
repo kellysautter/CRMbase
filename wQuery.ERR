@@ -1,0 +1,19 @@
+C:\lplr\CRMbase\wQuery.VML
+C:\lplr\CRMbase\wQuery.VML(12) : error 542: The Registered view referenced was not found. Last Token sHost
+C:\lplr\CRMbase\wQuery.VML(328) : error 539: An operation was referenced that could not be located Last Token GetTextConv
+C:\lplr\CRMbase\wQuery.VML(328) : error 529: This combination of data types is invalid in the expression. Last Token ViewToWindow
+C:\lplr\CRMbase\wQuery.VML(328) : error 554: Invalid Function Definition
+C:\lplr\CRMbase\wQuery.VML(1546) : error 539: An operation was referenced that could not be located Last Token GetMessageConv
+C:\lplr\CRMbase\wQuery.VML(2761) : error 531: The LOD given could not be loaded. Last Token qProspct
+C:\lplr\CRMbase\wQuery.VML(2788) : error 510: The entity name referenced was not defined to this object type. Last Token AdministrativeDivision
+C:\lplr\CRMbase\wQuery.VML(2788) : error 510: The entity name referenced was not defined to this object type. Last Token CurrentAdministrativeDivision
+C:\lplr\CRMbase\wQuery.VML(3420) : error 510: The entity name referenced was not defined to this object type. Last Token ActivateID_List
+C:\lplr\CRMbase\wQuery.VML(3787) : error 510: The entity name referenced was not defined to this object type. Last Token SecuritySet
+C:\lplr\CRMbase\wQuery.VML(3928) : error 517: No object type given for the view declaration. Last Token mStuSAPA
+C:\lplr\CRMbase\wQuery.VML(3931) : error 517: No object type given for the view declaration. Last Token mStuAcdS
+C:\lplr\CRMbase\wQuery.VML(4141) : error 510: The entity name referenced was not defined to this object type. Last Token ContactListItemStudentPerson
+C:\lplr\CRMbase\wQuery.VML(4142) : error 507: Attempting to reference a view that was not declared above. Last Token mConListX
+C:\lplr\CRMbase\wQuery.VML(4143) : error 510: The entity name referenced was not defined to this object type. Last Token ContactListItemStudent
+C:\lplr\CRMbase\wQuery.VML(4292) : error 541: The attribute qualifier is undefined or cannot be located. Last Token wXferO.ActivateID_List
+C:\lplr\CRMbase\wQuery.VML(4330) : error 517: No object type given for the view declaration. Last Token mCntHist
+C:\lplr\CRMbase\wQuery.VML(5066) : error 517: No object type given for the view declaration. Last Token zqLangLST

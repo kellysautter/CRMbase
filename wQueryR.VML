@@ -1,0 +1,3437 @@
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_QueryReportNew
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_QueryReportNew( VIEW ViewToWindow )
+
+   VIEW mUser   REGISTERED AS mUser
+   VIEW mReport BASED ON LOD  mReport
+   
+   // Go to create a new Query Report.
+   
+   // A Query Report must have a Type of QOE_SUMM (Extension Summary) to be used in a Dashboard.
+   // Also, the Query must have a Query Exention defined for it as well.
+   
+   GET VIEW mReport NAMED "mReport"
+   IF RESULT >= 0
+      DropObjectInstance( mReport )
+   END
+
+   ACTIVATE  mReport EMPTY
+   CREATE ENTITY  mReport.Report
+   NAME VIEW mReport "mReport"
+   INCLUDE mReport.ReportCreatingUser FROM mUser.User 
+   mReport.Report.Type = "QOE_SUMM"     // Set Report Type to "Extension Summary" for dashboard.
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_QueryReportUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_QueryReportUpdate( VIEW ViewToWindow )
+
+   VIEW mReportLST REGISTERED AS mReportLST
+   VIEW mReport    BASED ON LOD  mReport
+   SHORT nRC
+
+   ACTIVATE mReport SingleForUpdate WHERE mReport.Report.ID = mReportLST.Report.ID
+   NAME VIEW mReport "mReport"
+   
+   // Expand the Query blob to create selection criteria.
+   ActivateQueryForReport( ViewToWindow )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DELETE_QueryReport
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_QueryReport( VIEW ViewToWindow )
+
+   VIEW mReportLST REGISTERED AS mReportLST
+   VIEW mReport    BASED ON LOD  mReport
+   SHORT nRC
+
+   ACTIVATE mReport SingleForUpdate WHERE mReport.Report.ID = mReportLST.Report.ID
+   DELETE ENTITY mReport.Report
+   COMMIT mReport
+   DropObjectInstance( mReport )
+   DropEntity( mReportLST, "Report", zREPOS_NONE )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CLOSE_QueryReportList
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CLOSE_QueryReportList( VIEW ViewToWindow )
+
+   VIEW mReportLST REGISTERED AS mReportLST
+   
+   DropObjectInstance( mReportLST )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CANCEL_QueryReportUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_QueryReportUpdate( VIEW ViewToWindow )
+
+   VIEW mReport REGISTERED AS mReport
+   VIEW zqFrame BASED ON LOD  zqFrame
+   
+   // Simply drop objects.
+   DropObjectInstance( mReport )
+   GET VIEW zqFrame NAMED "zqFrame"
+   IF RESULT >= 0
+      DropObjectInstance( zqFrame )
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SAVE_RETURN_QueryReport
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SAVE_RETURN_QueryReport( VIEW ViewToWindow )
+
+   VIEW mReport    REGISTERED AS mReport
+   VIEW mReportLST REGISTERED AS mReportLST
+   VIEW zqFrame    BASED ON LOD  zqFrame
+   STRING ( 1 ) sz
+   
+   // Save the report after modifying zqFrame General Parameters from the SelectionCriteria in the Report and saving it in the blob for the Report.
+   
+   IF mReport.StoredQuery DOES NOT EXIST
+      MessageSend( ViewToWindow, "QueryReq", "Save Report", "Query is required.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Validate the Report Type against the Query.
+   // If Report Type is Graph, then the Query must have a Graph function defined.
+   IF mReport.Report.Type = "GPH"
+      GET VIEW zqFrame NAMED "zqFrame"
+      IF zqFrame.GraphDefinition DOES NOT EXIST
+         MessageSend( ViewToWindow, "", "Save Report", 
+                      "A Report Type of 'Graph' is only valid if Graph information is specified.", 
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN 2
+      END
+   END
+   
+   // Validate the Object and Report Type against Document, if document exists.
+   IF mReport.Document EXISTS
+      IF mReport.Document.ObjectName != mReport.StoredQuery.ObjectName 
+         // The object for a Query and Document must be the same.
+         MessageSend( ViewToWindow, "", "Save Report", "The Object Name must be the same for both Query and Document.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN 2
+      END
+      
+      // The Report Type must match the Document Type.
+      IF mReport.Report.Type = "ODT_T"
+         IF mReport.Document.DocType != "O"
+            MessageSend( ViewToWindow, "", "Save Report", 
+                         "The Report Type does not match the Document Type.", 
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            RETURN 2
+         END
+      ELSE
+      IF mReport.Report.Type = "DOCX_T"
+         IF mReport.Document.DocType != "D"
+            MessageSend( ViewToWindow, "", "Save Report", 
+                         "The Report Type does not match the Document Type.", 
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            RETURN 2
+         END
+      END 
+      END
+   END
+   
+   // If the Report is for an Extension Summary, then the Query must have an Extension defined.
+   IF mReport.Report.Type = "QOE_SUMM"
+      GET VIEW zqFrame NAMED "zqFrame"
+      IF zqFrame.SelectedQueryObjectExtension DOES NOT EXIST 
+         MessageSend( ViewToWindow, "", "Save Report", 
+                      "If the Report Type is 'Object Extension', the Query must have an Object Extension defined.", 
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN 2
+      END
+   END
+   
+   // Modify the General Parameters from the Selection Criteria and save the object in the Report blob.
+   GET VIEW zqFrame NAMED "zqFrame"
+   IF RESULT >= 0 
+      IF zqFrame.zqFrame.ReportSearchCriteriaDescription != zqFrame.zqFrame.ReportSearchCriteriaDescription 
+         zqFrame.zqFrame.ReportSearchCriteriaDescription = zqFrame.zqFrame.ReportSearchCriteriaDescription
+      END
+      FOR EACH zqFrame.SelectionCriteria 
+         SET CURSOR FIRST zqFrame.GeneralParameter WHERE zqFrame.GeneralParameter.wBooleanConditionName = zqFrame.SelectionCriteria.BooleanCriteriaName 
+         zqFrame.GeneralParameter.ReportInterfaceFlag =  zqFrame.SelectionCriteria.ReportInterfaceFlag
+      END
+      SetBlobFromOI( mReport, "StoredQuery", "QueryBlob", zqFrame, 0 )
+      
+      SET CURSOR FIRST zqFrame.SelectionCriteria WHERE zqFrame.SelectionCriteria.ReportInterfaceFlag = "Y"
+      IF RESULT >= zCURSOR_SET
+         mReport.Report.UpdateableQueryFlag = "Y"
+      ELSE
+         mReport.Report.UpdateableQueryFlag = ""
+      END
+   END
+   mReport.Report.PackagedQueryFlag = "Y"
+      
+   COMMIT mReport
+   DropObjectInstance( mReport )
+   DropObjectInstance( zqFrame )
+
+   // Reactivate the list of Query Reports.
+   DropObjectInstance( mReportLST )
+   ACTIVATE mReportLST Multiple WHERE mReportLST.StoredQuery EXISTS
+   NAME VIEW mReportLST "mReportLST" 
+   OrderEntityForView( mReportLST, "Report", "ReportGroup.Name A" )
+   SET CURSOR FIRST mReportLST.Report  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ActivateQueryForReport
+**    
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ActivateQueryForReport( VIEW ViewToWindow )
+   VIEW mReport  REGISTERED AS mReport
+   VIEW zqFrame  BASED ON LOD  zqFrame
+   VIEW vLOD
+   VIEW qBaseR
+   STRING ( 50 )  szNamedQueryView
+
+   // Create the Query Selection Criteria entries.
+   
+   // Make sure no old zqFrame is hanging around if there is no StoredQuery entry.
+   GET VIEW zqFrame NAMED "zqFrame"
+   IF RESULT >= 0
+      DropObjectInstance( zqFrame ) 
+   END
+   
+   IF mReport.StoredQuery EXISTS
+      // Create the Query Selection Criteria entries.
+      // StoredQuery entry.
+      szNamedQueryView = "zqQuery_" + mReport.StoredQuery.Name
+      SetOI_FromBlob( zqFrame, "zqFrame", ViewToWindow,
+                      mReport, "StoredQuery", "QueryBlob", zSINGLE )
+      NAME VIEW zqFrame "zqFrame"
+      FOR EACH zqFrame.SelectionCriteria 
+         DELETE ENTITY zqFrame.SelectionCriteria NONE 
+      END
+      FOR EACH zqFrame.GeneralParameter WHERE zqFrame.GeneralParameter.SearchType != ""
+         // Don't copy search criteria which are just to eliminate entities for performance sake.
+         IF zqFrame.GeneralParameter.AttributeName != "ID" AND zqFrame.GeneralParameter.Value != "0"
+            CREATE ENTITY zqFrame.SelectionCriteria 
+            SetMatchingAttributesByName( zqFrame, "SelectionCriteria",
+                                         zqFrame, "GeneralParameter", zSET_ALL )
+            // ExternalValue may not be set, so we want ExternalValue to be just Value.
+            IF zqFrame.SelectionCriteria.ExternalValue = ""
+               zqFrame.SelectionCriteria.ExternalValue = zqFrame.SelectionCriteria.Value 
+            END
+            zqFrame.SelectionCriteria.BooleanCriteriaName     = zqFrame.GeneralParameter.wBooleanConditionName 
+            zqFrame.SelectionCriteria.SubsectionQualification = zqFrame.GeneralParameter.dSubSelectQualification 
+         END
+      END
+      FOR EACH zqFrame.GeneralParameter WHERE zqFrame.GeneralParameter.ListDisplayFlag = "Y"
+         CREATE ENTITY mReport.DisplayGeneralParameter  
+         SetMatchingAttributesByName( mReport, "DisplayGeneralParameter", zqFrame, "GeneralParameter", zSET_ALL )
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildReportUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildReportUpdate( VIEW ViewToWindow )
+
+   VIEW sAppMgr   REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv
+   STRING ( 20 ) szCriteriaName
+   
+   GetTextConv(szLangConv,ViewToWindow,"Report Update","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildReportRunList
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildReportRunList( VIEW ViewToWindow )
+
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW sAppMgr     REGISTERED AS sAppMgr 
+   VIEW mQryObj     BASED ON LOD  mQryObj
+   STRING ( 200 ) szFileName
+   STRING ( 1 )   szFirstCharacter
+   STRING ( 100 ) szLangConv
+   
+   // Make sure QueryValues exists.
+   IF wXferO.QueryValues DOES NOT EXIST
+      BuildQueryObjectList( mQryObj, ViewToWindow, "" )
+   END
+   
+   IF sAppMgr.SplitWindow DOES NOT EXIST 
+      CREATE ENTITY sAppMgr.SplitWindow 
+   END
+   GetTextConv(szLangConv,ViewToWindow,"Report Configuration","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildUserReportRunList
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildUserReportRunList( VIEW ViewToWindow )
+
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW sAppMgr     REGISTERED AS sAppMgr 
+   VIEW mUser       REGISTERED AS mUser
+   VIEW mReportLST  BASED ON LOD  mReport
+   VIEW mQryObj     BASED ON LOD  mQryObj
+   STRING ( 200 ) szFileName
+   STRING ( 1 )   szFirstCharacter
+   STRING ( 100 ) szLangConv
+   
+   // Make sure QueryValues exists.
+   IF wXferO.QueryValues DOES NOT EXIST
+      BuildQueryObjectList( mQryObj, ViewToWindow, "" )
+   END
+   
+   GetTextConv(szLangConv,ViewToWindow,"School Specific Reports","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+   
+   // Activate list of School Specific Reports assigned to the current User/User Group.
+   // We will activate those who are assigned to the User or assigned to a UserGroup that is assigned to that User.
+   // If Named View, mReportPQLST exists, the list is already in memory.
+   GET VIEW mReportLST NAMED "mReportPQLST"
+   DropView( mReportLST )
+   
+   // Since this is different than the school specific (for user), rebuild the list.
+   //IF RESULT < 0
+   
+      ACTIVATE mReportLST Multiple WHERE mReportLST.AssignedToUserGroupUser.ID = mUser.User.ID 
+                                      OR mReportLST.AssignedToUser.ID          = mUser.User.ID 
+      NAME VIEW mReportLST "mReportLST"
+      NAME VIEW mReportLST "mReportPQLST"
+      OrderEntityForView( mReportLST, "Report", "Name A" )
+      SET CURSOR FIRST mReportLST.Report 
+   //END
+ 
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildReportMaintList
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildReportMaintList( VIEW ViewToWindow )
+
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW sAppMgr     REGISTERED AS sAppMgr 
+   STRING ( 200 ) szFileName
+   STRING ( 1 )   szFirstCharacter
+   STRING ( 100 ) szLangConv
+   
+   GetTextConv(szLangConv,ViewToWindow,"School Specific Reports","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ACTIVATE_QueryListForQueryView
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ACTIVATE_QueryListForQueryView( VIEW ViewToWindow )
+
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW zqSQueryLST BASED ON LOD  zqSQuery
+   
+   // Make sure a non-blank entry is selected.
+   IF wXferO.QueryObject.ExternalName = ""
+      MessageSend( ViewToWindow, "ObjectReq", "", "Object is required.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   // Activate the Query list and indicate that have been listed.
+   wXferO.QueryValues.SelectQueryListAllFlag = "Y"
+   wXferO.Root.CurrentFunction = "GenerateResultSet"
+   
+   GET VIEW zqSQueryLST NAMED "zqSQueryLST"
+   IF RESULT >= 0
+      DropObjectInstance( zqSQueryLST )
+   END
+   
+   // Activate without User selection.
+   ACTIVATE zqSQueryLST Multiple
+            WHERE zqSQueryLST.StoredQuery.ObjectName = wXferO.QueryObject.ObjectName
+              AND zqSQueryLST.StoredQuery.Type = "S"
+   NAME VIEW zqSQueryLST "zqSQueryLST"
+   
+   FOR EACH zqSQueryLST.StoredQuery 
+      IF zqSQueryLST.StoredQueryCategory EXISTS
+         zqSQueryLST.StoredQuery.wCategoryName = zqSQueryLST.StoredQueryCategory.Name 
+      END
+   END
+   OrderEntityForView( zqSQueryLST, "StoredQuery", "wCategoryName A Name A" )
+   SET CURSOR FIRST zqSQueryLST.StoredQuery 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_QueryNewForReport
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_QueryNewForReport( VIEW ViewToWindow )
+
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW zqFrame     BASED ON LOD  zqFrame
+   VIEW mQryObExLST BASED ON LOD  mQryObEx
+   VIEW QueryView
+   INTEGER nRC
+   
+   // This operation is very much the same as wQuery.GOTO_QueryNew.
+
+   // Special Type, update the stored query created in SetUpForNewQuery.
+   IF wXferO.QueryValues.QueryType = ""
+      wXferO.QueryValues.QueryType = "S" 
+   END
+   nRC = SetUpForNewQuery( zqFrame, ViewToWindow )
+   IF nRC = 2
+      RETURN 2
+   END
+   
+   // Initialize data for QueryUpdate.
+   GET VIEW zqFrame NAMED "zqFrame"
+   GET VIEW QueryView NAMED "QueryView"
+   InitQueryUpdate( zqFrame, QueryView )
+   //InitializeQueryUpdate( ViewToWindow )
+   
+   // Remove all General Parameter entries to begin with.
+   GET VIEW zqFrame NAMED "zqFrame"
+   FOR EACH zqFrame.GeneralParameter 
+      DELETE ENTITY zqFrame.GeneralParameter NONE 
+   END
+   
+   // Activate the list of Query Object Extensions for the selected Object.
+   ACTIVATE mQryObExLST Multiple WHERE mQryObExLST.QueryObjectExtension.ObjectName = wXferO.QueryObject.ObjectName 
+   NAME VIEW mQryObExLST "mQryObExLST"
+   OrderEntityForView( mQryObExLST, "QueryObjectExtension", "ExtensionName A" )
+   SET CURSOR FIRST mQryObExLST.QueryObjectExtension 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SELECT_QueryForReport
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SELECT_QueryForReport( VIEW ViewToWindow )
+
+   VIEW zqSQueryLST REGISTERED AS zqSQueryLST
+   VIEW mReport     REGISTERED AS mReport 
+   VIEW mUser       REGISTERED AS mUser 
+   VIEW zqFrame     BASED ON LOD  zqFrame
+   
+   // Include the selected StoredQuery in the target object named mReport from the  source object.
+   GET VIEW mReport NAMED "mReport"
+   IF mReport.StoredQuery EXISTS
+      DELETE ENTITY mReport.StoredQuery
+   END
+   CREATE ENTITY mReport.StoredQuery
+   SetMatchingAttributesByName( mReport,     "StoredQuery",
+                                zqSQueryLST, "StoredQuery", zSET_NULL )
+   mReport.StoredQuery.Type = "M"
+   INCLUDE mReport.CreatingUser FROM mUser.User 
+   IF mReport.OriginatingStoredQuery EXISTS
+      EXCLUDE mReport.OriginatingStoredQuery
+   END
+   INCLUDE mReport.OriginatingStoredQuery FROM zqSQueryLST.StoredQuery 
+   
+   // Activate the zqFrame object for the Stored Query.
+   ActivateQueryForReport( ViewToWindow )
+   
+   // Copy display options to Query Report.
+   FOR EACH mReport.DisplayGeneralParameter 
+      DELETE ENTITY mReport.DisplayGeneralParameter NONE 
+   END
+   GET VIEW zqFrame NAMED "zqFrame"
+   FOR EACH zqFrame.GeneralParameter WHERE zqFrame.GeneralParameter.ListDisplayFlag = "Y"
+      CREATE ENTITY mReport.DisplayGeneralParameter  
+      SetMatchingAttributesByName( mReport, "DisplayGeneralParameter", zqFrame, "GeneralParameter", zSET_ALL )
+   END
+   
+   DropObjectInstance( zqSQueryLST )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_ToSelectQuery
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_ToSelectQuery( VIEW ViewToWindow )
+
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW zqSQueryLST BASED ON LOD  zqSQuery
+   VIEW mQryObj     BASED ON LOD  mQryObj
+   
+   // Make sure selected Query object is pointing to first in list.
+   SET CURSOR FIRST wXferO.QueryObject
+   IF RESULT < zCURSOR_SET
+      BuildQueryObjectList( mQryObj, ViewToWindow, "" )
+      SET CURSOR FIRST wXferO.QueryObject
+   END
+   
+   // Activate the list of queries for the first Query object.
+   ACTIVATE_QueryListForQueryView( ViewToWindow )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MainMenu
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MainMenu( VIEW ViewToWindow )
+
+   VIEW KZXMLPGO
+
+   // In going to the Main Menu, we need to clear the return path of pages that got us here. Otherwise, they build up.
+   GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+   FOR EACH KZXMLPGO.PagePath
+      DELETE ENTITY KZXMLPGO.PagePath NONE 
+   END 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildUserAssignments
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildUserAssignments( VIEW ViewToWindow )
+
+   VIEW wXferO    REGISTERED AS wXferO
+   VIEW sHost     REGISTERED AS sHost
+   VIEW sAppMgr   REGISTERED AS sAppMgr
+   VIEW vTZCMLPLO
+   STRING ( 200 ) szFileName
+   STRING ( 1 )   szFirstCharacter
+   INTEGER        nRC
+   STRING ( 100 ) szLangConv
+   
+   GetTextConv(szLangConv,ViewToWindow,"Permissions","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: REMOVE_UserGroupAssignment
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+REMOVE_UserGroupAssignment( VIEW ViewToWindow )
+
+   VIEW mReport REGISTERED AS mReport
+   
+   // Simply exclude the selected Assigned Group.
+   EXCLUDE mReport.AssignedToUserGroup  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ADD_UserGroupToPackageQuery
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ADD_UserGroupToPackageQuery( VIEW ViewToWindow )
+
+   VIEW mReport     REGISTERED AS mReport
+   VIEW mUGroupsLST REGISTERED AS mUGroupsLST
+   
+   // Include the selected User Group in the School Specific Report if it isn't already there and sort the entries.
+   SET CURSOR FIRST mReport.AssignedToUserGroup WHERE mReport.AssignedToUserGroup.GroupName = mUGroupsLST.UserGroup.GroupName 
+   IF RESULT < zCURSOR_SET
+      INCLUDE mReport.AssignedToUserGroup  FROM mUGroupsLST.UserGroup 
+      OrderEntityForView( mReport, "AssignedToUserGroup", "GroupName A" )
+      SET CURSOR FIRST mReport.AssignedToUserGroup  
+   END 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: REMOVE_UserAssignment
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+REMOVE_UserAssignment( VIEW ViewToWindow )
+
+   VIEW mReport REGISTERED AS mReport
+   
+   // Simply exclude the selected Assigned Group.
+   EXCLUDE mReport.AssignedToUser 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ADD_UserToPackageQuery
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ADD_UserToPackageQuery( VIEW ViewToWindow )
+
+   VIEW mReport REGISTERED AS mReport
+   VIEW lUser   REGISTERED AS lUser
+   
+   // Include the selected User Group in the School Specific Report if it isn't already there and sort the entries.
+   SET CURSOR FIRST mReport.AssignedToUser WHERE mReport.AssignedToUser.ID = lUser.User.ID
+   IF RESULT < zCURSOR_SET
+      INCLUDE mReport.AssignedToUser FROM lUser.User
+      OrderEntityForView( mReport, "AssignedToUser", "UserName A" )
+      SET CURSOR FIRST mReport.AssignedToUser  
+   END 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FIND_UserListByFilter
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+FIND_UserListByFilter( VIEW ViewToWindow )
+
+   VIEW wXferO REGISTERED AS wXferO
+   VIEW lUser  BASED ON LOD  lUser
+   STRING ( 50 ) szSearchName
+   
+   // Activate User list by partial User Last Name.
+   GET VIEW lUser NAMED "lUser"
+   IF RESULT >= 0
+      DropObjectInstance( lUser )
+   END
+   szSearchName = "%" + wXferO.Root.SearchName + "%"
+   ACTIVATE lUser Multiple WHERE lUser.Person.LastName LIKE szSearchName
+   NAME VIEW lUser "lUser"
+   OrderEntityForView( lUser, "User", "UserName A" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: REMOVE_PackagedQueryFromGroup
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+REMOVE_PackagedQueryFromGroup( VIEW ViewToWindow )
+
+   VIEW mUGroupsLST REGISTERED AS mUGroupsLST
+   VIEW mUGroups    BASED ON LOD  mUGroups
+   
+   // Remove the School Specific Report from the Group and save it.
+   ACTIVATE mUGroups WHERE mUGroups.UserGroup.ID = mUGroupsLST.UserGroup.ID 
+   NAME VIEW mUGroups "mUGroupsDelete"
+   SET CURSOR FIRST mUGroups.PackageQuery WHERE mUGroups.PackageQuery.ID = mUGroupsLST.PackageQuery.ID 
+   IF RESULT >= zCURSOR_SET
+      EXCLUDE mUGroups.PackageQuery 
+      COMMIT mUGroups 
+      DropEntity( mUGroupsLST, "PackageQuery", zREPOS_NONE )
+   END 
+   DropObjectInstance( mUGroups )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ADD_PackageQueryToUserGroup
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ADD_PackageQueryToUserGroup( VIEW ViewToWindow )
+
+   VIEW mReportLST  REGISTERED AS mReportLST
+   VIEW mUGroupsLST REGISTERED AS mUGroupsLST
+   VIEW mUGroups    BASED ON LOD  mUGroups
+   
+   // Add the selected School Specific Report from mReportLST to the current User Group and relink the User Group entry in the list.
+   ACTIVATE mUGroups WHERE mUGroups.UserGroup.ID = mUGroupsLST.UserGroup.ID 
+   NAME VIEW mUGroups "mUGroupsDelete"
+   SET CURSOR FIRST mUGroups.PackageQuery WHERE mUGroups.PackageQuery.ID = mReportLST.Report.ID  
+   IF RESULT < zCURSOR_SET
+      INCLUDE mUGroups.PackageQuery FROM mReportLST.Report 
+      OrderEntityForView( mUGroups, "PackageQuery", "Name A" )
+      SET CURSOR FIRST mUGroups.PackageQuery  
+      COMMIT mUGroups 
+      EXCLUDE mUGroupsLST.UserGroup NONE
+      INCLUDE mUGroupsLST.UserGroup FROM mUGroups.UserGroup  
+      //RelinkInstanceToInstance( mUGroupsLST, "UserGroup", mUGroups, "UserGroup" )
+   END 
+   DropObjectInstance( mUGroups )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_RunPackagedQuery
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_RunPackagedQuery( VIEW ViewToWindow )
+
+   VIEW mReportLST  REGISTERED AS mReportLST
+   VIEW zqSQuery    BASED ON LOD  zqSQuery
+   SHORT   nRC
+   
+   // Set up objects for running the Packaged Query (ie., Report)
+   nRC = SetUpPackagedQueryRun( zqSQuery, mReportLST )
+   RETURN nRC
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RUN_PackagedQuery
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+RUN_PackagedQuery( VIEW ViewToWindow )
+
+   VIEW zqFrame    REGISTERED AS zqFrame
+   VIEW mReportLST REGISTERED AS mReportLST
+   VIEW zqObjExt   BASED ON LOD  zqObjExt
+   VIEW QueryView
+   VIEW vResultSet
+   VIEW KZXMLPGO
+   INTEGER nRC
+
+   // Run the Query using the zqFrame and QueryView objects.
+   // This uses some of the same code as the zqSQuery.ExecQueryForGenerate operation.
+   
+   GET VIEW QueryView NAMED "QueryView"
+   IF RESULT < 0
+      MessageSend( ViewToWindow, "", "Update Query",
+                   "Query View doesn't exist.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Make sure the ParentEntity path matches the new LOD.
+   FormatDisplay( zqFrame, QueryView )
+
+   // Set up ordering information as requested.
+   SetUpOrderingInfo( zqFrame )
+
+   // Create the Result Set.
+   nRC = ActivateQueryObject( zqFrame, vResultSet )
+   IF nRC < 0
+      // An error has occurred during processing.
+      RETURN nRC
+   END
+   NAME VIEW vResultSet "ResultSet"
+   
+   // Where we go next depends upon the Package Query Type (ie., Report.Type)
+   
+   // Format Result set as Query Object Extension.
+   IF mReportLST.Report.Type = "QOE_SUMM"
+      
+      // Set up transfer to Extension Summary page.
+      BuildDisplayValues( zqObjExt, zqFrame, vResultSet )
+      GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+      CREATE ENTITY KZXMLPGO.NextDialogWindow
+      KZXMLPGO.NextDialogWindow.DialogName = "wQueryR" 
+      KZXMLPGO.NextDialogWindow.WindowName = "ExportDisplayQOE_Summary"
+      RETURN 0
+   END
+   
+   // Format Result set as Graphics and go to Graphics Display.
+   IF mReportLST.Report.Type = "GPH"
+      // Format Result set as Graphics
+      FormatQueryForChart( zqFrame, vResultSet, "Chart1" ) 
+      DropObjectInstance( zqFrame )
+      DropObjectInstance( vResultSet )
+      
+      // Set up transfer to Graphics page.
+      GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+      CREATE ENTITY KZXMLPGO.NextDialogWindow
+      KZXMLPGO.NextDialogWindow.DialogName = "wQuery" 
+      KZXMLPGO.NextDialogWindow.WindowName = "QueryGraphsDisplay"
+      RETURN 0
+   END
+   
+   // Format Result set as CSV Document and go to Export page..
+   IF mReportLST.Report.Type = "CSV_S" OR mReportLST.Report.Type = "CSV_F"
+      // Create display list of roots.
+      FormatResultSetList( zqFrame, vResultSet )
+   
+      // Set up transfer to Export CSV Document page.
+      GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+      CREATE ENTITY KZXMLPGO.NextDialogWindow
+      KZXMLPGO.NextDialogWindow.DialogName = "wQueryR" 
+      KZXMLPGO.NextDialogWindow.WindowName = "ExportCSV_QueryResult"
+      RETURN 0
+   END
+   
+   // Format Result set as DOCX or ODT Document, which goes to Print page..
+   IF mReportLST.Report.Type = "DOCX_T" OR mReportLST.Report.Type = "ODT_T"
+      // Format the display entries for all root entities returned.
+      FormatResultSetList( zqFrame, vResultSet )
+   
+      // Format Result set as HTML Document
+      // Set up transfer to Graphics page.
+      GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+      CREATE ENTITY KZXMLPGO.NextDialogWindow
+      KZXMLPGO.NextDialogWindow.DialogName = "wQueryR" 
+      KZXMLPGO.NextDialogWindow.WindowName = "PrintODT_QueryResult"
+      RETURN 0
+   END
+   
+   // Format Result set as HTML Document, which currently stays on current page.
+   IF mReportLST.Report.Type = "HTML_T"
+      // Format Result set as HTML Document
+      // Set up transfer to Graphics page.
+      GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+      CREATE ENTITY KZXMLPGO.NextDialogWindow
+      KZXMLPGO.NextDialogWindow.DialogName = "wQueryR" 
+      KZXMLPGO.NextDialogWindow.WindowName = "ExportHTML_QueryResult"
+      RETURN 0
+   END
+   
+   // If we haven't processed a valid type yet, give error message.
+   MessageSend( ViewToWindow, "", "Update Query",
+                "The selected is not yet supported.",
+                zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+   RETURN 2
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildDashboardEntryDetail
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildDashboardEntryDetail( VIEW ViewToWindow )
+
+   VIEW sAppMgr   REGISTERED AS sAppMgr
+   VIEW zqFrame   REGISTERED AS zqFrame
+   STRING ( 100 ) szLangConv
+   STRING ( 20 ) szCriteriaName
+   
+   GetTextConv(szLangConv,ViewToWindow,"Dashboard Entry Detail","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildReportRun
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildReportRun( VIEW ViewToWindow )
+
+   VIEW sAppMgr   REGISTERED AS sAppMgr
+   VIEW zqFrame   REGISTERED AS zqFrame
+   STRING ( 100 ) szLangConv
+   STRING ( 20 ) szCriteriaName
+   
+   GetTextConv(szLangConv,ViewToWindow,"Run Packaged Query","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+   // In case we are returning from updating a Selection Criteria entry, update the corresponding Selection Criteria subobject from
+   // the current General Parameter entry.
+   SET CURSOR FIRST zqFrame.GeneralParameter 
+              WHERE zqFrame.GeneralParameter.wBooleanConditionName = zqFrame.SelectionCriteria.BooleanCriteriaName 
+   zqFrame.SelectionCriteria.SearchType              = zqFrame.GeneralParameter.SearchType 
+   zqFrame.SelectionCriteria.Value                   = zqFrame.GeneralParameter.Value 
+   zqFrame.SelectionCriteria.ScopingEntityName       = zqFrame.GeneralParameter.ScopingEntityName 
+   zqFrame.SelectionCriteria.SubsectionQualification = zqFrame.GeneralParameter.dSubSelectQualification  
+   FOR EACH zqFrame.SelectionCriteriaSubParameter 
+      DELETE ENTITY zqFrame.SelectionCriteriaSubParameter NONE 
+   END
+   FOR EACH zqFrame.GeneralSubParameter 
+      CREATE ENTITY zqFrame.SelectionCriteriaSubParameter
+      SetMatchingAttributesByName( zqFrame, "SelectionCriteriaSubParameter", zqFrame, "GeneralSubParameter", zSET_ALL )
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdateGeneralParameter
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdateGeneralParameter( VIEW ViewToWindow )
+
+   VIEW zqFrame  REGISTERED AS zqFrame
+   VIEW QueryView
+   VIEW KZXMLPGO
+   STRING ( 20 ) szDateValueIn
+   STRING ( 20 ) szDateValueOut
+   INTEGER Count
+   INTEGER nRC
+   
+   // THIS IS VERY SIMILAR TO THE OPERATION OF THE SAME NAME IN wQuery.
+   
+   // Position on same GeneralParameter as the selected and make sure GeneralParameter values match the SelectionCriteria values.
+   SET CURSOR FIRST zqFrame.GeneralParameter 
+              WHERE zqFrame.GeneralParameter.wBooleanConditionName = zqFrame.SelectionCriteria.BooleanCriteriaName 
+   zqFrame.GeneralParameter.SearchType = zqFrame.SelectionCriteria.SearchType 
+   zqFrame.GeneralParameter.Value      = zqFrame.SelectionCriteria.Value 
+   
+   // If the GeneralParameter.SearchType is Sub Select, then expand the GeneralSubParameter entries to 20.
+   IF zqFrame.GeneralParameter.SearchType = "subselect"
+      Count = 0
+      // Make sure there are at least 20 subparms.
+      FOR EACH zqFrame.GeneralSubParameter 
+         Count = Count + 1
+      END
+      LOOP WHILE Count < 20
+         CREATE ENTITY zqFrame.GeneralSubParameter 
+         Count = Count + 1 
+      END
+      SET CURSOR FIRST zqFrame.GeneralSubParameter
+   END
+   
+   // Go to appropriate General Parameter update page based on type of parameter.
+   // Also set up subparameter values as necessary
+      
+   IF zqFrame.GeneralParameter.DataType = "T"
+      // The Parameter is a date, so copy Query Values to work values and go to date update page.
+      szDateValueIn = zqFrame.GeneralParameter.Value 
+      IF szDateValueIn = "" 
+         zqFrame.GeneralParameter.wValueUpdateDate = ""
+      ELSE
+         nRC = ValidateDateString( szDateValueIn, "YYYY-MM-DD" )
+         IF nRC = 0
+            szDateValueOut = szDateValueIn[1:4] + szDateValueIn[6:2] + szDateValueIn[9:2]
+            zqFrame.GeneralParameter.wValueUpdateDate = szDateValueOut
+         ELSE
+            MessageSend( ViewToWindow, "", "Update Query",
+                         "The date value specified is not a valid date.",
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            RETURN 2
+         END
+      END
+      FOR EACH zqFrame.GeneralSubParameter 
+         szDateValueIn = zqFrame.GeneralSubParameter.Value 
+         IF szDateValueIn = "" 
+            zqFrame.GeneralSubParameter.wValueUpdateDate = ""
+         ELSE
+            nRC = ValidateDateString( szDateValueIn, "YYYY-MM-DD" )
+            IF nRC = 0 
+               szDateValueOut = szDateValueIn[1:4] + szDateValueIn[6:2] + szDateValueIn[9:2]
+               zqFrame.GeneralSubParameter.wValueUpdateDate = szDateValueOut
+            ELSE
+               zqFrame.GeneralSubParameter.wValueUpdateDate = ""
+            END
+         END
+      END
+      
+      // Set up transfer to next page.
+      GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+      CREATE ENTITY KZXMLPGO.NextDialogWindow
+      KZXMLPGO.NextDialogWindow.DialogName = "wQuery" 
+      KZXMLPGO.NextDialogWindow.WindowName = "ParameterUpdateCalendar"
+   ELSE
+      // If the parameter is not a date, we need to check the Domain to see if it's a table.
+      GET VIEW QueryView NAMED "QueryView"
+      SET CURSOR FIRST QueryView.LOD     // Make sure the root is visible.
+      SET CURSOR FIRST QueryView.LOD_Entity WHERE QueryView.LOD_Entity.Name = zqFrame.GeneralParameter.EntityName 
+      SET CURSOR FIRST QueryView.ER_Attribute WITHIN QueryView.LOD_Entity WHERE QueryView.ER_Attribute.Name = zqFrame.GeneralParameter.AttributeName 
+      
+      // Set up transfer to next page.
+      GET VIEW KZXMLPGO NAMED "KZXMLPGO"
+      CREATE ENTITY KZXMLPGO.NextDialogWindow
+      IF QueryView.Domain.DomainType = "T"
+         // The parameter is a table, so set up combo box table and  go to table update page.
+         // Also, if this is a subselect, set up work values in sub parameter entries.
+         zqFrame.GeneralParameter.wValueUpdateTable = zqFrame.GeneralParameter.Value 
+         FOR EACH zqFrame.GeneralSubParameter 
+            zqFrame.GeneralSubParameter.wValueUpdateTable = zqFrame.GeneralSubParameter.Value 
+         END
+         BuildValueComboBoxTable( ViewToWindow )
+         KZXMLPGO.NextDialogWindow.DialogName = "wQuery"
+         KZXMLPGO.NextDialogWindow.WindowName = "ParameterUpdateComboBox" 
+      ELSE
+         // The parameter is not a date nor a table, so go to regular update page.
+         KZXMLPGO.NextDialogWindow.DialogName = "wQuery" 
+         KZXMLPGO.NextDialogWindow.WindowName = "ParameterUpdate"
+      END
+   END
+   
+   // Set up return back to the current page.
+   CREATE ENTITY KZXMLPGO.PagePath
+   KZXMLPGO.PagePath.LastPageName = "wQueryRQueryReportRun" 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CLOSE_QueryReportRun
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CLOSE_QueryReportRun( VIEW ViewToWindow )
+
+   VIEW zqFrame  BASED ON LOD zqFrame
+   VIEW zqSQuery BASED ON LOD zqSQuery
+   VIEW QueryView
+
+   // Drop any Query objects.
+   GET VIEW zqFrame NAMED "zqFrame"
+   IF RESULT >= 0
+      DropObjectInstance( zqFrame )
+   END
+   GET VIEW zqSQuery NAMED "zqSQuery"
+   IF RESULT >= 0
+      DropObjectInstance( zqSQuery )
+   END
+   GET VIEW QueryView NAMED "QueryView"
+   IF RESULT >= 0
+      DropObjectInstance( QueryView )
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdatePackagedQuery
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdatePackagedQuery( VIEW ViewToWindow )
+
+   VIEW mReport     REGISTERED AS mReport
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW zqSQuery    BASED ON LOD  zqSQuery
+   VIEW zqFrame     BASED ON LOD  zqFrame
+   VIEW QueryView
+   INTEGER        nRC
+   
+   // Go to Update the Original Stored Query tied to this Report.
+   
+   // Make sure that a Stored Query has been selected.
+   IF mReport.OriginatingStoredQuery DOES NOT EXIST
+      MessageSend( ViewToWindow, "", "Update Query",
+                   "A Query has not yet been selected.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   // Save the current Query zqFrame object in case that Query Update cancels the update function.
+   GET VIEW zqFrame NAMED "zqFrame"
+   NAME VIEW zqFrame "zqFrameSave"
+   DropNameForView( zqFrame, "zqFrame", ViewToWindow, zLEVEL_TASK )
+
+   // Activate zqSQuery from the original Stored Query.
+   // Also create zqFrame from zqSQuery.
+
+   // Activate the stored query instance that stores the query.
+   ACTIVATE zqSQuery WHERE zqSQuery.StoredQuery.ID = mReport.OriginatingStoredQuery.ID 
+   NAME VIEW zqSQuery "zqSQuery"
+   wXferO.QueryValues.QueryObjectName        = zqSQuery.StoredQuery.ObjectName
+   wXferO.QueryValues.CurrentStoredQueryName = zqSQuery.StoredQuery.Name
+
+   // Create the query instance (an instance of zqFrame).
+   SetOI_FromBlob( zqFrame, 0, ViewToWindow,
+                   zqSQuery, "StoredQuery", "QueryBlob", zIGNORE_ERRORS )
+   NAME VIEW zqFrame "zqFrame" 
+   wXferO.QueryValues.QueryObjectName = zqSQuery.StoredQuery.ObjectName
+   
+   // Activate the Query LOD (Query View).
+   nRC = ActivateQueryViewByName( ViewToWindow, QueryView, zqSQuery.StoredQuery.ObjectName )
+   IF nRC < 0
+      MessageSend( ViewToWindow, "wQueryNotLoaded", "Select Query",
+                   "Query cannot be loaded.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      DropObjectInstance( zqFrame )
+      DropObjectInstance( zqSQuery )
+      RETURN 2
+   END
+   
+   SetFrameStructure( zqFrame, QueryView )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SELECT_DocumentForReport
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SELECT_DocumentForReport( VIEW ViewToWindow )
+
+   VIEW zqMDocOLST REGISTERED AS zqMDocOLST
+   VIEW mReport    REGISTERED AS mReport
+   
+   // Include the selected Document in the Report.
+   IF mReport.Document EXISTS
+      IF mReport.Document.ID != zqMDocOLST.Document.ID 
+         EXCLUDE mReport.Document 
+         INCLUDE mReport.Document FROM zqMDocOLST.Document 
+      END
+   ELSE
+      INCLUDE mReport.Document FROM zqMDocOLST.Document
+   END
+   DropObjectInstance( zqMDocOLST )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildDocumentListForSelect
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildDocumentListForSelect( VIEW ViewToWindow )
+
+   VIEW sAppMgr REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv
+   
+   GetTextConv(szLangConv,ViewToWindow,"Select Document","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+   
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildDocumentListForSelect
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildChartDisplay( VIEW ViewToWindow )
+
+   VIEW sAppMgr REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv
+   
+   GetTextConv(szLangConv,ViewToWindow,"Chart","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildExport
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildExport( VIEW ViewToWindow )
+
+   VIEW sAppMgr REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv
+   
+   GetTextConv(szLangConv,ViewToWindow,"Export","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+   
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildPrint
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildPrint( VIEW ViewToWindow )
+
+   VIEW sAppMgr REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv
+   
+   GetTextConv(szLangConv,ViewToWindow,"Print","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+   
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CLOSE_DocumentSelectList
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CLOSE_DocumentSelectList( VIEW ViewToWindow )
+
+   VIEW zqMDocOLST REGISTERED AS zqMDocOLST
+   
+   DropObjectInstance( zqMDocOLST )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_ToSelectDocument
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_ToSelectDocument( VIEW ViewToWindow )
+
+   VIEW mReport    REGISTERED AS mReport
+   VIEW zqMDocOLST BASED ON LOD  zqMDocO
+   
+   // Activate list of Documents for Query Object of Report (School Specific Report).
+   
+   // Make sure that Query has been selected for Report.
+   IF mReport.StoredQuery DOES NOT EXIST
+      MessageSend( ViewToWindow, "QueryReq", "Select Document",
+                   "Query is required.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   GET VIEW zqMDocOLST NAMED "zqMDocOLST"
+   IF RESULT >= 0
+      DropObjectInstance( zqMDocOLST )
+   END
+   ACTIVATE  zqMDocOLST Multiple WHERE zqMDocOLST.Document.ObjectName = mReport.StoredQuery.ObjectName 
+   IF RESULT < 0
+      DropObjectInstance( zqMDocOLST )
+      MessageSend( ViewToWindow, "", "Select Document",
+                   "No document exists.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   NAME VIEW zqMDocOLST "zqMDocOLST"
+   OrderEntityForView( zqMDocOLST, "Document", "Name A" )
+   SET CURSOR FIRST zqMDocOLST.Document
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdateDocument
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdateDocument( VIEW ViewToWindow )
+
+   VIEW wXferO  REGISTERED AS wXferO
+   VIEW mReport REGISTERED AS mReport
+   VIEW zqMDocO BASED ON LOD  zqMDocO
+   
+   // Activate Document that is tied to Report.
+   
+   // Make sure that Document has been selected for Report.
+   IF mReport.Document DOES NOT EXIST
+      MessageSend( ViewToWindow, "", "Select Document",
+                   "No Document exists.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   ACTIVATE zqMDocO SingleForUpdate WHERE zqMDocO.Document.ID = mReport.Document.ID
+   NAME VIEW zqMDocO "zqMDocO"
+   
+   // Include the selectable object, if the Document contains an object name.
+   IF zqMDocO.Document.ObjectName != ""
+      SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ObjectName = zqMDocO.Document.ObjectName 
+      CREATE ENTITY zqMDocO.QueryObject 
+      zqMDocO.QueryObject.ObjectName = zqMDocO.Document.ObjectName
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_DocumentNew
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DocumentNew( VIEW ViewToWindow )
+
+   VIEW wXferO  REGISTERED AS wXferO
+   VIEW mReport REGISTERED AS mReport
+   VIEW mUser   REGISTERED AS mUser
+   VIEW zqMDocO BASED ON LOD  zqMDocO
+   
+   // Initialize Document.
+   
+   // Make sure that a Document doesn't already exist for Report.
+   IF mReport.Document EXISTS
+      MessageSend( ViewToWindow, "", "Select Document",
+                   "A Document already exists.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Make sure that Query has been selected for Report.
+   IF mReport.StoredQuery DOES NOT EXIST
+      MessageSend( ViewToWindow, "QueryReq", "Select Document",
+                   "Query is required.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Initialize empty Document object.
+   ACTIVATE zqMDocO EMPTY
+   CREATE ENTITY zqMDocO.Document
+   zqMDocO.Document.ObjectName = mReport.StoredQuery.ObjectName 
+   zqMDocO.Document.GenerateContactActivityFlag = "Y"
+   NAME VIEW zqMDocO "zqMDocO"
+   zqMDocO.Document.FunctionalAreaName = wXferO.FunctionalArea.FunctionalAreaName 
+   INCLUDE zqMDocO.AdministrativeDivision FROM mUser.CurrentAdministrativeDivision
+   
+   // Initialize the Object Name in the new Document.
+   CREATE ENTITY zqMDocO.QueryObject 
+   zqMDocO.QueryObject.ObjectName = mReport.StoredQuery.ObjectName
+   zqMDocO.Document.ObjectName    = mReport.StoredQuery.ObjectName
+   SET CURSOR FIRST wXferO.QueryValues   
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: EXPORT_QueryRunResult
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+EXPORT_QueryRunResult( VIEW ViewToWindow )
+
+   VIEW wXferO     REGISTERED AS wXferO
+   VIEW sHost      REGISTERED AS sHost
+   VIEW mUser      REGISTERED AS mUser
+   VIEW zqFrame    REGISTERED AS zqFrame
+   VIEW mReportLST REGISTERED AS mReportLST
+   VIEW vLOD
+   VIEW vResultSet
+   INTEGER nRC
+   STRING ( 400 ) szFileName
+   STRING ( 1 )   szSparseFullFlag
+   STRING ( 25 )  szDateTime
+
+   // Format the CSV File to a temporary file name, which will include the User Name, so that there is no interference
+   // by multiple Users. Since a User is only running one report at a time, there is no conflict on the name for a User.
+   // Also, we assume the generated document doesn't need to be saved on the server, since Users will save documents on their own computers.
+      
+   IF sHost.Host.TempDir = ""
+      MessageSend( ViewToWindow, "", "",
+                   "A Host Temp Directory name must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   szFileName = sHost.Host.TempDir + mUser.User.UserName + "QueryResult.csv"
+   
+   IF wXferO.QueryValues DOES NOT EXIST
+      CREATE ENTITY wXferO.QueryValues 
+   END
+   wXferO.QueryValues.OutputFileName = szFileName
+   
+   // Set Sparse or Full flag.
+   IF mReportLST.Report.Type = "CSV_S"
+      szSparseFullFlag = "S"     // Sparse
+   ELSE
+      szSparseFullFlag = "F"     // Full
+   END
+
+   GET VIEW vResultSet NAMED "ResultSet"
+   GET VIEW vLOD NAMED "QueryView"
+   nRC = FormatCSV_FrmResultSet( zqFrame,
+                                 vLOD,
+                                 vResultSet,
+                                 szSparseFullFlag,
+                                 szFileName )
+   IF nRC = 2
+      RETURN 2
+   END
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "",
+                   "An error was encountered.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+      
+   //DropObjectInstance( zqFrame )
+   //DropObjectInstance( vResultSet )
+   //DropObjectInstance( vLOD )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PRINT_DOCX_ODT_QueryRunResult
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PRINT_DOCX_ODT_QueryRunResult( VIEW ViewToWindow )
+
+   VIEW wXferO     REGISTERED AS wXferO
+   VIEW sHost      REGISTERED AS sHost
+   VIEW mUser      REGISTERED AS mUser
+   VIEW zqFrame    REGISTERED AS zqFrame
+   VIEW mReportLST REGISTERED AS mReportLST
+   VIEW vLOD
+   VIEW vResultSet
+   INTEGER nRC
+   STRING ( 400 ) szOutputDirectoryFileName
+   STRING ( 400 ) szTemplateDirectoryFileName
+   STRING ( 50 )  szRootEntityName
+
+   // Merge the Result Data and ODT Template documents into a temporary output file, which includes the User Name.
+   // The interface will then ask to save the file to a local directory.
+      
+   IF sHost.Host.TempDir = ""
+      MessageSend( ViewToWindow, "", "",
+                   "A Host Temp Directory name must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Get general Insert operation parms.
+   szTemplateDirectoryFileName = mReportLST.Document.UploadDirectory + mReportLST.Document.TemplateFileName 
+   szRootEntityName            = wXferO.QueryValues.RootEntityName
+   
+   // Also set up QueryValues attribute for identifying temporary output name for display.
+   IF wXferO.QueryValues DOES NOT EXIST
+      CREATE ENTITY wXferO.QueryValues 
+   END
+   
+   // Output file suffix and insert operation depend on Document Type.
+   IF mReportLST.Document.DocType = "O"
+      // Document Type is ODT.
+      szOutputDirectoryFileName   = sHost.Host.TempDir + mUser.User.UserName + "QueryResult.odt"
+      wXferO.QueryValues.OutputFileName = szOutputDirectoryFileName
+      
+      // Merge the data into the template.
+      GET VIEW vResultSet NAMED "ResultSet"
+      nRC = InsertOI_DataIntoODT_Template( vResultSet, 
+                                           szOutputDirectoryFileName,
+                                           szTemplateDirectoryFileName, 
+                                           szRootEntityName )
+   ELSE
+      // Document Type is DOCX.
+      szOutputDirectoryFileName   = sHost.Host.TempDir + mUser.User.UserName + "QueryResult.docx" 
+      wXferO.QueryValues.OutputFileName = szOutputDirectoryFileName
+      
+      // Merge the data into the template.
+      GET VIEW vResultSet NAMED "ResultSet"
+      nRC = InsertOI_DataIntoDOCX_Template( vResultSet, 
+                                            szOutputDirectoryFileName,
+                                            szTemplateDirectoryFileName, 
+                                            szRootEntityName )
+   END
+   IF nRC = 2
+      RETURN 2
+   END
+   IF nRC < 0
+      MessageSend( ViewToWindow, "", "",
+                   "An error was encountered.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Objects are dropped right now in Close.
+   //DropObjectInstance( zqFrame )
+   //DropObjectInstance( vResultSet )
+   //DropObjectInstance( vLOD )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FORMAT_HTML_QueryRunResult
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+FORMAT_HTML_QueryRunResult( VIEW ViewToWindow )
+
+   VIEW wXferO     REGISTERED AS wXferO
+   VIEW sHost      REGISTERED AS sHost
+   VIEW mUser      REGISTERED AS mUser
+   VIEW zqFrame    REGISTERED AS zqFrame
+   VIEW mReportLST REGISTERED AS mReportLST
+   VIEW vLOD
+   VIEW vResultSet
+   INTEGER nRC
+   STRING ( 400 ) szOutputDirectoryFileName
+   STRING ( 400 ) szTemplateDirectoryFileName
+   STRING ( 50 )  szRootEntityName
+
+   // Merge the Result Data and HTML Template documents into a temporary output file, which includes the User Name.
+   // The interface will then ask to save the file to a local directory.
+      
+   IF sHost.Host.TempDir = ""
+      MessageSend( ViewToWindow, "", "",
+                   "A Host Temp Directory name must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   szOutputDirectoryFileName   = sHost.Host.TempDir + mUser.User.UserName + "QueryResult.html"
+   szTemplateDirectoryFileName = mReportLST.Document.TemplateFileName 
+   szRootEntityName            = wXferO.QueryValues.RootEntityName
+   
+   IF wXferO.QueryValues DOES NOT EXIST
+      CREATE ENTITY wXferO.QueryValues 
+   END
+   wXferO.QueryValues.OutputFileName = szOutputDirectoryFileName
+   
+   // Merge the data into the template.
+   GET VIEW vResultSet NAMED "ResultSet"
+   nRC = InsertOI_DataIntoTemplateFile( vResultSet,
+                                        szOutputDirectoryFileName,
+                                        szTemplateDirectoryFileName,
+                                        szRootEntityName )
+   IF nRC = 2
+      RETURN 2
+   END
+   IF nRC < 0 
+      MessageSend( ViewToWindow, "", "",
+                   "An error was encountered.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+      
+   //DropObjectInstance( zqFrame )
+   //DropObjectInstance( vResultSet )
+   //DropObjectInstance( vLOD )
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_CreateContactList
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_CreateContactList( VIEW ViewToWindow )
+
+
+   VIEW wXferO     REGISTERED AS wXferO
+   VIEW wXferO2    BASED ON LOD  wXferO
+   VIEW mConList   BASED ON LOD  mConList
+   VIEW vResultSet BASED ON LOD  qProspct
+    VIEW mQryObj BASED ON LOD  mQryObj
+   VIEW zqFrame    BASED ON LOD  zqFrame
+   VIEW mUser      REGISTERED AS mUser
+   STRING ( 32 ) szRootEntityName
+   STRING ( 32 ) szIncludeEntity
+   STRING ( 32 ) szCreateEntity
+   STRING ( 32 ) szSourceIncludeEntity
+   SHORT         nRC
+   
+   // Do nothing if there is no object yet.
+   GET VIEW zqFrame NAMED "zqFrame"
+   IF RESULT < 0
+      RETURN 2
+   END
+   IF wXferO.QueryObject DOES NOT EXIST
+      // Remove any currenty entries.
+   IF wXferO.QueryValues EXISTS
+      DELETE ENTITY wXferO.QueryValues  
+   END
+   BuildQueryObjectList( mQryObj, ViewToWindow, "" )
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ObjectName = zqFrame.zqFrame.QueryObjectName
+   END
+   
+   // KJS 09/05/19 - If ContactListType is blank, then there are no contact lists associated with this query. Like qUserPrm... Users have not contact lists.
+   IF wXferO.QueryObject.ContactListType = ""
+      MessageSend( ViewToWindow, "NoConList", "Save Result Set",
+                   "A contact list can not be created.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+   // Create a Contact List entry made up of each selected type of entry.
+   ACTIVATE mConList EMPTY
+   NAME VIEW mConList "mConList"
+   CREATE ENTITY mConList.ContactList
+   INCLUDE mConList.AdministrativeDivision FROM mUser.CurrentAdministrativeDivision
+   INCLUDE mConList.User FROM mUser.User
+   CreateViewFromView( wXferO2, wXferO )
+   SET CURSOR FIRST wXferO2.QueryObject
+              WHERE wXferO2.QueryObject.ObjectName = zqFrame.zqFrame.QueryObjectName
+   mConList.ContactList.Type = wXferO2.QueryObject.ContactListType
+   DropView( wXferO2 )
+   SetAttributeFromCurrentDateTime( mConList, "ContactList", "DateGenerated" )
+   GET VIEW vResultSet NAMED "ResultSet"
+   szRootEntityName = zqFrame.zqFrame.QueryObjectRootEntityName 
+   IF wXferO.QueryObject.SourceIncludeEntityName != ""
+      // A Source Include Entity Name is specified.
+      szSourceIncludeEntity = wXferO.QueryObject.SourceIncludeEntityName 
+   ELSE
+      // No Source Include Entity Name is specified.
+      szSourceIncludeEntity = szRootEntityName
+   END
+   
+   // Loop through display entities and create Contact List entry for each selected.
+   FOR zqFrame.ResultSetDisplayRow WHERE zqFrame.ResultSetDisplayRow.wSelected = "Y"
+   
+      // We will do the include of the root entity from the Result Set.
+      nRC = SetCursorFirstEntityByInteger( vResultSet, szRootEntityName, "ID", zqFrame.ResultSetDisplayRow.RootEntityID, "" )
+      IF nRC >= zCURSOR_SET 
+         
+         szIncludeEntity = wXferO.QueryObject.ContactListIncludeEntityName 
+         szCreateEntity  = wXferO.QueryObject.ContactListCreateEntityName 
+         IF szCreateEntity = szIncludeEntity
+            // There is no Create Entity.
+            IncludeSubobjectFromSubobject( mConList, szIncludeEntity, vResultSet, szSourceIncludeEntity, zPOS_AFTER )
+         ELSE
+            // There is a Create Entity.
+            CreateEntity( mConList, szCreateEntity, zPOS_AFTER )
+            IncludeSubobjectFromSubobject( mConList, szIncludeEntity, vResultSet, szSourceIncludeEntity, zPOS_AFTER )
+         END
+         
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildQueryExtension
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildQueryExtension( VIEW ViewToWindow )
+
+   VIEW sAppMgr  REGISTERED AS sAppMgr
+   VIEW zqObjExt REGISTERED AS zqObjExt
+   STRING ( 100 ) szLangConv
+   
+   GetTextConv(szLangConv,ViewToWindow,"Query Extension","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildQOE_SummaryUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildQOE_SummaryUpdate( VIEW ViewToWindow )
+
+   VIEW sAppMgr  REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv
+   
+   GetTextConv(szLangConv,ViewToWindow,"Query Extension","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_AddObjectExtension
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_AddObjectExtension( VIEW ViewToWindow )
+
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW mQryObEx    BASED ON LOD  mQryObEx
+   VIEW zqObjExt    BASED ON LOD  zqObjExt
+   
+   ACTIVATE mQryObEx EMPTY  
+   NAME VIEW mQryObEx "mQryObEx"
+   CREATE ENTITY mQryObEx.QueryObjectExtension  
+   mQryObEx.QueryObjectExtension.ObjectName = wXferO.QueryObject.ObjectName 
+   
+   ACTIVATE zqObjExt EMPTY  
+   NAME VIEW zqObjExt "zqObjExt"
+   CREATE ENTITY zqObjExt.QueryObjectExtension
+   zqObjExt.QueryObjectExtension.QueryObjectName = wXferO.QueryObject.ObjectName  
+   CREATE ENTITY zqObjExt.SummaryEntry 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_ExtensionSummaryUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_ExtensionSummaryUpdate( VIEW ViewToWindow )
+
+   VIEW mQryObExLST REGISTERED AS mQryObExLST 
+   VIEW mQryObEx    BASED ON LOD  mQryObEx
+   VIEW zqObjExt    BASED ON LOD  zqObjExt
+   
+   ACTIVATE mQryObEx WHERE mQryObEx.QueryObjectExtension.ID = mQryObExLST.QueryObjectExtension.ID 
+   NAME VIEW mQryObEx "mQryObEx"
+   SetOI_FromBlob( zqObjExt, 0, ViewToWindow,
+                   mQryObEx, "QueryObjectExtension", "QueryExtensionBlob", zIGNORE_ERRORS )
+   NAME VIEW zqObjExt "zqObjExt"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SAVE_RETURN_QueryExtension
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SAVE_RETURN_QueryExtension( VIEW ViewToWindow )
+
+   VIEW mQryObExLST REGISTERED AS mQryObExLST 
+   VIEW mQryObEx    REGISTERED AS mQryObEx
+   VIEW zqObjExt    REGISTERED AS zqObjExt
+   VIEW zqFrame     REGISTERED AS zqFrame
+   STRING ( 500 ) szOriginalText
+   
+   // Set the Query Extension blob in the Query Extension object and commit it.
+   
+   mQryObEx.QueryObjectExtension.ExtensionName        = zqObjExt.SummaryEntry.Name
+   mQryObEx.QueryObjectExtension.ExtensionDescription = zqObjExt.SummaryEntry.Description
+   SetBlobFromOI( mQryObEx, "QueryObjectExtension", "QueryExtensionBlob",
+                  zqObjExt, zINCREMENTAL )
+   COMMIT mQryObEx 
+   
+   // Check to see if each Title/DisplayName value is in language conversion object and add it as necessary.
+   // Also add "Range" if any Range value is specified.
+   FOR EACH zqObjExt.SummarySelectionCriteria
+      szOriginalText = zqObjExt.SummarySelectionCriteria.Title 
+      IF szOriginalText != ""
+         CheckAddLanguageText( zqFrame, szOriginalText )
+      END
+   END
+   FOR EACH zqObjExt.SummaryDisplayAttribute
+      szOriginalText = zqObjExt.SummaryDisplayAttribute.DisplayName 
+      IF szOriginalText != ""
+         CheckAddLanguageText( zqFrame, szOriginalText )
+      END
+   END
+   szOriginalText = zqObjExt.SummaryEntry.Name  
+   CheckAddLanguageText( zqFrame, szOriginalText )
+   SET CURSOR FIRST zqObjExt.SummarySelectionCriteria WHERE zqObjExt.SummarySelectionCriteria.RangeMinimum != ""
+   IF RESULT >= zCURSOR_SET
+      CheckAddLanguageText( zqFrame, "Value Range" )
+   END 
+   
+   DropObjectInstance( mQryObExLST )
+   ACTIVATE mQryObExLST Multiple WHERE mQryObExLST.QueryObjectExtension.ObjectName = mQryObEx.QueryObjectExtension.ObjectName 
+   NAME VIEW mQryObExLST "mQryObExLST"
+   OrderEntityForView( mQryObExLST, "QueryObjectExtension", "ExtensionName A" )
+   SET CURSOR FIRST mQryObExLST.QueryObjectExtension  
+   
+   DropObjectInstance( mQryObEx )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CLOSE_QueryObjectExtension
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CLOSE_QueryObjectExtension( VIEW ViewToWindow )
+
+   VIEW mQryObEx REGISTERED AS mQryObEx
+   
+   DropObjectInstance( mQryObEx )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DELETE_ObjectExtension
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_ObjectExtension( VIEW ViewToWindow )
+
+   VIEW mQryObExLST REGISTERED AS mQryObExLST 
+   VIEW mQryObEx    BASED ON LOD  mQryObEx
+   
+   ACTIVATE mQryObEx WHERE mQryObEx.QueryObjectExtension.ID = mQryObExLST.QueryObjectExtension.ID 
+   NAME VIEW mQryObEx "mQryObExDelete"
+   DELETE ENTITY mQryObEx.QueryObjectExtension 
+   COMMIT mQryObEx
+   DropObjectInstance( mQryObEx )
+   DropEntity( mQryObExLST, "QueryObjectExtension", zREPOS_NONE ) 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ADD_SummaryCriteraEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ADD_SummaryCriteraEntries( VIEW ViewToWindow )
+
+   VIEW zqObjExt REGISTERED AS zqObjExt
+   VIEW zqFrame  REGISTERED AS zqFrame
+   
+   // Create a Summary Criteria entry for each selected Entity/Attribute.
+   // We will start by setting on the flag for the entity on which we're currently positioned.
+   SET CURSOR LAST zqObjExt.SummarySelectionCriteria  
+   zqFrame.DisplayTreeAttribute.wSelectedToShow = "Y"
+   FOR zqFrame.DisplayTreeAttribute WHERE zqFrame.DisplayTreeAttribute.wSelectedToShow = "Y"
+      CREATE ENTITY zqObjExt.SummarySelectionCriteria 
+      zqObjExt.SummarySelectionCriteria.EntityName    = zqFrame.DisplayTreeEntity.EntityName
+      zqObjExt.SummarySelectionCriteria.AttributeName = zqFrame.DisplayTreeAttribute.Name 
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ADD_SummaryDisplayEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+ADD_SummaryDisplayEntries( VIEW ViewToWindow )
+
+   VIEW zqObjExt REGISTERED AS zqObjExt
+   VIEW zqFrame  REGISTERED AS zqFrame
+   
+   // Create a Summary Display Attribute entry for each selected Entity/Attribute.
+   // We will start by setting on the flag for the entity on which we're currently positioned.
+   SET CURSOR LAST zqObjExt.SummaryDisplayAttribute 
+   zqFrame.DisplayTreeAttribute.wSelectedToShow = "Y"
+   FOR zqFrame.DisplayTreeAttribute WHERE zqFrame.DisplayTreeAttribute.wSelectedToShow = "Y"
+      CREATE ENTITY zqObjExt.SummaryDisplayAttribute 
+      zqObjExt.SummaryDisplayAttribute.SourceEntityName    = zqFrame.DisplayTreeEntity.EntityName
+      zqObjExt.SummaryDisplayAttribute.SourceAttributeName = zqFrame.DisplayTreeAttribute.Name 
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: POSITION_OnDisplayAttribute
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+POSITION_OnDisplayAttribute( VIEW ViewToWindow )
+
+   VIEW zqFrame  REGISTERED AS zqFrame
+   VIEW zqFrame2 BASED ON LOD  zqFrame
+   
+   // Set the Selected flag for the entity selected (clearing all other flags first).
+   CreateViewFromView( zqFrame2, zqFrame )
+   FOR EACH zqFrame2.DisplayTreeEntity 
+      zqFrame2.DisplayTreeEntity.wSelectedFlag = ""
+   END
+   DropView( zqFrame2 )
+   zqFrame.DisplayTreeEntity.wSelectedFlag = "Y"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildQOE_SummaryUsage
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildQOE_SummaryUsage( VIEW ViewToWindow )
+
+   VIEW sAppMgr  REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv
+   
+  GetTextConv(szLangConv,ViewToWindow,"Query Extension","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_ExtensionSummaryUsage
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_ExtensionSummaryUsage( VIEW ViewToWindow )
+
+   VIEW mQryObExLST REGISTERED AS mQryObExLST 
+   VIEW mQryObEx    BASED ON LOD  mQryObEx
+   VIEW zqFrame     BASED ON LOD  zqFrame
+   VIEW zqSQueryLST BASED ON LOD  zqSQuery
+   
+   // List all Queries that use the selected Object Summary Extension.
+   // This is more complex because the relationship is inside a work object and not in the ER.
+   // Thus, we will loop through all Queries for the object and look inside each zqFrame object for the relationship.
+   
+   ACTIVATE mQryObEx WHERE mQryObEx.QueryObjectExtension.ID = mQryObExLST.QueryObjectExtension.ID 
+   NAME VIEW mQryObEx "mQryObEx"
+   
+   ACTIVATE zqSQueryLST RootOnlyMultiple WHERE zqSQueryLST.StoredQuery.ObjectName = mQryObEx.QueryObjectExtension.ObjectName 
+   NAME VIEW zqSQueryLST "zqSQueryLSTUsage"
+   FOR EACH zqSQueryLST.StoredQuery 
+      SetOI_FromBlob( zqFrame, 0, ViewToWindow,
+                      zqSQueryLST, "StoredQuery", "QueryBlob", zIGNORE_ERRORS )
+      NAME VIEW zqFrame "zqFrameUsage"
+      IF zqFrame.SelectedObjectExtensionSummary.Name = mQryObEx.QueryObjectExtension.ExtensionName 
+         CREATE ENTITY mQryObEx.QueryNameUsingExtension 
+         mQryObEx.QueryNameUsingExtension.Name        = zqSQueryLST.StoredQuery.Name 
+         mQryObEx.QueryNameUsingExtension.Description = zqSQueryLST.StoredQuery.Description 
+      END
+      DropObjectInstance( zqFrame )
+   END
+   DropObjectInstance( zqSQueryLST )
+   SET CURSOR FIRST mQryObEx.QueryNameUsingExtension  
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CANCEL_QueryObjectExtensionUsage
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_QueryObjectExtensionUsage( VIEW ViewToWindow )
+
+   VIEW mQryObEx REGISTERED AS mQryObEx 
+   
+   DropObjectInstance( mQryObEx )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildExportDisplayQOE_Sum
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildExportDisplayQOE_Sum( VIEW ViewToWindow )
+
+   VIEW wXferO  REGISTERED AS wXferO
+   VIEW sAppMgr REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv
+   
+   // Clear work file name.
+   wXferO.QueryValues.OutputFileName = ""
+   
+   GetTextConv(szLangConv,ViewToWindow,"Export/Display Query Extension Summary","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FORMAT_QOE_ResultSetToGraph
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+FORMAT_QOE_ResultSetToGraph( VIEW ViewToWindow )
+
+   VIEW zqFrame  REGISTERED AS zqFrame
+   VIEW zqObjExt BASED ON LOD  zqObjExt
+   VIEW mChart   BASED ON LOD  mChart
+   INTEGER nRC
+   
+   // Make sure we're not adding to an existing mChart entry.
+   GET VIEW mChart NAMED "mChart"
+   IF RESULT >= 0
+      DropObjectInstance( mChart )
+   END
+   
+   // Format the Graph.
+   GET VIEW zqObjExt NAMED "zqObjExt"
+   nRC = FormatGraphFromSummary( zqObjExt, zqFrame, "Chart1" )
+   RETURN nRC
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: EXPORT_QOE_ResultSetToCSV
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+EXPORT_QOE_ResultSetToCSV( VIEW ViewToWindow )
+
+   VIEW wXferO   REGISTERED AS wXferO
+   VIEW sHost    REGISTERED AS sHost
+   VIEW mUser    REGISTERED AS mUser
+   VIEW zqFrame  REGISTERED AS zqFrame
+   VIEW zqFrameT BASED ON LOD  zqFrame
+   VIEW zqObjExt BASED ON LOD  zqObjExt
+   VIEW vLOD
+   VIEW vResultSet
+   STRING ( 400 ) szFileName
+   INTEGER nRC
+   
+   // Format Summary if Summary is being displayed.
+   IF zqFrame.SelectedObjectExtensionSummary EXISTS AND zqFrame.zqFrame.wCurrentDisplayFormat != "R" 
+      GET VIEW zqObjExt NAMED "zqObjExt"
+      nRC = FormatCSV_FromSummary( zqObjExt, zqFrame )
+      RETURN nRC
+   END
+   
+   // Otherwise, format Detail..
+   // We will use a copy of zqFrame because the Format process is somehow currently dropping the ParentEntity subobject.
+   ActivateOI_FromOI( zqFrameT, zqFrame, zSINGLE )
+   NAME VIEW zqFrameT "zqFrameT"
+   SetUpOrderingInfo( zqFrameT )     // Set up ordering information as requested
+   // For FileDownLoad, the FileName will be built on UserName.
+   szFileName = sHost.Host.TempDir + "QueryReport" + mUser.User.UserName + ".csv"
+   wXferO.QueryValues.OutputFileName = szFileName
+   TraceLineS( "### CSV File: ", szFileName )
+   SET CURSOR FIRST zqFrameT.ParentEntity   // We need to make sure position is on ParentEntity.
+   GET VIEW vResultSet NAMED "ResultSet"
+   GET VIEW vLOD NAMED "QueryView"
+   nRC = FormatCSV_FrmResultSet( zqFrameT,
+                                 vLOD,
+                                 vResultSet,
+                                 "",              // This is for format Sparse or Full and we will assume Sparse.
+                                 szFileName )
+   DropObjectInstance( zqFrameT )
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CLOSE_QOE_SummaryDisplay
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CLOSE_QOE_SummaryDisplay( VIEW ViewToWindow )
+
+   VIEW zqFrame  BASED ON LOD zqFrame
+   VIEW zqSQuery BASED ON LOD zqSQuery
+   VIEW QueryView
+
+   // Drop any Query objects.
+   GET VIEW zqFrame NAMED "zqFrame"
+   IF RESULT >= 0
+      DropObjectInstance( zqFrame )
+   END
+   GET VIEW zqSQuery NAMED "zqSQuery"
+   IF RESULT >= 0
+      DropObjectInstance( zqSQuery )
+   END
+   GET VIEW QueryView NAMED "QueryView"
+   IF RESULT >= 0
+      DropObjectInstance( QueryView )
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildLanguageConvertSingle
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildLanguageConvertSingle( VIEW ViewToWindow )
+
+   VIEW wXferO    REGISTERED AS wXferO
+   VIEW zqLangLST BASED ON LOD  zqLang
+   VIEW sAppMgr   REGISTERED AS sAppMgr 
+   STRING ( 100 ) szLangConv
+   
+   IF sAppMgr.SplitWindow DOES NOT EXIST 
+      CREATE ENTITY sAppMgr.SplitWindow 
+   END
+   GetTextConv(szLangConv,ViewToWindow,"Query Language Conversion Single","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+   // If a Language has not been selected, drop the zqLangLST object.
+   IF wXferO.Root.LanguageSelection = ""
+      GET VIEW zqLangLST NAMED "zqLangLST"
+      IF RESULT >= 0
+         DropObjectInstance( zqLangLST )
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SELECT_LanguageForConversion
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SELECT_LanguageForConversion( VIEW ViewToWindow )
+
+   VIEW wXferO    REGISTERED AS wXferO
+   VIEW zqLangLST BASED ON LOD  zqLang
+   VIEW zqLang    BASED ON LOD  zqLang
+   STRING ( 20 ) szSelectedLanguage
+   
+   // Activate list of Language Text values for the selected language and make sure they are all initialized.
+   
+   IF wXferO.Root.LanguageSelection = ""
+      MessageSend( ViewToWindow, "", "Select Language",
+                   "A Language entry must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Drop current list if it exists.
+   GET VIEW zqLangLST NAMED "zqLangLST"
+   IF RESULT >= 0
+      DropObjectInstance( zqLangLST )
+   END
+   
+   szSelectedLanguage = wXferO.Root.LanguageSelection
+   ACTIVATE zqLangLST Multiple WHERE zqLangLST.OriginalDialogText.IsAdvancedQuery = "Y"
+         RESTRICTING zqLangLST.LanguageText TO zqLangLST.LanguageText.Language = szSelectedLanguage
+   NAME VIEW zqLangLST "zqLangLST"
+   OrderEntityForView( zqLangLST, "OriginalDialogText", "UniqueTextValue A" )
+   
+   // Make sure each original language entry has a LanguageText entry for selected Language.
+   FOR EACH zqLangLST.OriginalDialogText 
+      IF zqLangLST.LanguageText DOES NOT EXIST
+         CREATE ENTITY zqLangLST.LanguageText 
+         zqLangLST.LanguageText.Language = szSelectedLanguage
+      END
+   END
+   
+   //  Initialize original value.
+   FOR EACH zqLangLST.OriginalDialogText 
+      zqLangLST.LanguageText.wOriginalValue = zqLangLST.LanguageText.TextValue 
+   END
+   SET CURSOR FIRST zqLangLST.OriginalDialogText
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SAVE_QueryLanguageSingle
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SAVE_QueryLanguageSingle( VIEW ViewToWindow )
+
+   VIEW wXferO    REGISTERED AS wXferO
+   VIEW zqLangLST REGISTERED AS zqLangLST
+   VIEW zqLang    BASED ON LOD  zqLang
+   VIEW zqLangDEL BASED ON LOD  zqLang
+   STRING ( 20 ) szSelectedLanguage
+   STRING ( 50 ) szCurrentLangConvName
+   
+   // A Lenguage must be selected.
+   IF wXferO.Root.LanguageSelection = ""
+      MessageSend( ViewToWindow, "", "Save Language",
+                   "A Language entry must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // If any text tile has changed, update its value.
+   szSelectedLanguage = wXferO.Root.LanguageSelection
+   FOR EACH zqLangLST.OriginalDialogText 
+      IF zqLangLST.LanguageText.TextValue != zqLangLST.LanguageText.wOriginalValue 
+         // Activate object for update.
+         ACTIVATE zqLang WHERE zqLang.OriginalDialogText.ID = zqLangLST.OriginalDialogText.ID 
+                RESTRICTING zqLang.LanguageText TO zqLang.LanguageText.Language = szSelectedLanguage
+         NAME VIEW zqLang "zqLangUpdate"
+      
+         // If the Conversion entry already exists, we'll update it.
+         // Otherwise, we'll create it new.
+         IF zqLang.LanguageText DOES NOT EXIST
+            CREATE ENTITY zqLang.LanguageText 
+            zqLang.LanguageText.Language = szSelectedLanguage
+         END
+         zqLang.LanguageText.TextValue = zqLangLST.LanguageText.TextValue 
+         COMMIT zqLang
+         DropObjectInstance ( zqLang )
+            
+         // Also update in list.
+         zqLangLST.LanguageText.wOriginalValue  = zqLangLST.LanguageText.TextValue
+      END
+   END
+   SET CURSOR FIRST zqLangLST.OriginalDialogText  
+   
+   // Also delete any entries selected for deletion.
+   GET VIEW zqLangDEL NAMED "zqLangDEL"
+   IF RESULT >= 0
+      FOR EACH zqLangDEL.OriginalDialogText 
+         // Delete entry.
+         ACTIVATE zqLang WHERE zqLang.OriginalDialogText.ID = zqLangDEL.OriginalDialogText.ID
+         NAME VIEW zqLang "zqLangDelete"
+         DELETE ENTITY zqLang.OriginalDialogText  
+         COMMIT zqLang
+         DropObjectInstance ( zqLang )
+      END
+      DropObjectInstance ( zqLangDEL )
+   END
+   
+   // If there is an existing translation object for this language, drop it.
+   szCurrentLangConvName = "QueryLangConv" + szSelectedLanguage
+   GET VIEW zqLang NAMED szCurrentLangConvName
+   IF RESULT >= 0
+      DropObjectInstance( zqLang )
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CLOSE_QueryLanguageMultiple
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CLOSE_QueryLanguageMultiple( VIEW ViewToWindow )
+   
+   VIEW wXferO    REGISTERED AS wXferO
+   VIEW zqLangLST REGISTERED AS zqLangLST
+   
+   DropObjectInstance ( zqLangLST )
+   wXferO.Root.LanguageSelection = ""
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DELETE_OriginalLanguageText
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_OriginalLanguageText( VIEW ViewToWindow )
+
+   VIEW wXferO    REGISTERED AS wXferO
+   VIEW zqLangLST REGISTERED AS zqLangLST
+   VIEW zqLangDEL BASED ON LOD  zqLang
+   STRING ( 20 ) szSelectedLanguage
+   
+   // Add the selected entry to the delete list and remove it from this list.
+   szSelectedLanguage = wXferO.Root.LanguageSelection
+   GET VIEW zqLangDEL NAMED "zqLangDEL"
+   IF RESULT < 0
+      ActivateEmptyObjectInstance( zqLangDEL, "zqLang", ViewToWindow, zMULTIPLE )
+      ACTIVATE zqLangDEL EMPTY 
+      NAME VIEW zqLangDEL "zqLangDEL" 
+   END
+   CREATE ENTITY zqLangDEL.OriginalDialogText 
+   zqLangDEL.OriginalDialogText.ID = zqLangLST.OriginalDialogText.ID  
+   DropEntity( zqLangLST, "OriginalDialogText", zREPOS_NONE )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: INITIALIZE_FromDialogBase
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+INITIALIZE_FromDialogBase( VIEW ViewToWindow )
+
+   VIEW wXferO    REGISTERED AS wXferO
+   VIEW zqLangLST REGISTERED AS zqLangLST
+   VIEW zqLang    BASED ON LOD  zqLang
+   STRING ( 50 ) szSelectedLanguage
+
+   // Try to itialize all null entries to any Dialog language value that exists for the same original text.
+   szSelectedLanguage = wXferO.Root.LanguageSelection
+ TraceLineS( "szSelectedLanguage: ", zqLangLST.LanguageText.TextValue )
+   FOR EACH zqLangLST.OriginalDialogText 
+ TraceLineS( "Original Text: ", zqLangLST.LanguageText.TextValue )
+      IF zqLangLST.LanguageText.TextValue = ""
+         ACTIVATE zqLang WHERE zqLang.OriginalDialogText.UniqueTextValue = zqLangLST.OriginalDialogText.UniqueTextValue 
+                RESTRICTING zqLang.LanguageText TO zqLang.LanguageText.Language = szSelectedLanguage
+         IF RESULT >= 0
+            NAME VIEW zqLang "zqLangSet"
+            zqLangLST.LanguageText.TextValue = zqLang.LanguageText.TextValue
+ TraceLineS( "Lang Set: ", zqLang.LanguageText.TextValue )
+         END
+         DropObjectInstance( zqLang )
+      END  
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdateMultipleLanguages
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdateMultipleLanguages( VIEW ViewToWindow )
+
+   VIEW zqLangLST BASED ON LOD  zqLang
+
+   // Build multiple language maintenance object.
+   GET VIEW zqLangLST NAMED "zqLangLSTAll"
+   IF RESULT >= 0
+      DropObjectInstance( zqLangLST )
+   END
+   BuildMultipleLanguageList( ViewToWindow )
+   
+   ACTIVATE zqLangLST RootOnlyMultiple 
+   NAME VIEW zqLangLST "zqLangLSTTest"
+   OrderEntityForView( zqLangLST, "OriginalDialogText", "UniqueTextValue A" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildLanguageConvertMultiple
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildLanguageConvertMultiple( VIEW ViewToWindow )
+
+   VIEW sAppMgr   REGISTERED AS sAppMgr 
+   STRING ( 100 ) szLangConv
+   
+   IF sAppMgr.SplitWindow DOES NOT EXIST 
+      CREATE ENTITY sAppMgr.SplitWindow 
+   END
+   GetTextConv(szLangConv,ViewToWindow,"Query Language Conversion Multiple","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildMultipleLanguageList
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+BuildMultipleLanguageList( VIEW ViewToWindow )
+
+   VIEW zqLangLST  BASED ON LOD  zqLang
+   VIEW zqLangMult BASED ON LOD  zqLang
+   INTEGER Count
+   STRING ( 2 )  szCount
+   STRING ( 50 ) szAttributeName
+   STRING ( 50 ) szOrigAttributeName
+   STRING ( 50 ) szLanguageText
+   STRING ( 50 ) szLanguage
+   
+   // Build the update work object for listing and updating Language Text values for multiple languages at one time.
+   
+   // Activate all current entries.
+   ACTIVATE zqLangLST Multiple WHERE zqLangLST.OriginalDialogText.IsAdvancedQuery = "Y"
+   NAME VIEW zqLangLST "zqLangLSTAll"
+   
+   // Build work object LanguageType subobjects made up of existing LanguageText entries organized by Language.
+   ACTIVATE zqLangMult EMPTY 
+   NAME VIEW zqLangMult "zqLangMult"
+   CREATE ENTITY zqLangMult.OriginalDialogText 
+   
+   // Build LanguageType entries for each Language for which there is a conversion entry.
+   FOR EACH zqLangLST.OriginalDialogText 
+      FOR EACH zqLangLST.LanguageText WHERE zqLangLST.LanguageText.TextValue != ""
+         SET CURSOR FIRST zqLangMult.LanguageType WHERE zqLangMult.LanguageType.Language = zqLangLST.LanguageText.Language 
+         IF RESULT < zCURSOR_SET
+            CREATE ENTITY zqLangMult.LanguageType 
+            szLanguage = zqLangLST.LanguageText.Language
+            zqLangMult.LanguageType.Language       = szLanguage
+            zqLangMult.LanguageType.LanguageDomain = szLanguage
+         END
+      END
+   END 
+   
+   // Build LanguageType display integer values for creating text and header names.
+   Count = 0
+   FOR EACH zqLangMult.LanguageType 
+      Count = Count + 1
+      szCount = Count
+      zqLangMult.LanguageType.DisplayPositionInteger = Count
+      zqLangMult.LanguageType.DisplayPositionString  = szCount
+      
+      // Set Header Attribute Mapping.
+      szAttributeName = "wLanguage" + zqLangMult.LanguageType.DisplayPositionString
+      GetStringFromAttributeByContext( szLanguageText, zqLangMult, "LanguageType", "LanguageDomain", "", 50 ) 
+      SetAttributeFromString( zqLangMult, "OriginalDialogText", szAttributeName, szLanguageText ) 
+   END
+   
+   // Finally build the zqLangMult.LanguageTextMultiple entries for display/update in the list.
+   FOR EACH zqLangLST.OriginalDialogText 
+      CREATE ENTITY zqLangMult.LanguageTextMultiple 
+      zqLangMult.LanguageTextMultiple.OriginalTextID = zqLangLST.OriginalDialogText.ID 
+      zqLangMult.LanguageTextMultiple.UniqueTextValue = zqLangLST.OriginalDialogText.UniqueTextValue  
+      FOR EACH zqLangLST.LanguageText 
+         SET CURSOR FIRST zqLangMult.LanguageType WHERE zqLangMult.LanguageType.Language = zqLangLST.LanguageText.Language 
+         szAttributeName     = "wLanguageText" + zqLangMult.LanguageType.DisplayPositionString 
+         szOrigAttributeName = "wLanguageOrigText" + zqLangMult.LanguageType.DisplayPositionString 
+         SetAttributeFromAttribute( zqLangMult, "LanguageTextMultiple", szAttributeName,
+                                    zqLangLST,  "LanguageText", "TextValue" )
+         SetAttributeFromAttribute( zqLangMult, "LanguageTextMultiple", szOrigAttributeName,
+                                    zqLangLST,  "LanguageText", "TextValue" )
+      END
+   END
+   
+   OrderEntityForView( zqLangMult, "LanguageTextMultiple", "UniqueTextValue A" )
+   SET CURSOR FIRST zqLangMult.LanguageTextMultiple  
+   
+   NAME VIEW zqLangMult "zqLangLST"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SAVE_QueryLanguageMultiple
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SAVE_QueryLanguageMultiple( VIEW ViewToWindow )
+
+   VIEW zqLangMult REGISTERED AS zqLangLST
+   VIEW zqLang     BASED ON LOD  zqLang
+   INTEGER Count
+   STRING ( 2 )  szCount
+   STRING ( 50 ) szAttributeName
+   STRING ( 50 ) szLanguageText
+   STRING ( 50 ) szLanguage
+   STRING ( 50 ) szCurrentLangConvName
+   
+   // Update text changes by each text row.
+   FOR EACH zqLangMult.LanguageTextMultiple 
+      IF zqLangMult.LanguageTextMultiple.wLanguageText1 != zqLangMult.LanguageTextMultiple.wLanguageOrigText1 OR 
+         zqLangMult.LanguageTextMultiple.wLanguageText2 != zqLangMult.LanguageTextMultiple.wLanguageOrigText2 OR 
+         zqLangMult.LanguageTextMultiple.wLanguageText3 != zqLangMult.LanguageTextMultiple.wLanguageOrigText3 OR 
+         zqLangMult.LanguageTextMultiple.wLanguageText4 != zqLangMult.LanguageTextMultiple.wLanguageOrigText4 OR 
+         zqLangMult.LanguageTextMultiple.wLanguageText5 != zqLangMult.LanguageTextMultiple.wLanguageOrigText5 OR 
+         zqLangMult.LanguageTextMultiple.wLanguageText6 != zqLangMult.LanguageTextMultiple.wLanguageOrigText6 
+         
+         ACTIVATE zqLang WHERE zqLang.OriginalDialogText.ID = zqLangMult.LanguageTextMultiple.OriginalTextID 
+         NAME VIEW zqLang "zqLangConvert"
+         
+         // Language 1
+         IF zqLangMult.LanguageTextMultiple.wLanguageText1 != zqLangMult.LanguageTextMultiple.wLanguageOrigText1
+            SET CURSOR FIRST zqLangMult.LanguageType WHERE zqLangMult.LanguageType.DisplayPositionInteger = 1
+            szLanguage = zqLangMult.LanguageType.Language 
+            SET CURSOR FIRST zqLang.LanguageText WHERE zqLang.LanguageText.Language = szLanguage 
+            IF RESULT < zCURSOR_SET
+               CREATE ENTITY zqLang.LanguageText 
+               zqLang.LanguageText.Language = szLanguage 
+            END 
+            zqLang.LanguageText.TextValue = zqLangMult.LanguageTextMultiple.wLanguageText1 
+         END
+         
+         // Language 2
+         IF zqLangMult.LanguageTextMultiple.wLanguageText2 != zqLangMult.LanguageTextMultiple.wLanguageOrigText2
+            SET CURSOR FIRST zqLangMult.LanguageType WHERE zqLangMult.LanguageType.DisplayPositionInteger = 2
+            szLanguage = zqLangMult.LanguageType.Language 
+            SET CURSOR FIRST zqLang.LanguageText WHERE zqLang.LanguageText.Language = szLanguage 
+            IF RESULT < zCURSOR_SET
+               CREATE ENTITY zqLang.LanguageText 
+               zqLang.LanguageText.Language = szLanguage 
+            END 
+            zqLang.LanguageText.TextValue = zqLangMult.LanguageTextMultiple.wLanguageText2 
+         END
+         
+         // Language 3
+         IF zqLangMult.LanguageTextMultiple.wLanguageText3 != zqLangMult.LanguageTextMultiple.wLanguageOrigText3
+            SET CURSOR FIRST zqLangMult.LanguageType WHERE zqLangMult.LanguageType.DisplayPositionInteger = 3
+            szLanguage = zqLangMult.LanguageType.Language 
+            SET CURSOR FIRST zqLang.LanguageText WHERE zqLang.LanguageText.Language = szLanguage 
+            IF RESULT < zCURSOR_SET
+               CREATE ENTITY zqLang.LanguageText 
+               zqLang.LanguageText.Language = szLanguage 
+            END 
+            zqLang.LanguageText.TextValue = zqLangMult.LanguageTextMultiple.wLanguageText3 
+         END
+         
+         // Language 4
+         IF zqLangMult.LanguageTextMultiple.wLanguageText4 != zqLangMult.LanguageTextMultiple.wLanguageOrigText4
+            SET CURSOR FIRST zqLangMult.LanguageType WHERE zqLangMult.LanguageType.DisplayPositionInteger = 4
+            szLanguage = zqLangMult.LanguageType.Language 
+            SET CURSOR FIRST zqLang.LanguageText WHERE zqLang.LanguageText.Language = szLanguage 
+            IF RESULT < zCURSOR_SET
+               CREATE ENTITY zqLang.LanguageText 
+               zqLang.LanguageText.Language = szLanguage 
+            END 
+            zqLang.LanguageText.TextValue = zqLangMult.LanguageTextMultiple.wLanguageText4 
+         END
+         
+         // Language 5
+         IF zqLangMult.LanguageTextMultiple.wLanguageText5 != zqLangMult.LanguageTextMultiple.wLanguageOrigText5
+            SET CURSOR FIRST zqLangMult.LanguageType WHERE zqLangMult.LanguageType.DisplayPositionInteger = 5
+            szLanguage = zqLangMult.LanguageType.Language 
+            SET CURSOR FIRST zqLang.LanguageText WHERE zqLang.LanguageText.Language = szLanguage 
+            IF RESULT < zCURSOR_SET
+               CREATE ENTITY zqLang.LanguageText 
+               zqLang.LanguageText.Language = szLanguage 
+            END 
+            zqLang.LanguageText.TextValue = zqLangMult.LanguageTextMultiple.wLanguageText5 
+         END
+         
+         // Language 6
+         IF zqLangMult.LanguageTextMultiple.wLanguageText6 != zqLangMult.LanguageTextMultiple.wLanguageOrigText6
+            SET CURSOR FIRST zqLangMult.LanguageType WHERE zqLangMult.LanguageType.DisplayPositionInteger = 6
+            szLanguage = zqLangMult.LanguageType.Language 
+            SET CURSOR FIRST zqLang.LanguageText WHERE zqLang.LanguageText.Language = szLanguage 
+            IF RESULT < zCURSOR_SET
+               CREATE ENTITY zqLang.LanguageText 
+               zqLang.LanguageText.Language = szLanguage 
+            END 
+            zqLang.LanguageText.TextValue = zqLangMult.LanguageTextMultiple.wLanguageText6 
+         END
+         
+         COMMIT zqLang
+         DropObjectInstance( zqLang )
+         
+      END 
+   END
+   
+   // If there are any existing translation objects for the languages processed, drop them
+   FOR EACH zqLangMult.LanguageType 
+      szLanguage = zqLangMult.LanguageType.Language 
+      szCurrentLangConvName = "QueryLangConv" + szLanguage
+      GET VIEW zqLang NAMED szCurrentLangConvName
+      IF RESULT >= 0
+         DropObjectInstance( zqLang )
+      END
+   END
+      
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: INITIALIZE_MultipleData
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+INITIALIZE_MultipleData( VIEW ViewToWindow )
+
+   VIEW zqLangLST  BASED ON LOD  zqLang
+   VIEW zqLang     BASED ON LOD  zqLang
+   INTEGER Count
+   STRING ( 2 )  szCount
+   STRING ( 500 ) szOriginalValue
+   STRING ( 500 ) szNewValue
+   
+   // Build the update work object for listing and updating Language Text values for multiple languages at one time.
+   
+   // Activate all current entries.
+   ACTIVATE zqLangLST RootOnlyMultiple WHERE zqLangLST.OriginalDialogText.IsAdvancedQuery = "Y"
+   NAME VIEW zqLangLST "zqLangLSTAll"
+   
+   // Add Language entries for each original text.
+   FOR EACH zqLangLST.OriginalDialogText 
+      ACTIVATE zqLang WHERE zqLang.OriginalDialogText.ID = zqLangLST.OriginalDialogText.ID 
+      NAME VIEW zqLang "zqLang"
+      FOR EACH zqLang.LanguageText 
+         DELETE ENTITY zqLang.LanguageText NONE 
+      END
+      
+      szOriginalValue = zqLang.OriginalDialogText.UniqueTextValue 
+      
+      // German
+      CREATE ENTITY zqLang.LanguageText
+      zqLang.LanguageText.Language = "DE"
+      szNewValue = szOriginalValue + " (DE)"
+      zqLang.LanguageText.TextValue = szNewValue
+      
+      // French
+      CREATE ENTITY zqLang.LanguageText
+      zqLang.LanguageText.Language = "FR"
+      szNewValue = szOriginalValue + " (FR)"
+      zqLang.LanguageText.TextValue = szNewValue
+      
+      // Greek
+      CREATE ENTITY zqLang.LanguageText
+      zqLang.LanguageText.Language = "EL"
+      szNewValue = szOriginalValue + " (EL)"
+      zqLang.LanguageText.TextValue = szNewValue
+      
+      // Italian
+      CREATE ENTITY zqLang.LanguageText
+      zqLang.LanguageText.Language = "IT"
+      szNewValue = szOriginalValue + " (IT)"
+      zqLang.LanguageText.TextValue = szNewValue
+      
+      // Hindi
+      CREATE ENTITY zqLang.LanguageText
+      zqLang.LanguageText.Language = "HI"
+      szNewValue = szOriginalValue + " (HI)"
+      zqLang.LanguageText.TextValue = szNewValue
+      
+      // Bangla
+      CREATE ENTITY zqLang.LanguageText
+      zqLang.LanguageText.Language = "BN"
+      szNewValue = szOriginalValue + " (BN)"
+      zqLang.LanguageText.TextValue = szNewValue
+      
+      COMMIT zqLang
+      DropObjectInstance( zqLang )
+   END
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DELETE_ALL_CurrentEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_ALL_CurrentEntries( VIEW ViewToWindow )
+
+   VIEW zqLangLST  BASED ON LOD  zqLang
+   VIEW zqLang     BASED ON LOD  zqLang
+   INTEGER Count
+   STRING ( 2 )  szCount
+   STRING ( 500 ) szOriginalValue
+   STRING ( 500 ) szNewValue
+   
+   // Build the update work object for listing and updating Language Text values for multiple languages at one time.
+   
+   // Activate all current entries.
+   ACTIVATE zqLangLST RootOnlyMultiple WHERE zqLangLST.OriginalDialogText.IsAdvancedQuery = "Y"
+   NAME VIEW zqLangLST "zqLangLSTAll"
+   
+   // Add Language entries for each original text.
+   FOR EACH zqLangLST.OriginalDialogText 
+      ACTIVATE zqLang WHERE zqLang.OriginalDialogText.ID = zqLangLST.OriginalDialogText.ID 
+      NAME VIEW zqLang "zqLang"
+      DELETE ENTITY zqLang.OriginalDialogText NONE 
+      COMMIT zqLang
+      DropObjectInstance( zqLang )
+   END
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SELECT_CurrentTestLanguage
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SELECT_CurrentTestLanguage( VIEW ViewToWindow )
+
+   VIEW mUser REGISTERED AS mUser
+   STRING ( 50 ) szSelectedLanguage
+   
+   // Set the selected Language in mUser.
+   szSelectedLanguage = mUser.Demographics.PreferredLanguage 
+   mUser.Demographics.LocalizedLanguage = szSelectedLanguage
+   //mUser.Demographics.LocalizedLanguage = "DE"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SHOW_QuerySummary
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SHOW_QuerySummary( VIEW ViewToWindow )
+
+   VIEW zqFrame     REGISTERED AS zqFrame
+   VIEW zqObjExt    BASED ON LOD  zqObjExt
+   VIEW vResultSet
+   
+   // Format the output to show the Query Summary values.
+   GET VIEW vResultSet NAMED "ResultSet"
+   BuildDisplayValues( zqObjExt, zqFrame, vResultSet )
+   zqFrame.zqFrame.wCurrentDisplayFormat = "S"   // Display is for Summary.
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SHOW_QuerySummaryDetail
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SHOW_QuerySummaryDetail( VIEW ViewToWindow )
+
+   VIEW zqFrame  REGISTERED AS zqFrame
+   VIEW vLOD
+   VIEW vResultSet
+   
+   // Go to format the Query Detail Mapping in the ResultSetDisplay subobject.
+   GET VIEW vResultSet NAMED "ResultSet"
+   GET VIEW vLOD NAMED "QueryView"
+   BuildSummaryDetail( zqFrame, vResultSet, vLOD )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildDashboardEntryList
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildDashboardEntryList( VIEW ViewToWindow )
+
+   VIEW sAppMgr     REGISTERED AS sAppMgr 
+   VIEW mDashBEnLST BASED ON LOD mDashBEn
+   STRING ( 100 ) szLangConv
+   
+   // Make sure Qthe list of Dashboard Entries exists.
+   GET VIEW mDashBEnLST NAMED "mDashBEnLST"
+   IF RESULT < 0
+      ACTIVATE mDashBEnLST Multiple 
+      NAME VIEW mDashBEnLST "mDashBEnLST" 
+      OrderEntityForView( mDashBEnLST, "DashboardEntryDefinition", "Report.Name A" )
+      SET CURSOR FIRST mDashBEnLST.DashboardEntryDefinition  
+   END
+   
+   IF sAppMgr.SplitWindow DOES NOT EXIST 
+      CREATE ENTITY sAppMgr.SplitWindow 
+   END
+   GetTextConv(szLangConv,ViewToWindow,"Dashboard Entries","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_DashboardEntryNew
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DashboardEntryNew( VIEW ViewToWindow )
+
+   VIEW mDashBEnLST REGISTERED AS mDashBEnLST 
+   VIEW mDashBEn    BASED ON LOD mDashBEn
+   VIEW mReportLST  BASED ON LOD  mReport
+   
+   ACTIVATE mDashBEn EMPTY 
+   NAME VIEW mDashBEn "mDashBEn"
+   CREATE ENTITY mDashBEn.DashboardEntryDefinition  
+   
+   // Activate list of Extension Reports.
+   GET VIEW mReportLST NAMED "mReportLST"
+   IF RESULT >= 0
+      DropObjectInstance( mReportLST )
+   END
+   ACTIVATE mReportLST Multiple WHERE mReportLST.Report.Type = "QOE_SUMM"
+   NAME VIEW mReportLST "mReportLST"
+   OrderEntityForView( mReportLST, "Report", "Name A" )
+   SET CURSOR FIRST mReportLST.Report
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_DashboardEntryUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_DashboardEntryUpdate( VIEW ViewToWindow )
+
+   VIEW mDashBEnLST REGISTERED AS mDashBEnLST 
+   VIEW mDashBEn    BASED ON LOD  mDashBEn
+   VIEW mReportLST  BASED ON LOD  mReport
+   
+   ACTIVATE mDashBEn WHERE mDashBEn.DashboardEntryDefinition.ID = mDashBEnLST.DashboardEntryDefinition.ID 
+   NAME VIEW mDashBEn "mDashBEn"
+   
+   // Activate list of Extension Reports.
+   GET VIEW mReportLST NAMED "mReportLST"
+   IF RESULT >= 0
+      DropObjectInstance( mReportLST )
+   END
+   ACTIVATE mReportLST Multiple WHERE mReportLST.Report.Type = "QOE_SUMM"
+   NAME VIEW mReportLST "mReportLST"
+   OrderEntityForView( mReportLST, "Report", "Name A" )
+   SET CURSOR FIRST mReportLST.Report
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DELETE_DashboardEntry
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_DashboardEntry( VIEW ViewToWindow )
+
+   VIEW mDashBEnLST REGISTERED AS mDashBEnLST 
+   VIEW mDashBEn    BASED ON LOD mDashBEn
+   
+   ACTIVATE mDashBEn WHERE mDashBEn.DashboardEntryDefinition.ID = mDashBEnLST.DashboardEntryDefinition.ID 
+   NAME VIEW mDashBEn "mDashBEn"
+   DELETE ENTITY mDashBEn.DashboardEntryDefinition 
+   COMMIT mDashBEn
+   DropEntity( mDashBEnLST, "DashboardEntryDefinition", zREPOS_NONE )
+   SET CURSOR FIRST mDashBEnLST.DashboardEntryDefinition  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildDashboardEntryUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildDashboardEntryUpdate( VIEW ViewToWindow )
+
+   VIEW sAppMgr    REGISTERED AS sAppMgr 
+   STRING ( 100 ) szLangConv
+
+   GetTextConv(szLangConv,ViewToWindow,"Dashboard Add/Update","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CANCEL_DashboardEntryUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_DashboardEntryUpdate( VIEW ViewToWindow )
+
+   VIEW mDashBEn REGISTERED AS mDashBEn
+   
+   DropObjectInstance( mDashBEn )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SAVE_RETURN_DashboardEntryUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SAVE_RETURN_DashboardEntryUpdate( VIEW ViewToWindow )
+
+   VIEW mDashBEnLST REGISTERED AS mDashBEnLST 
+   VIEW mDashBEn    REGISTERED AS mDashBEn
+   VIEW mDashBDf    BASED ON LOD  mDashBDf
+   
+   COMMIT mDashBEn
+   DropObjectInstance( mDashBEn )
+   DropObjectInstance( mDashBEnLST )
+   
+   // Drop the current Dashboard view so that it will be reactived during postbuild.
+   GET VIEW mDashBDf NAMED "mDashBDfQuery"
+   IF RESULT >= 0
+      DropObjectInstance( mDashBDf )
+      PostbuildQueryDashboard( ViewToWindow )
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SELECT_ReportForDashboardEntry
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SELECT_ReportForDashboardEntry( VIEW ViewToWindow )
+
+   VIEW mReportLST REGISTERED AS mReportLST 
+   VIEW mDashBEn   REGISTERED AS mDashBEn
+   VIEW mReport    BASED ON LOD  mReport
+   VIEW zqFrame    BASED ON LOD  zqFrame
+   
+   // If the selection is anything but List Only, the Query for the Report must have a Summary Extenstion.
+   IF mDashBEn.DashboardEntryDefinition.Type != "List" 
+      ACTIVATE mReport WHERE mReport.Report.ID = mReportLST.Report.ID 
+      NAME VIEW mReport "mReportDashboard"
+      SetOI_FromBlob( zqFrame, "zqFrame", ViewToWindow, mReport, "StoredQuery", "QueryBlob", zSINGLE )
+      NAME VIEW zqFrame "zqFrameDashboard"
+      IF zqFrame.SelectedObjectExtensionSummary DOES NOT EXIST
+         MessageSend( ViewToWindow, "", "Save Dashboard Entry",
+                      "The Report must be for a Query with a Summary Extension.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         DropObjectInstance( zqFrame )
+         RETURN 2
+      END
+      DropObjectInstance( zqFrame )
+      DropObjectInstance( mReport )
+   END
+   
+   // Include the selected Report entity for the Dashboard Entry Definition.
+   IF mDashBEn.Report EXISTS
+      IF mReportLST.Report.ID != mDashBEn.Report.ID 
+         EXCLUDE mDashBEn.Report
+         INCLUDE mDashBEn.Report FROM mReportLST.Report 
+      END
+   ELSE
+      INCLUDE mDashBEn.Report FROM mReportLST.Report 
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildQueryDashboard
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildQueryDashboard( VIEW ViewToWindow )
+
+   VIEW sAppMgr  REGISTERED AS sAppMgr
+   VIEW mUser    REGISTERED AS mUser
+   VIEW mDashBDf BASED ON LOD  mDashBDf
+   VIEW zqObjExt BASED ON LOD  zqObjExt
+   VIEW zqFrame  BASED ON LOD  zqFrame
+   VIEW mChart   BASED ON LOD  mChart
+   INTEGER        nRC
+   INTEGER        Count
+   INTEGER        ListCount
+   STRING ( 5 )   szCount
+   STRING ( 5 )   szListCount
+   STRING ( 50 )  szChartName
+   STRING ( 50 )  szLastRunAttributeName
+   STRING ( 50 )  szDisplayGridName
+   STRING ( 50 )  szDisplayGridRowName
+   STRING ( 50 )  szGridGroupName
+   STRING ( 100 ) szLangConv  
+   
+   // Make sure Dashboard object exists for Query.
+   GET VIEW mDashBDf NAMED "mDashBDfQuery"
+   IF RESULT < 0
+      ACTIVATE mDashBDf WHERE mDashBDf.DashboardDefinition.Name = "mDashBDfQuery"
+                          AND mDashBDf.User.ID = mUser.User.ID 
+      IF RESULT >= 0
+         NAME VIEW mDashBDf "mDashBDfQuery"
+      ELSE
+         ACTIVATE mDashBDf EMPTY 
+         NAME VIEW mDashBDf "mDashBDfQuery"
+         CREATE ENTITY mDashBDf.DashboardDefinition 
+         mDashBDf.DashboardDefinition.Name = "mDashBDfQuery"
+         INCLUDE mDashBDf.User FROM mUser.User
+         COMMIT mDashBDf
+      END
+   END
+   NAME VIEW mDashBDf "mDashBDf"
+   IF mDashBDf.DashboardUserEntryDefinition EXISTS
+      OrderEntityForView( mDashBDf, "DashboardUserEntryDefinition", "DisplaySequenceNumber A" )
+      SET CURSOR FIRST mDashBDf.DashboardUserEntryDefinition   
+   END
+   
+   // Initialize last run date/time values to null.
+   mDashBDf.DashboardDefinition.wLastRunDateTime1 = ""
+   mDashBDf.DashboardDefinition.wLastRunDateTime2 = ""
+   mDashBDf.DashboardDefinition.wLastRunDateTime3 = ""
+   mDashBDf.DashboardDefinition.wLastRunDateTime4 = ""
+   mDashBDf.DashboardDefinition.wLastRunDateTime5 = ""
+   mDashBDf.DashboardDefinition.wLastRunDateTime6 = ""
+   
+   // Make sure we're not adding to an existing mChart entry.
+   GET VIEW mChart NAMED "mChart"
+   IF RESULT >= 0
+      DropObjectInstance( mChart )
+   END
+   
+   // Format each Dashboard Entry within the Dashboard object.
+   Count = 0
+   FOR EACH mDashBDf.DashboardUserEntryDefinition 
+      Count = Count + 1
+      szCount = Count
+      szGridGroupName = "GridGroup" + szCount
+      
+      // We always want to delete any previous list entry for this loop count.
+      szDisplayGridName    = "DisplayGrid" + szCount
+      nRC = CheckExistenceOfEntity( mDashBDf, szDisplayGridName )
+      IF nRC >= zCURSOR_SET
+         DeleteEntity( mDashBDf, szDisplayGridName, zREPOS_NONE )
+      END
+      
+      // Don't allow more entries to be processed than groups that are defined.
+      IF Count <= 2 
+         IF mDashBDf.DashboardEntryDefinition.Type = "List" 
+            // Dashboard List / Grid
+            SetCtrlState( ViewToWindow, szGridGroupName, zCONTROL_STATUS_VISIBLE, TRUE )   // Make Grid Group visible.
+            IF mDashBDf.DashboardUserEntryDefinition.zqFrameOI != ""
+               szDisplayGridName    = "DisplayGrid" + szCount
+               szDisplayGridRowName = "DisplayGridRow" + szCount
+               
+               // Expand zqFrame * copy over ResultSetDisplay subobject values.
+               SetOI_FromBlob( zqFrame, "zqFrame", ViewToWindow, mDashBDf, "DashboardUserEntryDefinition", "zqFrameOI", zSINGLE )
+               NAME VIEW zqFrame "zqFrameList"
+               SetOI_FromBlob( zqObjExt, "zqObjExt", ViewToWindow, mDashBDf, "DashboardUserEntryDefinition", "zqObjExtOI", zSINGLE )
+               NAME VIEW zqObjExt "zqObjExtList"
+               BuildFrameSummary( zqObjExt, zqFrame )
+               CreateEntity( mDashBDf, szDisplayGridName, zPOS_AFTER )
+               SetAttributeFromAttribute( mDashBDf, szDisplayGridName, "Title", zqObjExt, "SummaryEntry", "Name" )
+               SetMatchingAttributesByName( mDashBDf, szDisplayGridName, zqFrame, "ResultSetDisplay", zSET_ALL )
+               FOR EACH zqFrame.ResultSetDisplayRow 
+                  CreateEntity( mDashBDf, szDisplayGridRowName, zPOS_AFTER )
+                  SetMatchingAttributesByName( mDashBDf, szDisplayGridRowName, zqFrame, "ResultSetDisplayRow", zSET_ALL )
+               END
+               
+               // Set Last Run Date/Time.
+               szLastRunAttributeName = "wLastRunDateTime" + szCount
+               SetAttributeFromAttribute( mDashBDf, "DashboardDefinition", szLastRunAttributeName, zqFrame, "zqFrame", "LastDashboardRunDateTime" )
+               DropObjectInstance( zqObjExt )
+               DropObjectInstance( zqFrame )
+            END
+         ELSE
+            // Dashboard is Chart.
+            SetCtrlState( ViewToWindow, szGridGroupName, zCONTROL_STATUS_VISIBLE, FALSE )   // Make Grid Group invisible.
+            szChartName = "Chart" + szCount
+            // Retrieve the zqObjExt and zqFrame OI's from the DashboardEntryDefinition and use them to format the Dashboard entry.
+            IF mDashBDf.DashboardUserEntryDefinition.zqObjExtOI != ""
+               SetOI_FromBlob( zqObjExt, "zqObjExt", ViewToWindow, mDashBDf, "DashboardUserEntryDefinition", "zqObjExtOI", zSINGLE )
+               SetOI_FromBlob( zqFrame, "zqFrame", ViewToWindow, mDashBDf, "DashboardUserEntryDefinition", "zqFrameOI", zSINGLE )
+               NAME VIEW zqObjExt "zqObjExtChart"
+               NAME VIEW zqFrame "zqFrameChart"
+               
+               // Set Graph Type
+               IF mDashBDf.DashboardEntryDefinition.Type = "Pie" OR mDashBDf.DashboardEntryDefinition.Type = "PieList"
+                  // Pie Chart
+                  SET CURSOR FIRST zqFrame.GraphDefinition WHERE zqFrame.GraphDefinition.Type = "Pie Chart"
+               ELSE
+                  // Default is Simple Bar Chart.
+                  SET CURSOR FIRST zqFrame.GraphDefinition WHERE zqFrame.GraphDefinition.Type = "Basic Bar Chart"
+               END
+               
+               FormatGraphFromSummary( zqObjExt, zqFrame, szChartName )
+               
+               // Set Last Run Date/Time.
+               szLastRunAttributeName = "wLastRunDateTime" + szCount
+               SetAttributeFromAttribute( mDashBDf, "DashboardDefinition", szLastRunAttributeName, zqFrame, "zqFrame", "LastDashboardRunDateTime" )
+               
+               DropObjectInstance( zqObjExt )
+               DropObjectInstance( zqFrame )
+            END
+         END
+      END
+   END
+   
+   // Set Breadcrumb
+   IF sAppMgr.SplitWindow DOES not EXIST 
+      CREATE ENTITY sAppMgr.SplitWindow 
+   END 
+   GetTextConv(szLangConv,ViewToWindow,"Query Dashboard","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostbuildDashboardUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostbuildDashboardUpdate( VIEW ViewToWindow )
+
+   VIEW sAppMgr     REGISTERED AS sAppMgr 
+   VIEW mDashBEnLST BASED ON LOD  mDashBEn
+   VIEW mDashBDf    REGISTERED AS mDashBDf
+   STRING ( 100 ) szLangConv
+   INTEGER        Count
+   
+   // Make sure list of Dashboard entries exists.
+   GET VIEW mDashBEnLST NAMED "mDashBEnLST"
+   IF RESULT < 0
+      ACTIVATE mDashBEnLST Multiple
+      NAME VIEW mDashBEnLST "mDashBEnLST"  
+      OrderEntityForView( mDashBEnLST, "DashboardEntryDefinition", "Report.Name A" )
+      SET CURSOR FIRST mDashBEnLST.DashboardEntryDefinition 
+   END
+   
+   // Make sure that DashboardUserEntryDefinition entries are sorted in current order and numbered.
+   OrderEntityForView( mDashBDf, "DashboardUserEntryDefinition", "DisplaySequenceNumber A" )
+   Count = 0
+   FOR EACH mDashBDf.DashboardUserEntryDefinition 
+      Count = Count + 1
+      mDashBDf.DashboardUserEntryDefinition.DisplaySequenceNumber = Count
+   END
+
+   GetTextConv(szLangConv,ViewToWindow,"Dashboard Specification","")
+   sAppMgr.SplitWindow.WindowName = sAppMgr.FunctionalArea.dFunctionalAreaTr +  " > " + sAppMgr.FunctionalSubArea.dFunctionalSubAreaTr +  " > " + szLangConv
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdateDashboardContent
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdateDashboardContent( VIEW ViewToWindow )
+
+   VIEW mDashBDf BASED ON LOD mDashBDf
+   
+   // Drop any current named view, "mDashBDf", and recreate it because it might be pointing to another Dashboard object.
+   GET VIEW mDashBDf NAMED "mDashBDf"
+   IF RESULT >= 0
+      DropNameForView( mDashBDf, "mDashBDf", ViewToWindow, zLEVEL_TASK )
+   END
+   
+   // Name the current Dashboard object "mDashBDf" for the update page and make root a subobject version.
+   GET VIEW mDashBDf NAMED "mDashBDfQuery"
+   NAME VIEW mDashBDf "mDashBDf"
+   CreateTemporalSubobjectVersion( mDashBDf, "DashboardDefinition" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SAVE_RETURN_DashboardUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SAVE_RETURN_DashboardUpdate( VIEW ViewToWindow )
+
+   VIEW mDashBEnLST REGISTERED AS mDashBEnLST 
+   VIEW mDashBDf    REGISTERED AS mDashBDf
+   
+   // Remove any List display subobjects to make sure they will be recreated.
+   IF mDashBDf.DisplayGrid1 EXISTS
+      DELETE ENTITY mDashBDf.DisplayGrid1  
+   END
+   IF mDashBDf.DisplayGrid2 EXISTS
+      DELETE ENTITY mDashBDf.DisplayGrid2 
+   END
+   AcceptSubobject( mDashBDf, "DashboardDefinition" )
+   COMMIT mDashBDf
+   DropObjectInstance( mDashBEnLST )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CANCEL_DashboardUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_DashboardUpdate( VIEW ViewToWindow )
+
+   VIEW mDashBEnLST REGISTERED AS mDashBEnLST 
+   VIEW mDashBDf    REGISTERED AS mDashBDf
+   
+   CancelSubobject( mDashBDf, "DashboardDefinition" )
+   COMMIT mDashBDf
+   DropObjectInstance( mDashBEnLST )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: REORDER_DashboardEntries
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+REORDER_DashboardEntries( VIEW ViewToWindow )
+
+   VIEW mDashBDf REGISTERED AS mDashBDf
+   INTEGER Count
+   
+   // Sort Dashboard Entries in new order and renumber them
+   OrderEntityForView( mDashBDf, "DashboardUserEntryDefinition", "DisplaySequenceNumber A" )
+   Count = 0
+   FOR EACH mDashBDf.DashboardUserEntryDefinition 
+      Count = Count + 1
+      mDashBDf.DashboardUserEntryDefinition.DisplaySequenceNumber = Count
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SELECT_DashboardEntry
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SELECT_DashboardEntry( VIEW ViewToWindow )
+
+   VIEW mDashBEnLST REGISTERED AS mDashBEnLST 
+   VIEW mDashBDf    REGISTERED AS mDashBDf
+   
+   // Include the select entry in the Dashboard if it doesn't already exist.
+   SET CURSOR FIRST mDashBDf.DashboardEntryDefinition WITHIN mDashBDf.DashboardDefinition 
+              WHERE mDashBDf.DashboardEntryDefinition.ID = mDashBEnLST.DashboardEntryDefinition.ID 
+   IF RESULT < zCURSOR_SET
+      SET CURSOR LAST mDashBDf.DashboardUserEntryDefinition 
+      CREATE ENTITY mDashBDf.DashboardUserEntryDefinition  
+      INCLUDE mDashBDf.DashboardEntryDefinition FROM mDashBEnLST.DashboardEntryDefinition 
+   END 
+   SET CURSOR FIRST mDashBDf.DashboardUserEntryDefinition  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_RunDashboardReport
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_RunDashboardReport( VIEW ViewToWindow )
+
+   VIEW wXferO   REGISTERED AS wXferO
+   VIEW mDashBDf BASED ON LOD mDashBDf
+   VIEW mReport  BASED ON LOD mReport
+   VIEW zqSQuery BASED ON LOD zqSQuery
+   INTEGER nRC
+   INTEGER Count
+   
+   // Set up the data to execute the query for the selected Dashboard entry Report based on wXferO.Root.DisplayCount.
+   // wXferO.Root.DisplayCount is set by a combination of the Action Java Script and the hidden editbox, "EBDBEntryNo", which sets the number 
+   // specified in the Action, such as "document.getElementById('EBDBEntryNo').value = '1';", into the attribute mapped from "EBDBEntryNo".
+   GET VIEW mDashBDf NAMED "mDashBDfQuery"
+   SET CURSOR FIRST mDashBDf.DashboardUserEntryDefinition 
+   IF RESULT >= zCURSOR_SET
+      // Position on DashboardEntryDefinition based on the Run Action number.
+      Count = wXferO.Root.DisplayCount 
+      LOOP WHILE Count > 1 
+         SET CURSOR NEXT mDashBDf.DashboardUserEntryDefinition 
+         IF RESULT < zCURSOR_SET
+            MessageSend( ViewToWindow, "", "Run Dashboard Entry",
+                         "There is no Dashboard Entry yet for this group.",
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            RETURN 2
+         END
+         Count = Count - 1
+      END
+      GET VIEW mReport NAMED "mReportDashboard"
+      IF RESULT >= 0
+         DropObjectInstance( mReport )
+      END
+      ACTIVATE mReport WHERE mReport.Report.ID = mDashBDf.Report.ID 
+      NAME VIEW mReport "mReportDashboard"
+      NAME VIEW mReport "mReport"     // We need this view for displaying the Report Name.
+      
+      // Set up objects for running the Packaged Query (ie., Report)
+      nRC = SetUpPackagedQueryRun( zqSQuery, mReport )
+      RETURN nRC
+   END 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RUN_DashboardQuery
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+RUN_DashboardQuery( VIEW ViewToWindow )
+
+   VIEW wXferO     REGISTERED AS wXferO
+   VIEW zqFrame    REGISTERED AS zqFrame
+   VIEW mDashBDf   BASED ON LOD  mDashBDf
+   VIEW zqObjExt   BASED ON LOD  zqObjExt
+   VIEW QueryView
+   VIEW vResultSet
+   INTEGER nRC
+
+   // Run the Query using the zqFrame and QueryView objects.
+   // This uses some of the same code as the zqSQuery.ExecQueryForGenerate operation.
+   
+   // Note that the actual graphs (built from mChart entries) are created from mDashBDf.DashboardUserEntryDefinition entries in PostbuildQueryDashboard.
+   // The mDashBDf.DashboardUserEntryDefinition entries are set at the end of this operation for named view "mDashBDfQuery".
+   
+   GET VIEW QueryView NAMED "QueryView"
+   IF RESULT < 0
+      MessageSend( ViewToWindow, "", "Run Dashboard Query",
+                   "Query View doesn't exist.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Set any new selection criteria values into the General Parameter values.
+   FOR EACH zqFrame.SelectionCriteria 
+      SET CURSOR FIRST zqFrame.GeneralParameter WHERE zqFrame.GeneralParameter.wBooleanConditionName = zqFrame.SelectionCriteria.BooleanCriteriaName  
+      zqFrame.GeneralParameter.Value = zqFrame.SelectionCriteria.Value  
+   END
+   
+   // Make sure the ParentEntity path matches the new LOD.
+   FormatDisplay( zqFrame, QueryView )
+
+   // Set up ordering information as requested.
+   SetUpOrderingInfo( zqFrame )
+
+   // Create the Result Set.
+   nRC = ActivateQueryObject( zqFrame, vResultSet )
+   IF nRC < 0
+      // An error has occurred during processing.
+      MessageSend( ViewToWindow, "", "Run Dashboard Query",
+                   "An error occurred during activation of the basic result set.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN nRC
+   END
+   NAME VIEW vResultSet "ResultSet"
+   
+   // Build the Summary object.
+   BuildDisplayValues( zqObjExt, zqFrame, vResultSet )
+   
+   // Build Detail data in zqFrame.
+   // Go to format the Query Detail Mapping in the zqFrame.ResultSetDisplay subobject.
+   GET VIEW QueryView NAMED "QueryView"
+   BuildSummaryDetail( zqFrame, vResultSet, QueryView )
+   
+   // Add zqFrame and zqObjExt objects to Dashboard entry, commit the Dashboard and drop all temporary OI's.
+   // Also set the zqFrame Graph Type from the DashboardEntryDefinition entry.????????
+   GET VIEW mDashBDf NAMED "mDashBDfQuery"
+   GET VIEW zqObjExt NAMED "zqObjExt"
+   
+   zqFrame.zqFrame.LastDashboardRunDateTime = wXferO.Root.dCurrentDateTime 
+   SetBlobFromOI( mDashBDf, "DashboardUserEntryDefinition", "zqObjExtOI", zqObjExt, 0 )
+   SetBlobFromOI( mDashBDf, "DashboardUserEntryDefinition", "zqFrameOI", zqFrame, 0 )
+   COMMIT mDashBDf
+   DropObjectInstance( zqFrame )
+   DropObjectInstance( zqObjExt )
+   DropObjectInstance( vResultSet )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_ShowDashboardDetail
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_ShowDashboardDetail( VIEW ViewToWindow )
+
+   VIEW wXferO   REGISTERED AS wXferO
+   VIEW mDashBDf BASED ON LOD  mDashBDf
+   VIEW zqFrame  BASED ON LOD  zqFrame
+   VIEW zqFrame2 BASED ON LOD  zqFrame
+   VIEW zqObjExt BASED ON LOD  zqObjExt
+   INTEGER nRC
+   INTEGER Count
+   
+   // Expand the zqFrame object for the selected Dashboard entry and go to list the query detail data..
+   GET VIEW mDashBDf NAMED "mDashBDfQuery"
+   SET CURSOR FIRST mDashBDf.DashboardUserEntryDefinition 
+   IF RESULT >= zCURSOR_SET
+      // Position on DashboardEntryDefinition based on the Run Action numbaer.
+      Count = wXferO.Root.DisplayCount 
+      LOOP WHILE Count > 1 
+         SET CURSOR NEXT mDashBDf.DashboardUserEntryDefinition 
+         IF RESULT < zCURSOR_SET
+            MessageSend( ViewToWindow, "", "Run Dashboard Entry",
+                         "There is no Dashboard Entry yet for this group.",
+                         zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+            RETURN 2
+         END
+         Count = Count - 1
+      END
+      
+      // Expand the zqFrame object. Note that it contains the list ( ) of the last run data behind the Summary.
+      SetOI_FromBlob( zqFrame, "zqFrame", ViewToWindow,
+                      mDashBDf, "DashboardUserEntryDefinition", "zqFrameOI", zSINGLE )
+      NAME VIEW zqFrame "zqFrame"
+      NAME VIEW mDashBDf "mDashBDf"
+      
+      // Build a second zqFrmae object to show the Summary detail.
+      SetOI_FromBlob( zqFrame2, "zqFrame", ViewToWindow,
+                      mDashBDf, "DashboardUserEntryDefinition", "zqFrameOI", zSINGLE )
+      NAME VIEW zqFrame2 "zqFrame2"
+      SetOI_FromBlob( zqObjExt, "zqObjExt", ViewToWindow,
+                      mDashBDf, "DashboardUserEntryDefinition", "zqObjExtOI", zSINGLE )
+      NAME VIEW zqObjExt "zqObjExt"
+      BuildFrameSummary( zqObjExt, zqFrame2 )
+      DropObjectInstance( zqObjExt )
+   END 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CLOSE_DashboardEntryDetail
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+CLOSE_DashboardEntryDetail( VIEW ViewToWindow )
+
+   VIEW zqFrame  REGISTERED AS zqFrame
+   VIEW mDashBDf REGISTERED AS mDashBDf
+   
+   DropObjectInstance( zqFrame )
+   DropNameForView( mDashBDf, "mDashBDf", ViewToWindow, zLEVEL_TASK )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FORMAT_DE_SummaryToOutput
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+FORMAT_DE_SummaryToOutput( VIEW ViewToWindow )
+
+   VIEW wXferO  REGISTERED AS wXferO
+   VIEW sHost   REGISTERED AS sHost
+   VIEW mUser   REGISTERED AS mUser
+   VIEW zqFrame BASED ON LOD  zqFrame
+   STRING ( 400 )  szFileName
+   STRING ( 60 )   szReportTitle
+   STRING ( 50 )   szUserName
+   STRING ( 200 )  szMsg
+   STRING ( 200 )  szLangConv
+   
+   // Format the Summary Data in zqObjExt to a CSV File with file name specified in wXferO.
+   
+   GET VIEW zqFrame NAMED "zqFrame2"
+   
+   // Set up Directory / File Name.
+   IF sHost.Host.TempDir = ""
+      MessageSend( zqFrame, "", "",
+                   "A Host Temporary Directoy Name must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   szUserName = mUser.User.UserName 
+   szReportTitle = "QueryDetailReport"
+   szFileName = sHost.Host.TempDir + szReportTitle + szUserName + ".csv"
+   IF wXferO.QueryValues DOES NOT EXIST
+      CREATE ENTITY wXferO.QueryValues 
+   END
+   wXferO.QueryValues.OutputFileName = szFileName
+   
+   // Go to generate the CSV file.
+   FormatRS_DisplayToCSV( zqFrame, szFileName )
+   
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FORMAT_DE_DetailToOutput
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+FORMAT_DE_DetailToOutput( VIEW ViewToWindow )
+
+   VIEW wXferO  REGISTERED AS wXferO
+   VIEW sHost   REGISTERED AS sHost
+   VIEW mUser   REGISTERED AS mUser
+   VIEW zqFrame REGISTERED AS zqFrame
+   STRING ( 400 )  szFileName
+   STRING ( 60 )   szReportTitle
+   STRING ( 50 )   szUserName
+   STRING ( 200 )  szMsg
+   STRING ( 200 )  szLangConv
+   
+   // Format the Summary Data in zqObjExt to a CSV File with file name specified in wXferO.
+   
+   // Set up Directory / File Name.
+   IF sHost.Host.TempDir = ""
+      MessageSend( zqFrame, "", "",
+                   "A Host Temporary Directoy Name must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   szUserName = mUser.User.UserName 
+   szReportTitle = "QueryDetailReport"
+   szFileName = sHost.Host.TempDir + szReportTitle + szUserName + ".csv"
+   IF wXferO.QueryValues DOES NOT EXIST
+      CREATE ENTITY wXferO.QueryValues 
+   END
+   wXferO.QueryValues.OutputFileName = szFileName
+   
+   // Go to generate the CSV file.
+   FormatRS_DisplayToCSV( zqFrame, szFileName )
+
+END

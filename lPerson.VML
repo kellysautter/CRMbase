@@ -1,0 +1,177 @@
+/*************************************************************************************************
+**    
+**    OPERATION: ActivatePersonList
+**    
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+ActivatePersonList( VIEW lPerson BASED ON LOD lPerson,
+                    VIEW fPerson BASED ON LOD fPerson )
+
+   VIEW vQualObject
+   VIEW vWindow
+   INTEGER nResult
+   INTEGER nRC
+   INTEGER nExists
+   INTEGER nRCE
+   INTEGER nRCA
+   STRING ( 1024 ) szString
+   STRING ( 2048 ) szFindString
+   STRING ( 1024 ) szAddToString
+   STRING ( 256  ) szNameString
+   STRING (  32  ) szListName
+   STRING (  64  ) szEntityName
+   STRING (  64  ) szAttributeName
+   STRING (  64  ) szPotentialListName
+
+   // for now do only the person entity
+   nResult = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", fPerson, zMULTIPLE )
+   nRC = CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER )
+   nRC = SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Person" )
+   // loop through each entity and attribute to find what ones were not null, the add a
+   //    qual attribute for each one.
+   nRCE = zGetFirstEntityNameForView( fPerson, szEntityName )
+   szFindString = ""
+   LOOP WHILE nRCE >= 0
+      nExists = CheckExistenceOfEntity( fPerson, szEntityName )
+      IF nExists >= zCURSOR_SET
+         // get the attributes
+         nRCA = zGetFirstAttributeNameForEntity( fPerson, szEntityName, szAttributeName )
+         LOOP WHILE nRCA >= 0
+            GetStringFromAttribute( szString, fPerson, szEntityName, szAttributeName )
+            // if a value was entered...qualify on it.
+            IF szString != ""
+               // set name string to the first cval found just to name the list
+               IF szNameString = ""
+                  szNameString = szAttributeName + " [" + szString + "]"
+               ELSE
+                  // if name string is NOT blank, we have a mutiple qualify situation, so put in an AND oper
+                  szFindString = szFindString + " AND "
+                  CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER )
+                  SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "AND" )
+               END
+               szAddToString = szEntityName + "." + szAttributeName + " like %" + szString + "%"
+               szFindString = szFindString + szAddToString
+               szAddToString = "%" + szString + "%"
+               DBQualEntityByString( vQualObject,  szEntityName, szAttributeName, " like ", szAddToString, 0 )
+            END
+            nRCA = zGetNextAttributeNameForEntity( fPerson, szEntityName, szAttributeName )
+         END
+      END
+      nRCE = zGetNextEntityNameForView( fPerson, szEntityName )
+   END
+   // if name is still blank, then we did not pick anything
+   IF szNameString = ""
+      MessageSend( fPerson, "SearchCriteriaReq", "Activate Person List", 
+                   "Search Criteria is required.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      DropView( vQualObject )
+      RETURN 2
+   END
+   nResult = ActivateObjectInstance ( lPerson , "lPerson", fPerson, vQualObject, zMULTIPLE )
+   IF nResult < 0
+      MessageSend( fPerson, "NoMatch", "Activate Person List", 
+                   "No matches found.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      DropView( vQualObject )
+      RETURN 2
+   END
+   DropView( vQualObject )
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dStuStatusCampus
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dStuStatusCampus( VIEW lPerson BASED ON LOD lPerson,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+ STRING ( 200 ) szString
+ String(30) szStatus
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   GetStringFromAttributeByContext( szStatus,
+                           lPerson,
+                           "Student",
+                           "Status","",20 )
+   IF lPerson.StudentPrimaryCampusLocation EXISTS
+       szString=szStatus + " - " + lPerson.StudentPrimaryCampusLocation.Name
+   ELSE
+       szString=szStatus
+   END
+   StoreStringInRecord ( lPerson,
+                         InternalEntityStructure, InternalAttribStructure, szString )
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dUpperFirstName
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dUpperFirstName( VIEW lPerson BASED ON LOD lPerson,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+ STRING ( 200 ) szFirstName
+ String(30) szStatus
+ 
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   IF lPerson.Person.FirstName = ""
+      szFirstName = ""
+   ELSE
+      zToUpper( lPerson.Person.FirstName,szFirstName)
+      zLTrim( szFirstName, szFirstName, 256 )
+      zRTrim( szFirstName, szFirstName, 256 )
+   END   
+   StoreStringInRecord ( lPerson, InternalEntityStructure, InternalAttribStructure, szFirstName )
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dUpperLastName
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dUpperLastName( VIEW lPerson BASED ON LOD lPerson,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+ STRING ( 200 ) szLastName
+ String(30) szStatus
+ 
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   IF lPerson.Person.LastName = ""
+      szLastName = ""
+   ELSE
+      zToUpper( lPerson.Person.LastName,szLastName)
+      zLTrim( szLastName, szLastName, 256 )
+      zRTrim( szLastName, szLastName, 256 )
+   END   
+   StoreStringInRecord ( lPerson, InternalEntityStructure, InternalAttribStructure, szLastName )
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END

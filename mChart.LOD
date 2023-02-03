@@ -1,0 +1,501 @@
+z1000-Zeidon    MCHART   TZZOLODO 09/21/22   16:07:59 1.0a2    
+eLOD       1
+aZKey      116075941
+aNextZKeyToAssign 116075995
+aName      mChart
+
+eLOD_EntityParent 2
+aName      Chart
+aIndentName Chart
+aIndentLvl 0
+aZKey      116075974
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_EntityChild 3
+aName      CodeLine
+aIndentName    CodeLine
+aIndentLvl 3
+aZKey      116075979
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      116075980
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Line
+aZKey      116075981
+
+eDomainRec 6
+aZKey      1158059
+aName      Note
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      10000 byte string
+aContextRestriction N
+
+eLOD_EntityChild 3
+aName      Option
+aIndentName    Option
+aIndentLvl 3
+aZKey      116075982
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      116075983
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Line
+aZKey      116075984
+
+eDomainRec 6
+
+eLOD_EntityChild 3
+aName      Column
+aIndentName    Column
+aIndentLvl 3
+aZKey      116075985
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      116075986
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Line
+aZKey      116075987
+
+eDomainRec 6
+
+eLOD_EntityChild 3
+aName      Row
+aIndentName    Row
+aIndentLvl 3
+aZKey      116075988
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      116075989
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Line
+aZKey      116075990
+
+eDomainRec 6
+
+eLOD_EntityChild 3
+aName      TempUniqueTitle
+aIndentName    TempUniqueTitle
+aIndentLvl 3
+aZKey      116075991
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      116075992
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Name
+aZKey      116075993
+
+eDomainRec 6
+aZKey      90000032
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      116075994
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      InternalName
+aZKey      116075995
+
+eDomainRec 6
+
+eLOD_AttributeRec 3
+aZKey      116075975
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      Tag
+aZKey      116075976
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      116075977
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      Type
+aZKey      116075978
+
+eDomainRec 5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eSourceFile 2
+aZKey      116075942
+aName      mChart
+aExtension VML
+aLanguageType V
+
+eOperation 3
+aName      CreatePieChart
+aZKey      116075943
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aZKey      116075944
+
+eOperation 3
+aName      CreateTimeLine
+aZKey      116075945
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aZKey      116075946
+
+eOperation 3
+aName      CreatePieChartRS
+aZKey      116075947
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc mChart
+aDataType  V
+aZKey      116075948
+
+eParameter 4
+aShortDesc zqFrame
+aDataType  V
+aZKey      116075949
+
+eParameter 4
+aShortDesc vResultSet
+aDataType  V
+aZKey      116075950
+
+eParameter 4
+aShortDesc szGroupNameGraph
+aDataType  S
+aZKey      116075951
+
+eOperation 3
+aName      CreateBarChartRS
+aZKey      116075952
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc mChart
+aDataType  V
+aZKey      116075953
+
+eParameter 4
+aShortDesc zqFrame
+aDataType  V
+aZKey      116075954
+
+eParameter 4
+aShortDesc vResultSet
+aDataType  V
+aZKey      116075955
+
+eParameter 4
+aShortDesc szGroupNameGraph
+aDataType  S
+aZKey      116075956
+
+eOperation 3
+aName      Create2_LevelBarChart
+aZKey      116075957
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aZKey      116075958
+
+eParameter 4
+aShortDesc zqFrame
+aDataType  V
+aZKey      116075959
+
+eParameter 4
+aShortDesc vResultSet
+aDataType  V
+aZKey      116075960
+
+eParameter 4
+aShortDesc szGroupNameGraph
+aDataType  S
+aZKey      116075961
+
+eOperation 3
+aName      SetJavaScriptLine
+aZKey      116075962
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc mChart
+aDataType  V
+aZKey      116075963
+
+eParameter 4
+aShortDesc JavaScriptLine
+aDataType  S
+aZKey      116075964
+
+eOperation 3
+aName      WriteChartToFile
+aZKey      116075965
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc mChart
+aDataType  V
+aZKey      116075966
+
+eParameter 4
+aShortDesc szDirectoryFileName
+aDataType  S
+aZKey      116075967
+
+eOperation 3
+aName      CreateBarChart
+aZKey      116075968
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aZKey      116075969
+
+eOperation 3
+aName      CreateColumnChart
+aZKey      116075970
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aZKey      116075971
+
+eOperation 3
+aName      CreateComboChart
+aZKey      116075972
+aType      T
+aReturnDataType N
+aClass     0
+
+eParameter 4
+aShortDesc View To Instance
+aDataType  V
+aZKey      116075973
+
+i9         5
+i13        5
+i17        5
+i24        21
+i27        21
+i30        21
+i31        1
+i32        25
+i33        26
+i34        21
+i35        28
+i36        29
+i37        21
+i38        2
+i39        3
+i40        4
+i41        5
+i42        6
+i43        7
+i44        8
+i45        5
+i46        10
+i47        11
+i48        12
+i49        5
+i50        14
+i51        15
+i52        16
+i53        5
+i54        18
+i55        19
+i56        20
+i57        21
+i58        22
+i59        23
+i60        21

@@ -1,0 +1,13 @@
+z1000-Zeidon    2ADC54F3 TZWDVORO 09/27/22   19:08:27 1.0a2    
+eViewObjRef 1
+aZKey      719082739
+aNextZKeyToAssign 719082739
+aName      zqSQuery
+
+eLOD       2
+aZKey      715592925
+aName      zqSQuery
+aDesc      Query - Stored Query
+aDLL_Name  LODOPS2
+aCommitConstraint Y
+

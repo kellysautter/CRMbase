@@ -1,0 +1,1678 @@
+
+/*************************************************************************************************
+**
+**    OPERATION: ActivateAllPersons
+**
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+ActivateAllPersonList( VIEW mPerson BASED ON LOD mPerson,
+                       VIEW ViewToWindow )
+
+   ACTIVATE mPerson MULTIPLE
+
+   OrderEntityForView( mPerson, "Person", "LastName A, FirstName A" )
+
+END
+
+
+/*************************************************************************************************
+**
+**    OPERATION: ActivateAllFaculty
+**
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+ActivateAllFaculty( VIEW mPerson BASED ON LOD mPerson,
+                    VIEW ViewToWindow )
+
+   ACTIVATE mPerson MULTIPLE
+      WHERE mPerson.Faculty EXISTS
+
+   OrderEntityForView( mPerson, "Person", "LastName A, FirstName A" )
+
+END
+
+
+/*************************************************************************************************
+**
+**    OPERATION: ActivateAllProspects
+**
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+ActivateAllProspects( VIEW mPerson BASED ON LOD mPerson,
+                      VIEW ViewToWindow )
+
+   ACTIVATE mPerson MULTIPLE
+      WHERE mPerson.Prospect EXISTS
+
+   OrderEntityForView( mPerson, "Person", "LastName A, FirstName A" )
+
+END
+
+
+/*************************************************************************************************
+**
+**    OPERATION: ActivateAllStaff
+**
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+ActivateAllStaff( VIEW mPerson BASED ON LOD mPerson,
+                  VIEW ViewToWindow )
+
+
+   ACTIVATE mPerson MULTIPLE
+      WHERE mPerson.Staff EXISTS
+
+   OrderEntityForView( mPerson, "Person", "LastName A, FirstName A" )
+
+END
+
+
+/*************************************************************************************************
+**
+**    OPERATION: ActivateFacultyStaff
+**
+**
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+ActivateFacultyStaff( VIEW mPerson BASED ON LOD mPerson,
+                      VIEW ViewToWindow )
+
+   ACTIVATE mPerson MULTIPLE
+      WHERE mPerson.Staff EXISTS OR mPerson.Faculty EXISTS
+
+   OrderEntityForView( mPerson, "Person", "LastName A, FirstName A" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dTrusteeNextElectDate
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dTrusteeNextElectDate( VIEW mPerson BASED ON LOD mPerson,
+                       STRING ( 32 ) InternalEntityStructure,
+                       STRING ( 32 ) InternalAttribStructure,
+                       SHORT GetOrSetFlag )
+
+   VIEW wXferO REGISTERED AS wXferO
+   STRING ( 8 ) szNextElectionDate
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+      IF mPerson.Trustee.LastElectionDate = ""
+         szNextElectionDate = ""
+      ELSE
+         wXferO.Root.WorkDate = mPerson.Trustee.LastElectionDate
+         AddMonthsToDate( wXferO, "Root", "WorkDate", 36 )
+         szNextElectionDate = wXferO.Root.WorkDate 
+      END
+         
+      StoreStringInRecord ( mPerson,
+                            InternalEntityStructure, InternalAttribStructure, szNextElectionDate )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: dPersonType
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dPersonType( VIEW mPerson BASED ON LOD mPerson,
+             STRING ( 32 ) InternalEntityStructure,
+             STRING ( 32 ) InternalAttribStructure,
+             SHORT GetOrSetFlag )
+
+   STRING ( 100 ) szType
+   STRING ( 100 ) szTypeN
+   STRING ( 100 ) szTypeLanguage 
+   STRING ( 20 )  szAdminDiv
+   SHORT          StringLength
+   
+
+   szType = ""
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+      
+      
+         // Set Person Type 
+         szType = ""
+         
+         IF mPerson.Prospect EXISTS AND mPerson.Prospect.ID > 0
+            GetTextConv( szTypeLanguage,mPerson,"Prospect","" )
+            szType = szType + szTypeLanguage+", "
+         END
+
+         IF mPerson.Faculty EXISTS AND mPerson.Faculty.ID > 0
+            GetTextConv( szTypeLanguage,mPerson,"Instructor","" )
+            szType = szType + szTypeLanguage+", "
+         END
+         IF mPerson.Staff EXISTS AND mPerson.Staff.ID > 0
+            GetTextConv( szTypeLanguage,mPerson,"Staff","" )
+            szType = szType + szTypeLanguage+", "
+         END
+         IF mPerson.Donor EXISTS AND mPerson.Donor.ID > 0
+            GetTextConv( szTypeLanguage,mPerson,"Donor","" )
+            szType = szType + szTypeLanguage+", "
+         END
+         IF mPerson.Student EXISTS AND mPerson.Student.ID > 0
+            GetTextConv( szTypeLanguage,mPerson,"Student","" )
+            szType = szType + szTypeLanguage+", "
+         END
+         IF mPerson.Alumni EXISTS AND mPerson.Alumni.ID > 0
+            GetTextConv( szTypeLanguage,mPerson,"Alumni","" )
+            szType = szType + szTypeLanguage+", "
+         END
+         IF mPerson.Employee EXISTS AND mPerson.Employee.ID > 0
+            GetTextConv( szTypeLanguage,mPerson,"Employee","" )
+            szType = szType + szTypeLanguage+", " 
+         END
+
+         StringLength = zGetStringLen( szType )
+         StringLength = StringLength - 2
+         szTypeN = szType[1:StringLength]
+
+         StoreStringInRecord ( mPerson,
+                               InternalEntityStructure, InternalAttribStructure, szTypeN )
+
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+/*************************************************************************************************
+**
+**    OPERATION: dPersonType
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dIsEmployee( VIEW mPerson BASED ON LOD mPerson,
+             STRING ( 32 ) InternalEntityStructure,
+             STRING ( 32 ) InternalAttribStructure,
+             SHORT GetOrSetFlag )
+
+   STRING ( 100 ) szType
+   STRING ( 100 ) szTypeN
+   STRING ( 100 ) szTypeLanguage 
+   STRING ( 20 )  szAdminDiv
+   SHORT          StringLength
+   
+
+   szType = ""
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+      
+      
+         // Set Person Type 
+         szType = ""
+         
+                IF mPerson.Employee EXISTS AND mPerson.Employee.ID > 0 AND mPerson.Employee.Status="A"
+            szType = "Y"
+         END
+
+         StoreStringInRecord ( mPerson,
+                               InternalEntityStructure, InternalAttribStructure, szType )
+
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+/*************************************************************************************************
+**
+**    OPERATION: dPersonFullName
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dPersonFullNameFML( VIEW mPerson BASED ON LOD mPerson,
+                    STRING ( 32 ) InternalEntityStructure,
+                    STRING ( 32 ) InternalAttribStructure,
+                    SHORT GetOrSetFlag )
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+         PersonName_FirstMiddleLast( mPerson, InternalEntityStructure, InternalAttribStructure, GetOrSetFlag )
+
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: dPersonFullNameLFM
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dPersonFullNameLFM( VIEW mPerson BASED ON LOD mPerson,
+                    STRING ( 32 ) InternalEntityStructure,
+                    STRING ( 32 ) InternalAttribStructure,
+                    SHORT GetOrSetFlag )
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+         PersonName_LastFirstMiddle( mPerson, InternalEntityStructure, InternalAttribStructure, GetOrSetFlag )
+
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: dAddressLabelFull
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dAddressLabelFull( VIEW mPerson BASED ON LOD mPerson,
+                   STRING ( 32 ) InternalEntityStructure,
+                   STRING ( 32 ) InternalAttribStructure,
+                   SHORT GetOrSetFlag )
+   SHORT nRC
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+      nRC = dAdressLabelFull( mPerson /* vAnyObject */,
+            InternalEntityStructure /* szInternalEntityStructure */,
+            InternalAttribStructure /* szInternalAttribStructure */,
+            GetOrSetFlag /* nGetOrSetFlag */ )
+      RETURN nRC
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dUsername
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dUsername( VIEW mPerson BASED ON LOD mPerson,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+   
+   STRING (100) strUsername
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+       strUsername = ""
+       IF mPerson.LoginUser EXISTS
+           IF mPerson.LoginUser.UserName   != ""
+               strUsername = mPerson.LoginUser.UserName  
+           END
+       END
+        StoreStringInRecord ( mPerson,InternalEntityStructure, InternalAttribStructure, strUsername )
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dCityStateZipCountry
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dCityStateZipCountry( VIEW mPerson BASED ON LOD mPerson,
+                      STRING ( 32 ) InternalEntityStructure,
+                      STRING ( 32 ) InternalAttribStructure,
+                      SHORT GetOrSetFlag )
+
+   STRING ( 60 ) szCityStateZipCountry
+   STRING ( 20 ) szCountry
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+      szCountry = mPerson.PrimaryAddress.Country
+
+         szCityStateZipCountry = mPerson.PrimaryAddress.City + ", " +
+                                 mPerson.PrimaryAddress.StateProvince + " " +
+                                 mPerson.PrimaryAddress.PostalCode + " " +
+                                 szCountry
+   
+      StoreStringInRecord ( mPerson,
+                            InternalEntityStructure, InternalAttribStructure, szCityStateZipCountry )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: ObjectConstraint
+**
+**
+*************************************************************************************************/
+OBJECT CONSTRAINT OPERATION
+ObjectConstraint( VIEW mPerson BASED ON LOD mPerson,
+                  SHORT Event,
+                  SHORT State )
+
+   VIEW sHost    REGISTERED AS sHost
+   VIEW mPerson2 BASED ON LOD  mPerson
+   VIEW mPerson3 BASED ON LOD  mPerson
+   VIEW mDonor   BASED ON LOD  mDonor
+   VIEW mStudent BASED ON LOD  mStudent
+   VIEW mProspct /*BASED ON LOD  mProspct */
+   VIEW mFaculty /*BASED ON LOD  mFaculty */
+   VIEW mAdmDiv  BASED ON LOD  mAdmDiv
+   VIEW sAppMgr  BASED ON LOD  sAppMgr
+   VIEW mUser    REGISTERED AS mUser
+   STRING ( 1 ) szRole
+   STRING (  32  ) szFunctionalArea
+   STRING ( 254 ) szLastname
+   STRING ( 254 ) szTempLastname
+   STRING ( 254 ) szFirstname
+   STRING ( 254 ) szTempFirstname
+   INTEGER nRC 
+   
+   CASE Event
+       OF   zOCE_ACTIVATE:
+       
+          IF State != 0
+             // Return if this is not a regular Activate OI. (For example, an ActivateOI_FromOI)
+             RETURN 0
+          END
+    
+          CreateViewFromView( mPerson2, mPerson)
+    
+          // Relink PrimaryAddress with Address.
+          IF mPerson2.PrimaryAddress EXISTS
+             SET CURSOR FIRST mPerson2.Address WHERE mPerson2.Address.ID = mPerson2.PrimaryAddress.ID
+             RelinkInstanceToInstance( mPerson2, "PrimaryAddress",
+                                       mPerson2, "Address" )
+             //IF mPerson2.PrimaryForPerson EXISTS
+             //   RelinkInstanceToInstance( mPerson2, "PrimaryForPerson",
+             //                             mPerson2, "Person" )
+             //END
+          END
+ 
+          FOR EACH mPerson2.Category 
+             INCLUDE  mPerson2.ListedCategory FROM  mPerson2.Category 
+          END
+          FOR EACH mPerson2.FacultyCategory 
+             INCLUDE  mPerson2.ListedCategory FROM  mPerson2.FacultyCategory 
+          END
+          FOR EACH mPerson2.ProspectCategory 
+             INCLUDE  mPerson2.ListedCategory FROM  mPerson2.ProspectCategory 
+          END
+          FOR EACH mPerson2.StudentCategory 
+             INCLUDE  mPerson2.ListedCategory FROM  mPerson2.StudentCategory 
+          END
+          FOR EACH mPerson2.StaffCategory 
+             INCLUDE  mPerson2.ListedCategory FROM  mPerson2.StaffCategory 
+          END
+          
+          
+          // Set the work Emailback Date, if a Emailback entry exists for the current User.
+          nRC = GetViewByName( mUser, "mUser", mPerson, zLEVEL_TASK )
+          IF nRC < 0
+             // Use task view in case we're running under Web.
+             nRC = GetViewByName( mUser, "mUser", mPerson, zLEVEL_TASK )
+          END
+                    IF nRC >= 0 
+             SET CURSOR FIRST mPerson.CallbackUser WITHIN mPerson.Person 
+                        WHERE mPerson.CallbackUser.ID = mUser.User.ID 
+             IF RESULT >= zCURSOR_SET
+                mPerson.Person.wCallbackDate   = mPerson.Callback.Date 
+             END 
+          END
+          
+          IF nRC >= 0 
+             SET CURSOR FIRST mPerson.EmailbackUser WITHIN mPerson.Person 
+                        WHERE mPerson.EmailbackUser.ID = mUser.User.ID 
+             IF RESULT >= zCURSOR_SET
+                mPerson.Person.wEmailbackDate   = mPerson.Emailback.Date 
+             END 
+          END
+    
+          // Build the derived entity path FamilyPerson
+          BuildFamilyRole( mPerson )
+          
+          nRC = GetViewByName( sAppMgr, "sAppMgr", mPerson, zLEVEL_TASK )
+          IF nRC < 0
+             // Use task view in case we're running under Web.
+             nRC = GetViewByName( sAppMgr, "sAppMgr", mPerson, zLEVEL_TASK )
+          END
+          IF  nRC > 0  
+             szFunctionalArea = sAppMgr.FunctionalArea.FunctionalAreaName 
+          ELSE 
+             szFunctionalArea = ""
+          END 
+          // Build the combined Contact Activity list of Person and Donor, if Donor exists, or
+          // Person and Student, if Student exists.
+          IF mPerson.Donor EXISTS
+             GET VIEW mDonor NAMED "mDonor"
+             IF RESULT >= 0
+                IF mPerson.Donor.ID = mDonor.Donor.ID  
+                   FOR EACH mDonor.ContactActivity
+                      INCLUDE mPerson.ListedContactActivity FROM mDonor.ContactActivity 
+                      mPerson.ListedContactActivity.wObjectType = "Donor"
+                   END
+                END
+             END
+          END
+          IF mPerson.Student EXISTS
+             GET VIEW mStudent NAMED "mStudent"
+             IF RESULT >= 0
+                IF mPerson.Student.ID = mStudent.Student.ID  
+                   FOR EACH mStudent.ContactActivity
+                      IF mStudent.ContactActivity.PrivateToArea = "Y"
+                         // On 11/20/09, based on requests by Dana Parker and Mindy Vasquez, we will include
+                         // FinancialAid entries with StudentAcounts and vice versa.
+                         IF szFunctionalArea = "FinancialAid" OR szFunctionalArea = "StudentAccounts"
+                            IF mStudent.ContactActivity.FunctionalArea = "FinancialAid" OR 
+                               mStudent.ContactActivity.FunctionalArea = "StudentAccounts"
+                               
+                               INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                               mPerson.ListedContactActivity.wObjectType = "Student"
+                            END
+                         ELSE
+                            IF mStudent.ContactActivity.FunctionalArea =  szFunctionalArea
+                               INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                               mPerson.ListedContactActivity.wObjectType = "Student"
+                            END 
+                         END
+                      ELSE 
+                         INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                         mPerson.ListedContactActivity.wObjectType = "Student"
+                      END
+                   END
+                END
+             ELSE 
+                GET VIEW mStudent NAMED "mFAStu"
+                IF RESULT >= 0
+                   IF mPerson.Student.ID = mStudent.Student.ID  
+                      FOR EACH mStudent.ContactActivity
+                         IF mStudent.ContactActivity.PrivateToArea = "Y"
+                            // On 11/20/09, based on requests by Dana Parker and Mindy Vasquez, we will include
+                            // FinancialAid entries with StudentAcounts and vice versa.
+                            IF szFunctionalArea = "FinancialAid" OR szFunctionalArea = "StudentAccounts"
+                               IF mStudent.ContactActivity.FunctionalArea = "FinancialAid" OR 
+                                  mStudent.ContactActivity.FunctionalArea = "StudentAccounts"
+                                  
+                                  INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                                  mPerson.ListedContactActivity.wObjectType = "Student"
+                               END
+                            ELSE
+                               IF mStudent.ContactActivity.FunctionalArea =  szFunctionalArea
+                                  INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                                  mPerson.ListedContactActivity.wObjectType = "Student"
+                               END 
+                            END
+                         ELSE 
+                            INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                            mPerson.ListedContactActivity.wObjectType = "Student"
+                         END
+                      END
+                   END
+                ELSE 
+                   GET VIEW mStudent NAMED "mSAStu"
+                   IF RESULT >= 0
+                      IF mPerson.Student.ID = mStudent.Student.ID  
+                         FOR EACH mStudent.ContactActivity
+                            IF mStudent.ContactActivity.PrivateToArea = "Y"
+                               // On 11/20/09, based on requests by Dana Parker and Mindy Vasquez, we will include
+                               // FinancialAid entries with StudentAcounts and vice versa.
+                               IF szFunctionalArea = "FinancialAid" OR szFunctionalArea = "StudentAccounts"
+                                  IF mStudent.ContactActivity.FunctionalArea = "FinancialAid" OR 
+                                     mStudent.ContactActivity.FunctionalArea = "StudentAccounts"
+                                     
+                                     INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                                     mPerson.ListedContactActivity.wObjectType = "Student"
+                                  END
+                               ELSE
+                                  IF mStudent.ContactActivity.FunctionalArea =  szFunctionalArea
+                                     INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                                     mPerson.ListedContactActivity.wObjectType = "Student"
+                                  END 
+                               END
+                            ELSE 
+                               INCLUDE mPerson.ListedContactActivity FROM mStudent.ContactActivity 
+                               mPerson.ListedContactActivity.wObjectType = "Student"
+                            END
+                         END
+                      END
+                   END
+                END
+             END
+          END
+          IF mPerson.Prospect EXISTS
+             TraceLineS("mPerson object constraint: ","1")
+             GET VIEW mProspct NAMED "mProspct"
+             
+             IF RESULT >= 0
+              
+                FOR EACH mProspct.StudentContactActivity WHERE mProspct.StudentContactActivity.FunctionalArea = "FinancialAid" 
+                   INCLUDE mPerson.ListedContactActivity FROM mProspct.StudentContactActivity 
+                   mPerson.ListedContactActivity.wObjectType = "Fin Aid"
+                END
+             END
+             TraceLineS("mPerson object constraint: ","2")
+          END
+          OrderEntityForView( mPerson, "ContactActivity", "CompletedDateTime D" )
+          TraceLineS("mPerson object constraint: ","3")
+          FOR EACH mPerson2.ContactActivity
+             // If the entry is Private, only include for the proper area.
+             IF mPerson2.ContactActivity.PrivateToArea = "Y"
+                // The only current use of Private is Faculty.
+                GET VIEW mFaculty NAMED "mFaculty"
+                IF RESULT >= 0
+                   IF mFaculty.Person EXISTS    // If the Faculty entry is being created, there may be no Person yet.
+                      IF mPerson2.Person.ID = mFaculty.Person.ID
+                         INCLUDE mPerson.ListedContactActivity FROM mPerson2.ContactActivity 
+                         mPerson.ListedContactActivity.wObjectType = "Person"
+                      END
+                   END
+                END
+             ELSE
+                INCLUDE mPerson.ListedContactActivity FROM mPerson2.ContactActivity 
+                mPerson.ListedContactActivity.wObjectType = "Person"
+             END
+          END
+          TraceLineS("mPerson object constraint: ","4")
+          SET CURSOR FIRST mPerson.ListedContactActivity  
+          OrderEntityForView( mPerson, "ListedContactActivity", "CompletedDateTime D" )
+          
+          OrderEntityForView( mPerson, "VehicleRegistration", "VehicleRegistrationCollegeYear.Year D" )
+          FOR EACH mPerson.VehicleRegistration
+             INCLUDE mPerson.DisplayVehicleRegistration FROM mPerson.VehicleRegistration 
+          END
+          SET CURSOR FIRST mPerson.VehicleRegistration
+          
+          DropView( mPerson2 )
+          TraceLineS("mPerson object constraint: ","5")
+          
+          // Build the DisplayCustomAttribute work entries depending on what function is being executed.
+          GET VIEW sAppMgr NAMED "sAppMgr"
+          IF RESULT >= 0
+           TraceLineS("mPerson object constraint: ","5a")
+            BuildDisplayCustAttrs( mPerson, sHost )
+             TraceLineS("mPerson object constraint: ","5b")
+          END
+          mPerson.Person.wOriginalGovernmentID  = mPerson.Person.GovernmentID 
+          
+          // Create a copy of the original Person to be used during save at commit time.
+          /*ActivateOI_FromOI( mPerson2, mPerson, zSINGLE )
+          CREATE ENTITY mPerson.CurrentTransaction
+          SetBlobFromOI( mPerson, "CurrentTransaction", "OriginalOI", mPerson2, zCOMPRESSED )
+          DropObjectInstance( mPerson2 )*/
+          TraceLineS("mPerson object constraint: ","6")
+          /* end zOCE_ACTIVATE */
+       OF   zOCE_ACTIVATE_EMPTY:
+       
+          // Build the DisplayCustomAttribute work entries depending on what function is being executed.
+          BuildDisplayCustAttrs( mPerson, sHost )
+
+        /* end zOCE_ACTIVATE_EMPTY */
+       OF   zOCE_COMMIT:
+         IF mPerson.Person EXISTS
+         
+            // KJS 07/22/20 - Check if the lastname or firstname has a leading or trailing space, if so fix.
+            szLastname = mPerson.Person.LastName 
+            szFirstname = mPerson.Person.FirstName 
+            szTempLastname = szLastname
+            szTempFirstname = szFirstname
+            zLTrim( szTempLastname, szTempLastname, 256 )
+            zRTrim( szTempLastname, szTempLastname, 256 )
+            zLTrim( szTempFirstname, szTempFirstname, 256 )
+            zRTrim( szTempFirstname, szTempFirstname, 256 )
+            
+            IF zstrlen( szLastname ) != zstrlen( szTempLastname )
+               mPerson.Person.LastName = szTempLastname
+            END            
+            IF zstrlen( szFirstname ) != zstrlen( szTempFirstname )
+               mPerson.Person.FirstName = szTempFirstname
+            END
+         
+            // Set new modifed date/time.
+            SetAttributeFromCurrentDateTime( mPerson, "Person", "ModifiedDateTime" )
+         
+            // If Address has changed, set Modified flag.
+            CreateViewFromView( mPerson2, mPerson)
+            FOR EACH mPerson2.Address  
+               nRC = GetIncrementalUpdateFlags( mPerson2, "Address", zSET_INCR_UPDATED )
+               IF nRC = 1
+                  SetAttributeFromCurrentDateTime( mPerson2, "Address", "ModifiedDateTime" )
+               END
+            END
+            
+            // Make sure Longitude and Latitude are correctly set.
+            FOR EACH mPerson2.Address WHERE mPerson2.Address.PostalCode != ""
+               SetAddressLongitudeLatitude( mPerson2, "Address", mPerson2.Address.PostalCode )
+            END
+            DropView( mPerson2 )
+            
+            // Set IPEDS_Ethnicity as needed.
+            SetIPEDS_Ethnicity( mPerson )
+            
+            // If the Person is Deceased, make sure the ContactPreference attribute is set to "do not call" (N).
+            IF mPerson.Person.Deceased = "Y"
+               mPerson.Person.ContactPreference = "N"
+            END
+            // Create the Change Log entry.
+            // For Prospects, create a blob of the before and after images of the object.
+            // Drop any current Transaction entries (because we don't want past OI blobs taking up space in this OI blob)
+            // and store a copy (blob) of the current OI in the new transaction entry.
+            // Also create a copy of the original OI.
+         
+            // Always generate log entry.
+            GenerateTransactionEntry( mPerson )
+            
+            IF mPerson.Person.wOriginalGovernmentID  != "" AND sHost.Host.UsesSSN  ="Y"
+               IF mPerson.Person.wOriginalGovernmentID != mPerson.Person.GovernmentID
+                  CREATE ENTITY mPerson.PersonalDataModification 
+                  mPerson.PersonalDataModification.OriginalSSN = mPerson.Person.wOriginalGovernmentID
+                  mPerson.PersonalDataModification.NewSSN      = mPerson.Person.GovernmentID
+                  SetAttributeFromCurrentDateTime( mPerson, "PersonalDataModification", "ModifiedDateTime" )
+                  GetViewByName( mUser, "mUser", mPerson, zLEVEL_TASK )
+                  IF nRC < 0
+                     // Use task view in case we're running under Web.
+                     nRC = GetViewByName( mUser, "mUser", mPerson, zLEVEL_TASK )
+                  END
+                  IF nRC >= 0
+                  INCLUDE mPerson.PersonalDataModificationUser FROM mUser.User 
+                  END
+                  // The following 3 statements were added by DonC on 11/19/10 to correct the bug where a Modification entry
+                  // was not created when an SSN was changed to another value and then back to the same value without refreshing mPerson.
+                  // It also makes sure the entries are in reverse order by date.
+                  mPerson.Person.wOriginalGovernmentID = mPerson.Person.GovernmentID
+
+                  OrderEntityForView( mPerson, "PersonalDataModification", "ModifiedDateTime D" )
+                  SET CURSOR FIRST mPerson.PersonalDataModification  
+               END
+            END
+           IF nRC >= 0 AND mPerson.Person.ID = mUser.Person.ID
+               RelinkInstanceToInstance( mUser, "Person",
+                                       mPerson, "Person" )
+           END
+           TraceLineS("mPerson object constraint commit: ","5")
+            // If this Person is a Prospect, see if we need to update Territory information.
+            IF mPerson.Prospect EXISTS
+            
+               // If the Administrative Division requests that Counselor and Territory be automatically
+               // determined, include the proper values here.
+               GET VIEW mProspct NAMED "mProspct"
+               IF RESULT >= 0 
+                  GET VIEW mAdmDiv NAMED "mAdmDiv"
+                  IF RESULT >= 0
+                     IF mAdmDiv.AdministrativeDivision.AutoAssignCounselorFlag = "Y"
+                   //     AssignTerritoryValues( mProspct, mAdmDiv )
+                     END
+                  END
+               END
+            END
+            
+            // Update any Custom Attribute values.
+            FOR EACH mPerson.DisplayCustomAttribute 
+               SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                          WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+               IF RESULT < zCURSOR_SET
+                  SET CURSOR FIRST sHost.CustomAttribute WHERE sHost.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+                  CREATE ENTITY mPerson.CustomAttributeEntry  
+                  INCLUDE mPerson.CustomAttribute FROM sHost.CustomAttribute 
+               END
+                  TraceLineS("KB resave name: ",mPerson.DisplayCustomAttribute.Name)
+                     TraceLineS("KB resave entry text: ",mPerson.DisplayCustomAttribute.EntryValueText)
+               mPerson.CustomAttributeEntry.Text = mPerson.DisplayCustomAttribute.EntryValueText 
+               mPerson.CustomAttributeEntry.Date = mPerson.DisplayCustomAttribute.EntryValueDate 
+            END
+            
+         END
+         TraceLineS("mPerson object constraint commit: ","6")
+       /* end zOCE_COMMIT */
+       OF   zOCE_DROPOI:
+
+       /* end zOCE_DROPOI */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ValidateDeletePerson
+**    
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+ValidateDeletePerson( VIEW mPerson BASED ON LOD mPerson )
+
+   STRING ( 1 ) szConstraintError
+
+   // Validate that important information tied to the person does not exist.
+        
+   // Don't allow delete if the Person is still a Prospect, Student, Donor or Alumni.
+   szConstraintError = ""
+   IF mPerson.Faculty EXISTS 
+      szConstraintError = "Y" 
+   END
+   IF mPerson.Prospect EXISTS 
+      szConstraintError = "Y" 
+   END
+   IF mPerson.Staff EXISTS 
+      szConstraintError = "Y" 
+   END
+   IF mPerson.Student EXISTS 
+      szConstraintError = "Y" 
+   END
+   IF mPerson.Donor EXISTS 
+      szConstraintError = "Y" 
+   END
+   IF mPerson.Alumni EXISTS 
+      szConstraintError = "Y" 
+   END
+   IF mPerson.Vendor EXISTS 
+      szConstraintError = "Y" 
+   END
+   IF mPerson.Trustee EXISTS 
+      szConstraintError = "Y" 
+   END
+      IF mPerson.Employee EXISTS 
+      szConstraintError = "Y" 
+   END
+   IF szConstraintError = "Y"
+      MessageSend( mPerson, "mPerson001", "Delete Person",
+                   "The person being deleted has active roles (eg., Prospect, Student, Alumni) and cannot be deleted.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // A Person with Categories cannot be deleted.
+   IF mPerson.Category EXISTS
+      MessageSend( mPerson, "mPerson002", "Delete Person",
+                   "The person cannot be deleted because he/she has Categories assigned.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RemoveFamilyRole
+**    
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+RemoveFamilyRole( VIEW mPerson BASED ON LOD mPerson )
+
+   VIEW mPerson2 BASED ON LOD mPerson
+
+   // Because of an error in the Terminal Services environment at ENC, we must remove a derived subobject
+   // before commiting it.
+   CreateViewFromView( mPerson2, mPerson)
+   FOR EACH mPerson2.FamilyRole 
+      DELETE ENTITY mPerson2.FamilyRole NONE 
+   END
+   DropView( mPerson2 )
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: IsPrimaryAddress
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+IsPrimaryAddress( VIEW mPerson BASED ON LOD mPerson,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+
+   STRING ( 1 ) szPrimary
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+         szPrimary = ""
+         IF mPerson.PrimaryAddress EXISTS
+            IF mPerson.PrimaryAddress.ID = "" AND mPerson.Address.wPrimaryAddress = "Y"
+               szPrimary = "Y"
+            ELSE
+            IF mPerson.PrimaryAddress.ID != "" AND mPerson.Address.ID = mPerson.PrimaryAddress.ID 
+               szPrimary = "Y"
+            END
+            END
+         END
+         StoreStringInRecord ( mPerson,
+                               InternalEntityStructure, InternalAttribStructure, szPrimary )
+         
+        /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: IsPrimaryAddress
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+IsRemitAddress( VIEW mPerson BASED ON LOD mPerson,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+         IF mPerson.RemitToVendor EXISTS  
+            StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, "Y" )
+         ELSE 
+            StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, "" )
+         END
+        /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dDocumentOrSubject
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dDocumentOrSubject( VIEW mPerson BASED ON LOD mPerson,
+                    STRING ( 32 ) InternalEntityStructure,
+                    STRING ( 32 ) InternalAttribStructure,
+                    SHORT GetOrSetFlag )
+
+   STRING ( 32 )  szEntityName
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      IF szEntityName = "ContactActivity"
+         IF mPerson.ContactActivity.EmailSubjectLine != ""
+            StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, mPerson.ContactActivity.EmailSubjectLine )
+         ELSE
+            IF mPerson.Document EXISTS
+               StoreStringInRecord ( mPerson,
+                                     InternalEntityStructure, InternalAttribStructure, mPerson.Document.Name )
+            ELSE
+               StoreStringInRecord ( mPerson,
+                                     InternalEntityStructure, InternalAttribStructure, "" )
+            END
+         END
+      ELSE
+         IF mPerson.ListedContactActivity.EmailSubjectLine != ""
+            StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, mPerson.ListedContactActivity.EmailSubjectLine )
+         ELSE
+            IF mPerson.ListedContactActivityDocument EXISTS
+               StoreStringInRecord ( mPerson,
+                                     InternalEntityStructure, InternalAttribStructure, mPerson.ListedContactActivityDocument.Name )
+            ELSE
+               StoreStringInRecord ( mPerson,
+                                     InternalEntityStructure, InternalAttribStructure, "" )
+            END
+         END
+      END
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dEventDescOrRecipients
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dEventDescOrRecipients( VIEW mPerson BASED ON LOD mPerson,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+   STRING ( 32 )  szEntityName
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+      GetEntityNameFromStructure( InternalEntityStructure, szEntityName )
+      IF szEntityName = "ContactActivity"
+         IF mPerson.ContactActivity.UserEmailRecipients != ""
+            StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, mPerson.ContactActivity.UserEmailRecipients )
+         ELSE
+            IF mPerson.ContactActivityEvent EXISTS
+               StoreStringInRecord ( mPerson,
+                                     InternalEntityStructure, InternalAttribStructure, mPerson.ContactActivityEvent.Description )
+            ELSE
+               StoreStringInRecord ( mPerson,
+                                     InternalEntityStructure, InternalAttribStructure, "" )
+            END
+         END
+      ELSE
+         IF mPerson.ListedContactActivity.UserEmailRecipients != ""
+            StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, mPerson.ListedContactActivity.UserEmailRecipients )
+         ELSE
+            IF mPerson.ListedContactActivityEvent EXISTS
+               StoreStringInRecord ( mPerson,
+                                     InternalEntityStructure, InternalAttribStructure, mPerson.ListedContactActivityEvent.Description )
+            ELSE
+               StoreStringInRecord ( mPerson,
+                                     InternalEntityStructure, InternalAttribStructure, "" )
+            END
+         END
+      END
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dDeceasedDisplayText
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dDeceasedDisplayText( VIEW mPerson BASED ON LOD mPerson,
+                      STRING ( 32 ) InternalEntityStructure,
+                      STRING ( 32 ) InternalAttribStructure,
+                      SHORT GetOrSetFlag )
+
+   STRING ( 100 ) szTypeLanguage 
+        
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+      
+         IF mPerson.FamilyPerson.Deceased = "Y"
+            GetTextConv( szTypeLanguage,mPerson,"Deceased","" )
+            StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, szTypeLanguage )
+         ELSE 
+            StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, "" )
+         END
+         
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dListedCA_DocumentName
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dListedCA_DocumentName( VIEW mPerson BASED ON LOD mPerson,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+   
+   STRING ( 90 ) szDocumentName
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+      
+         // This is the normal Document Name, unless this is a Health Services contact entry, in which case,
+         // "Health Services Note" will be displayed.
+         IF mPerson.ListedContactActivity.HealthServicesNote = ""
+            // This is a regular contact activity entry, so use Document Name, if it exists.
+            IF mPerson.ListedContactActivityDocument EXISTS
+               szDocumentName = mPerson.ListedContactActivityDocument.Name 
+            END
+         ELSE 
+            szDocumentName = "Health Services Note"
+         END
+         StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, szDocumentName )
+         
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dPersonCombinMailExist
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dPersonCombinMailExist( VIEW mPerson BASED ON LOD mPerson,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+STRING ( 1 ) szExists
+  
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+IF mPerson.PersonCombiningItsMailing EXISTS
+   szExists="Y"
+ELSE
+   szExists="N"
+END
+ StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, szExists )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dCombinedMailingPerson
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dCombinedMailingPerson( VIEW mPerson BASED ON LOD mPerson,
+                        STRING ( 32 ) InternalEntityStructure,
+                        STRING ( 32 ) InternalAttribStructure,
+                        SHORT GetOrSetFlag )
+
+STRING ( 254 ) szExists
+  
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+      IF mPerson.CombinedMailingPerson EXISTS
+   szExists=mPerson.CombinedMailingPerson.dFullName 
+ELSE
+   szExists=""
+END
+ StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, szExists )
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dGovernmentIDExists
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dGovernmentIDExists( VIEW mPerson BASED ON LOD mPerson,
+                     STRING ( 32 ) InternalEntityStructure,
+                     STRING ( 32 ) InternalAttribStructure,
+                     SHORT GetOrSetFlag )
+
+   VIEW mPerson2  BASED ON LOD mPerson
+    STRING ( 1000 ) szMsg
+     INTEGER nRC
+     
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+IF mPerson.Person.GovernmentID != "" and mPerson.Person.GovernmentID != "0"
+      ACTIVATE mPerson2 RootOnlyMultiple WHERE mPerson2.Person.GovernmentID = mPerson.Person.GovernmentID 
+                                           AND mPerson2.Person.ID != mPerson.Person.ID 
+      IF RESULT >= 0
+ StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, "Y" )
+      ELSE  StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, "N" )
+                                  END
+      DropObjectInstance( mPerson2 )
+END
+   
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dNameAndCityExist
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dNameAndCityExist( VIEW mPerson BASED ON LOD mPerson,
+                   STRING ( 32 ) InternalEntityStructure,
+                   STRING ( 32 ) InternalAttribStructure,
+                   SHORT GetOrSetFlag )
+ VIEW mPerson2  BASED ON LOD mPerson
+    STRING ( 1000 ) szMsg
+     INTEGER nRC
+     
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   IF mPerson.Person.ID = ""
+      IF  mPerson2.PrimaryAddress EXISTS 
+        IF mPerson.PrimaryAddress.City != ""
+           ACTIVATE mPerson2 WHERE mPerson2.Person.LastName     = mPerson.Person.LastName 
+                          AND mPerson2.Person.FirstName    = mPerson.Person.FirstName 
+                          AND mPerson2.PrimaryAddress.City = mPerson.PrimaryAddress.City 
+        else
+            ACTIVATE mPerson2 WHERE mPerson2.Person.LastName     = mPerson.Person.LastName 
+                          AND mPerson2.Person.FirstName    = mPerson.Person.FirstName
+        END
+      else
+          ACTIVATE mPerson2 WHERE mPerson2.Person.LastName     = mPerson.Person.LastName 
+                          AND mPerson2.Person.FirstName    = mPerson.Person.FirstName
+      END
+      
+                          
+      IF RESULT >= 0
+ StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, "Y" )
+      ELSE  StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, "N" )
+                                  END
+      DropObjectInstance( mPerson2 )
+ELSE
+ StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, "N" )
+   END
+   
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dUserNameList
+**    List of usernames for a person
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dUserNameList( VIEW ViewtoInstance BASED ON LOD mPerson,
+               STRING ( 32 ) InternalEntityStructure,
+               STRING ( 32 ) InternalAttribStructure,
+               SHORT GetOrSetFlag )
+
+   STRING ( 100 ) szUserNameLst
+
+   INTEGER FirstTime
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+         // Get Usernames
+         FirstTime=1
+         szUserNameLst = ""
+         FOR EACH ViewtoInstance.LoginUser
+               IF FirstTime = 1
+                   szUserNameLst = szUserNameLst + ViewtoInstance.LoginUser.UserName 
+                   FirstTime = 0
+               ELSE
+                   szUserNameLst = szUserNameLst + ", "
+                   szUserNameLst = szUserNameLst +ViewtoInstance.LoginUser.UserName 
+               END
+         END
+         FOR EACH ViewtoInstance.LoginUser
+             StoreStringInRecord (ViewtoInstance,InternalEntityStructure, InternalAttribStructure, szUserNameLst )
+         END
+
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dHESAQualSubList
+**    List of usernames for a person
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dHESAQualSubList( VIEW ViewtoInstance BASED ON LOD mPerson,
+               STRING ( 32 ) InternalEntityStructure,
+               STRING ( 32 ) InternalAttribStructure,
+               SHORT GetOrSetFlag )
+
+   STRING ( 500 ) szSubjectLst
+
+   INTEGER FirstTime
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+         // Get Usernames
+         FirstTime=1
+         szSubjectLst = ""
+         FOR EACH ViewtoInstance.HESAPriorEdSubjects 
+               IF FirstTime = 1
+                   szSubjectLst = szSubjectLst + ViewtoInstance.HESAPriorEdSubjects.SubjectDescription  
+                   FirstTime = 0
+               ELSE
+                   szSubjectLst = szSubjectLst + ", "
+                   szSubjectLst = szSubjectLst + ViewtoInstance.HESAPriorEdSubjects.SubjectDescription  
+               END
+         END
+     //    FOR EACH ViewtoInstance.LoginUser
+             StoreStringInRecord (ViewtoInstance,InternalEntityStructure, InternalAttribStructure, szSubjectLst )
+     //    END
+
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dProfilePic
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dProfilePic( VIEW mPerson BASED ON LOD mPerson,
+             STRING ( 32 ) InternalEntityStructure,
+             STRING ( 32 ) InternalAttribStructure,
+             SHORT GetOrSetFlag )
+             
+   VIEW  sHost REGISTERED AS sHost
+   STRING ( 254 ) szPic  
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+   IF mPerson.Person.Photo != ""
+      szPic = "<img src='" + sHost.Host.SchoolFormsDisplayDir + "profilepics/" + mPerson.Person.Photo + "' class='ProfilePic img-thumbnail'/>"
+   ELSE 
+      szPic = "<img src='"+sHost.Host.SchoolFormsDisplayDir + "blank-profile.png' class='ProfilePic img-thumbnail'/>"
+   END
+  
+   StoreStringInRecord ( mPerson, InternalEntityStructure, InternalAttribStructure, szPic )
+
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dGovIDSSNDisplay
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dGovIDSSNDisplay( VIEW mPerson BASED ON LOD mPerson,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+    VIEW  sHost REGISTERED AS sHost
+    STRING ( 254 ) szID 
+  
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+   IF sHost.Host.UsesSSN="Y"
+      GetStringFromAttributeByContext( szID,
+                                      mPerson,
+                                      "Person",
+                                      "GovernmentID",
+                                      "SSN_SecurityDisplay",
+                                      254 ) 
+   ELSE
+      GetStringFromAttributeByContext( szID,
+                                      mPerson,
+                                      "Person",
+                                      "GovernmentID",
+                                      "",
+                                      254 ) 
+   END
+   StoreStringInRecord ( mPerson,
+                                  InternalEntityStructure, InternalAttribStructure, szID )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildDisplayCustAttrs
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+BuildDisplayCustAttrs( VIEW mPerson BASED ON LOD mPerson,
+                       VIEW sHost   BASED ON LOD sHost )
+
+
+   VIEW sAppMgr REGISTERED AS sAppMgr
+    TraceLineS("BuildDisplayCustAttrs: ","1")
+   // Build the DisplayCustomAttribute work entries depending on what function is being executed.
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "System Administration"
+      // System Administration shows everything.
+      FOR EACH sHost.CustomAttribute 
+         
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+   ELSE
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "Academics" AND sAppMgr.FunctionalSubArea.FunctionalSubAreaName = "Students"
+      // Academics includes Person and Student entries.
+      FOR EACH sHost.CustomAttribute WHERE sHost.CustomAttribute.Type = "S" OR 
+                                           sHost.CustomAttribute.Type = "P"
+         
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+   ELSE
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "StudentAccounts" AND sAppMgr.FunctionalSubArea.FunctionalSubAreaName = "Students"
+      // Student Accounts includes Person and Student entries.
+      FOR EACH sHost.CustomAttribute WHERE sHost.CustomAttribute.Type = "SA" OR 
+                                           sHost.CustomAttribute.Type = "P"
+         
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+   ELSE
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "Student Life" AND sAppMgr.FunctionalSubArea.FunctionalSubAreaName = "Students"
+      // People includes only Person entries.
+      FOR EACH sHost.CustomAttribute WHERE sHost.CustomAttribute.Type = "P"
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+   ELSE
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "FinancialAid" AND sAppMgr.FunctionalSubArea.FunctionalSubAreaName = "Students"
+      // People includes only Person entries.
+      FOR EACH sHost.CustomAttribute WHERE sHost.CustomAttribute.Type = "FA" OR 
+                                           sHost.CustomAttribute.Type = "P"
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+   ELSE
+       TraceLineS("BuildDisplayCustAttrs: ","adm before")
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "Admissions Portal"
+      // People includes only Person entries.
+          TraceLineS("BuildDisplayCustAttrs: ","AdmP if")
+      FOR EACH sHost.CustomAttribute WHERE (sHost.CustomAttribute.Type = "PR" OR 
+                                           sHost.CustomAttribute.Type = "P") AND sHost.CustomAttribute.ApplicationDisplay="Y"
+                 TraceLineS("BuildDisplayCustAttrs: ","Adm for")                              
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+         
+      END
+      
+   ELSE
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "Admissions" AND sAppMgr.FunctionalSubArea.FunctionalSubAreaName = "Prospects"
+      // People includes only Person entries.
+      FOR EACH sHost.CustomAttribute WHERE sHost.CustomAttribute.Type = "PR" OR 
+                                           sHost.CustomAttribute.Type = "P"
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+   ELSE
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "Academics" AND sAppMgr.FunctionalSubArea.FunctionalSubAreaName = "Instructors"
+      // People includes only Person entries.
+      FOR EACH sHost.CustomAttribute WHERE sHost.CustomAttribute.Type = "I" OR 
+                                           sHost.CustomAttribute.Type = "P"
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+   ELSE
+   IF sAppMgr.FunctionalArea.FunctionalAreaName = "HumanResources" AND sAppMgr.FunctionalSubArea.FunctionalSubAreaName = "Employees"
+      // People includes only Person entries.
+      FOR EACH sHost.CustomAttribute WHERE sHost.CustomAttribute.Type = "I" OR 
+                                           sHost.CustomAttribute.Type = "P" OR
+                                           sHost.CustomAttribute.Type = "E"
+
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+
+   ELSE      // Default is People.
+      FOR EACH sHost.CustomAttribute WHERE sHost.CustomAttribute.Type = "P"
+         // Create the Custom values and also the data values, if they exist.
+         CREATE ENTITY mPerson.DisplayCustomAttribute
+         SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+         SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                    WHERE mPerson.CustomAttribute.ID = mPerson.DisplayCustomAttribute.ID 
+         IF RESULT >= zCURSOR_SET
+            mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+            mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+         END
+      END
+   END
+   END
+   END
+   END
+   END
+   END
+   END
+   END
+   END
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildDisplayCustAttrs
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+BuildDisplayCustAttrsApp( VIEW mPerson BASED ON LOD mPerson,
+                       VIEW sHost   BASED ON LOD sHost )
+
+VIEW  mPerson2 BASED ON LOD mPerson
+   VIEW sAppMgr REGISTERED AS sAppMgr
+    TraceLineS("BuildDisplayCustAttrs: ","1")
+       // People includes only Person entries.
+          TraceLineS("BuildDisplayCustAttrs: ","AdmP if")
+    
+ 
+   FOR EACH mPerson.DisplayCustomAttribute
+     DELETE ENTITY mPerson.DisplayCustomAttribute NONE
+   END
+    
+      FOR EACH sHost.CustomAttribute WHERE (sHost.CustomAttribute.Type = "PR" OR 
+                                           sHost.CustomAttribute.Type = "P") AND sHost.CustomAttribute.ApplicationDisplay="Y"
+              
+             CREATE ENTITY mPerson.DisplayCustomAttribute
+             SetMatchingAttributesByName( mPerson, "DisplayCustomAttribute", sHost, "CustomAttribute", zSET_ALL )
+       
+          SET CURSOR FIRST mPerson.CustomAttribute WITHIN mPerson.Person 
+                        WHERE mPerson.CustomAttribute.ID =  mPerson.DisplayCustomAttribute.ID
+
+          IF RESULT >= zCURSOR_SET
+
+
+                mPerson.DisplayCustomAttribute.EntryValueText = mPerson.CustomAttributeEntry.Text 
+                mPerson.DisplayCustomAttribute.EntryValueDate = mPerson.CustomAttributeEntry.Date 
+                     TraceLineS("KB build name: ",mPerson.DisplayCustomAttribute.Name)
+                     TraceLineS("KB build entry text: ",mPerson.DisplayCustomAttribute.EntryValueText)
+          END
+          
+      END
+      
+ END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dHSSubjectsTotal
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dHSSubjectsTotal( VIEW mPerson BASED ON LOD mPerson,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+
+INTEGER szCount
+DECIMAL szTotalGP
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+
+
+szCount=0
+szTotalGP=0
+OrderEntityForView(mPerson,"HS_CourseEntry","GradePoint D")
+
+FOR EACH mPerson.HS_CourseEntry 
+  szCount=szCount+1
+  IF szCount <=6 
+    szTotalGP=szTotalGP+mPerson.HS_CourseEntry.GradePoint
+  END
+ 
+END
+StoreValueInRecord( mPerson,InternalEntityStructure,InternalAttribStructure,szTotalGP,0)
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END

@@ -1,0 +1,11 @@
+z1000-Zeidon    2ADC386F TZWDVORO 09/27/22   19:07:54 1.0a2    
+eViewObjRef 1
+aZKey      719075439
+aNextZKeyToAssign 719075439
+aName      mQryObExLST
+
+eLOD       2
+aZKey      116094970
+aName      mQryObEx
+aDesc      Query Object Extension entity for holding a Query Object Extension object as a blob.
+

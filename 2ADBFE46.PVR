@@ -1,0 +1,13 @@
+z1000-Zeidon    2ADBFE46 TZWDVORO 09/27/22   19:06:05 1.0a2    
+eViewObjRef 1
+aZKey      719060550
+aNextZKeyToAssign 719060550
+aName      sAppMgr
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      715265729
+aName      sAppMgr
+aDesc      System Application Manager
+aDLL_Name  LODOPSYS
+

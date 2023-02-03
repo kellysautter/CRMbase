@@ -1,0 +1,148 @@
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dContentCount
+**    No. of Persons, Students, etc. in this Contact  List.
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dContentCount( VIEW lConList BASED ON LOD lConList,
+               STRING ( 32 ) InternalEntityStructure,
+               STRING ( 32 ) InternalAttribStructure,
+               SHORT GetOrSetFlag )
+
+   INTEGER ContentCount
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+      // Note that only one of the loops below should have any entities to loop through, since a
+      // ContactList instance is for only one type of entity.
+      ContentCount = 0
+      FOR EACH lConList.Prospect 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.Church 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.School 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.Organization 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.Person 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.Donor 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.Fund 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.Donation 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.Alumni 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.ContactListItem
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.Class 
+         ContentCount = ContentCount + 1
+      END
+     
+      FOR EACH lConList.Course 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.FinAidSource 
+         ContentCount = ContentCount + 1
+      END
+      FOR EACH lConList.CL_ItemEmployee 
+         ContentCount = ContentCount + 1
+      END
+      
+      StoreValueInRecord ( lConList,
+                           InternalEntityStructure, InternalAttribStructure, ContentCount, 0 )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+
+/*************************************************************************************************
+**
+**    OPERATION: dFullPersonNameLFM
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dFullPersonNameLFM( VIEW lConList BASED ON LOD lConList,
+                    STRING ( 32 ) InternalEntityStructure,
+                    STRING ( 32 ) InternalAttribStructure,
+                    SHORT GetOrSetFlag )
+
+   STRING (  254  ) szString
+   STRING ( 4 )     szYear
+   STRING ( 5 )     szTermYear
+   STRING ( 1 )     szShortTerm
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+
+             IF lConList.ContactListItemStudentPerson EXISTS
+                                  szString = lConList.ContactListItemStudentPerson.LastName + ", " +
+                                             lConList.ContactListItemStudentPerson.FirstName + " " +
+                                             lConList.ContactListItemStudentPerson.MiddleName + " " + lConList.ContactListItemStudentPerson.Suffix  
+             ELSE
+                                  szString = ""
+             END
+            
+         // Store the calculated value in the object.
+         StoreStringInRecord ( lConList,
+                               InternalEntityStructure, InternalAttribStructure, szString )
+
+         /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+         /* end zDERIVED_SET */
+   END /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dIsRecurring
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dIsRecurring( VIEW lConList BASED ON LOD lConList,
+              STRING ( 32 ) InternalEntityStructure,
+              STRING ( 32 ) InternalAttribStructure,
+              SHORT GetOrSetFlag )
+
+   STRING ( 1 ) szRecurring  
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+      szRecurring = ""
+      IF lConList.DynamicCL_StoredQuery EXISTS
+         szRecurring = "Y"
+      END
+      StoreStringInRecord ( lConList, InternalEntityStructure, InternalAttribStructure, szRecurring )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END

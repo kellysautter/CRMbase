@@ -1,0 +1,13 @@
+z1000-Zeidon    1EF6B845 TZWDVORO 10/25/22   19:48:55 1.0a2    
+eViewObjRef 1
+aZKey      519485509
+aNextZKeyToAssign 519485509
+aName      mConListUpdate
+
+eLOD       2
+aZKey      116080108
+aName      mConList
+aDesc      Contact List
+aDLL_Name  LODOPS_A
+aActivateConstraint Y
+

@@ -1,0 +1,12 @@
+z1000-Zeidon    136257F0 TZWDVORO 03/25/22   21:22:16 1.0a2    
+eViewObjRef 1
+aZKey      325212144
+aNextZKeyToAssign 325212144
+aName      mUserCat
+
+eLOD       2
+aZKey      334002619
+aName      mUser
+aDesc      User logins
+aActivateConstraint Y
+

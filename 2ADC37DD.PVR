@@ -1,0 +1,14 @@
+z1000-Zeidon    2ADC37DD TZWDVORO 09/27/22   19:07:52 1.0a2    
+eViewObjRef 1
+aZKey      719075293
+aNextZKeyToAssign 719075293
+aName      mPerson
+
+eLOD       2
+aZKey      116094788
+aName      mPerson
+aDesc      Person 
+aDLL_Name  LODOPS_A
+aActivateConstraint Y
+aCommitConstraint Y
+

@@ -1,0 +1,12 @@
+z1000-Zeidon    2ADC5AAA TZWDVORO 09/27/22   19:08:42 1.0a2    
+eViewObjRef 1
+aZKey      719084202
+aNextZKeyToAssign 719084202
+aName      mReportG
+
+eLOD       2
+aZKey      714261939
+aName      mReportG
+aDesc      Report Group Maintenance
+aDLL_Name  LODOPS_B
+

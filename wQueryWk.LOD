@@ -1,0 +1,203 @@
+z1000-Zeidon    WQUERYWK TZZOLODO 09/27/22   15:27:00 1.0a2    
+eLOD       1
+aZKey      715270063
+aNextZKeyToAssign 715270082
+aName      wQueryWk
+
+eLOD_EntityParent 2
+aName      QueryWork
+aIndentName QueryWork
+aIndentLvl 0
+aZKey      715270075
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_EntityChild 3
+aName      DerivedAttribute
+aIndentName    DerivedAttribute
+aIndentLvl 3
+aZKey      715270080
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      715270081
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      AttributeName
+aZKey      715270082
+
+eDomainRec 6
+aZKey      90000032
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715270076
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      dCurrentDate
+aZKey      715270077
+
+eDomainRec 5
+
+eLOD_AttrDerivationOperRec 4
+aName      dCurrentDate
+aClass     0
+aZKey      715270065
+aType      A
+aReturnDataType N
+
+eSourceFileForDARec 5
+aZKey      715270064
+aName      wQueryWk
+aLanguageType V
+aExtension VML
+
+eLOD_AttributeRec 3
+aZKey      715270078
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      dCurrentTermYearSemester
+aZKey      715270079
+
+eDomainRec 5
+
+eLOD_AttrDerivationOperRec 4
+aName      dCurrentYearSemester
+aZKey      715270070
+aType      A
+aReturnDataType N
+
+eSourceFileForDARec 5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_AttrDerivationOper 4
+
+eSourceFileForDA 5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_AttrDerivationOper 4
+
+eSourceFileForDA 5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eSourceFile 2
+
+eOperation 3
+
+eParameter 4
+aShortDesc View to Instance
+aDataType  V
+aZKey      715270066
+
+eParameter 4
+aShortDesc Internal Entity Structure
+aDataType  S
+aZKey      715270067
+
+eParameter 4
+aShortDesc Internal Attrib Structure
+aDataType  S
+aZKey      715270068
+
+eParameter 4
+aShortDesc Get Or Set Flag
+aDataType  N
+aZKey      715270069
+
+eOperation 3
+
+eParameter 4
+aShortDesc View to Instance
+aDataType  V
+aZKey      715270071
+
+eParameter 4
+aShortDesc Internal Entity Structure
+aDataType  S
+aZKey      715270072
+
+eParameter 4
+aShortDesc Internal Attrib Structure
+aDataType  S
+aZKey      715270073
+
+eParameter 4
+aShortDesc Get Or Set Flag
+aDataType  N
+aZKey      715270074
+
+i8         5
+i13        5
+i15        10
+i16        1
+i17        6
+i18        7
+i19        5
+i20        9
+i21        10
+i22        11
+i23        12
+i24        5
+i25        14
+i26        10
+i27        2
+i28        3
+i29        4
+i30        5
+i31        10
+i32        9
+i37        14

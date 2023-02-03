@@ -1,0 +1,14 @@
+z1000-Zeidon    1305B649 TZWDVORO 03/19/22   14:14:48 1.0a2    
+eViewObjRef 1
+aZKey      319141449
+aNextZKeyToAssign 319141449
+aName      zqSQuery
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      334023535
+aName      zqSQuery
+aDesc      Query - Stored Query
+aDLL_Name  LODOPS2
+aCommitConstraint Y
+

@@ -1,0 +1,428 @@
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildFind_AD_Area
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildFind_AD_Area( VIEW ViewToWindow )
+
+   VIEW _AD_SchN   BASED ON LOD _AD_SchN
+   STRING ( 50 ) szEntityName
+   INTEGER nRC
+   
+   GET VIEW _AD_SchN NAMED "_AD_SchN"
+   IF RESULT < 0
+      // Activate and create empty entities for the search object for the page
+      ACTIVATE _AD_SchN EMPTY
+      NAME VIEW _AD_SchN  "_AD_SchN"
+      nRC = zGetFirstEntityNameForView( _AD_SchN, szEntityName )
+      LOOP WHILE nRC >= 0 
+         CreateEntity( _AD_SchN, szEntityName, zPOS_AFTER ) 
+         nRC = zGetNextEntityNameForView( _AD_SchN, szEntityName )
+      END
+   END  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: EXEC_Find_AD_AreaCL
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+EXEC_Find_AD_AreaCL( VIEW ViewToWindow )
+   VIEW mConList BASED ON LOD  mConList
+   VIEW _AD_SchN  REGISTERED AS _AD_SchN
+   VIEW _AD_RetN  BASED ON LOD  _AD_RetN
+   VIEW mUser    REGISTERED AS mUser
+   VIEW wXferO   REGISTERED AS wXferO
+   VIEW vQualObject
+   INTEGER nResult
+   INTEGER nRC
+   INTEGER nExists
+   INTEGER nRCE
+   INTEGER nRCA
+   STRING ( 1024 ) szString
+   STRING ( 2048 ) szFindString
+   STRING ( 1024 ) szAddToString
+   STRING ( 256  ) szNameString
+   STRING (  50  ) szConListName
+   STRING (  50  ) szConListViewName
+   STRING (  64  ) szEntityName
+   STRING (  64  ) szAttributeName
+   STRING (  64  ) szPotentialListName
+
+   // for now do only the person entity
+   nResult = SfActivateSysEmptyOI( vQualObject, "KZDBHQUA", ViewToWindow, zMULTIPLE )
+   nRC = CreateEntity( vQualObject, "EntitySpec", zPOS_AFTER )
+   nRC = SetAttributeFromString( vQualObject, "EntitySpec", "EntityName", "Person" )
+   
+   // loop through each entity and attribute to find what ones were not null, the add a
+   //    qual attribute for each one.
+   nRCE = zGetFirstEntityNameForView( _AD_SchN, szEntityName )
+
+   
+   LOOP WHILE nRCE >= 0
+      nExists = CheckExistenceOfEntity( _AD_SchN, szEntityName )
+
+      IF nExists >= zCURSOR_SET
+         // get the attributes
+         nRCA = zGetFirstAttributeNameForEntity( _AD_SchN, szEntityName, szAttributeName )
+         LOOP WHILE nRCA >= 0
+
+            GetStringFromAttribute( szString, _AD_SchN, szEntityName, szAttributeName )
+
+            // if a value was entered...qualify on it.
+            IF szString != ""
+                   TraceLineS("In","szString")
+               // set name string to the first cval found just to name the list
+               
+               IF szNameString = ""
+                  szNameString = szAttributeName + " [" + szString + "]"
+               ELSE
+                  // if name string is NOT blank, we have a mutiple qualify situation, so put in an AND oper
+                  szFindString = szFindString + " AND "
+                  CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER )
+                  SetAttributeFromString( vQualObject, "QualAttrib", "Oper", "AND" )
+               END
+              
+               szAddToString = szEntityName + "." + szAttributeName + " like " + szString + "%"
+           
+               szFindString = szFindString + szAddToString
+         
+               szAddToString = szString + "%"
+
+               TraceLineS("in find person: ",szAddToString)
+               TraceLineS("in find person name string: ",szNameString)
+               DBQualEntityByString( vQualObject,  szEntityName, szAttributeName, " like ", szAddToString, 0 )
+            END
+            
+            nRCA = zGetNextAttributeNameForEntity( _AD_SchN, szEntityName, szAttributeName )
+            
+         END
+      END
+      nRCE = zGetNextEntityNameForView( _AD_SchN, szEntityName )
+   END
+
+   // if name is still blank, then we did not pick anything
+   IF szNameString = ""
+ 
+      MessageSend( ViewToWindow, "SearchCriteriaReq", "Find",
+                   "Search Criteria is required." ,
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      DropObjectInstance( vQualObject )
+      RETURN 2
+   END
+   
+   nResult = ActivateObjectInstance ( _AD_RetN, "_AD_SchN", ViewToWindow, vQualObject, zMULTIPLE )
+   IF nResult < 0
+ 
+      MessageSend( ViewToWindow, "NoMatch", "Find",
+                   "No matches found.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      DropObjectInstance( vQualObject )
+      RETURN 2
+   END
+   DropObjectInstance( vQualObject )
+   IF nResult = 2
+      MessageSend( ViewToWindow, "MaxResults", "Find",
+                   "Max results reached.  Unable to return all.  Please narrow your search.",
+                   zMSGQ_OBJECT_CONSTRAINT_WARNING, 0 )
+   END
+   szPotentialListName = "SEARCH-" + szNameString
+  
+   // Drop any current mConList entry for this Suffix.
+   szConListViewName = "mConList" + "_AD_Suff"
+   GET VIEW mConList NAMED szConListName
+   IF RESULT >= 0
+      DropObjectInstance( mConList )
+   END
+   
+   // Initialize mConList which holds the results of the find.
+   ACTIVATE mConList WHERE mConList.ContactList.ListName = szConListViewName
+                       AND mConList.User.ID = mUser.User.ID
+   IF RESULT < 0
+      ACTIVATE mConList EMPTY
+      CREATE ENTITY mConList.ContactList
+      INCLUDE mConList.User FROM mUser.User
+      mConList.ContactList.ListName = szConListViewName
+      SetAttributeFromCurrentDateTime( mConList, "ContactList", "DateGenerated" )
+      mConList.ContactList.FindCriteria = szFindString
+    
+   END 
+   NAME VIEW mConList szConListViewName
+   wXferO.Root.SearchName =  szConListViewName
+   FOR EACH _AD_RetN._AD_RetE
+      CREATE ENTITY mConList.ContactListItem
+      INCLUDE mConList._AD_RetE FROM _AD_RetN._AD_RetE
+      mConList.ContactListItem.DisplayName = _AD_RetA
+   END
+  
+   DropObjectInstance( _AD_RetN ) 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PICK__AD_Area
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PICK__AD_Area( VIEW ViewToWindow )
+
+   VIEW _AD_UpdO   BASED ON LOD _AD_UpdO
+   VIEW mConList  BASED ON LOD  mConList
+   VIEW wXferO    REGISTERED AS wXferO
+
+   
+   //wXferO.Root.CurrentFunction2 = "ContactListR"
+   GET VIEW _AD_UpdO NAMED "_AD_UpdO"
+   IF RESULT >= 0
+      DropObjectInstance ( _AD_UpdO )
+   END
+   GET VIEW mConList NAMED "mConList_AD_Suff" 
+   ACTIVATE _AD_UpdO WHERE _AD_UpdO._AD_UpdR.ID = mConList._AD_UpdR.ID 
+   NAME VIEW _AD_UpdO "_AD_UpdO"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: NEW__AD_Area
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+NEW__AD_Area( VIEW ViewToWindow )
+
+   VIEW _AD_UpdO  BASED ON LOD  _AD_UpdO
+
+   // Create an empty update object instance.
+   ACTIVATE  _AD_UpdO EMPTY
+   CREATE ENTITY _AD_UpdO._AD_UpdR
+   NAME VIEW  _AD_UpdO "_AD_UpdO"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: LOAD_ContactList_AD_Suff
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+LOAD_ContactList_AD_Suff( VIEW ViewToWindow )
+
+   VIEW lConList REGISTERED AS lConList_AD_SuffLST
+   VIEW mUser    REGISTERED AS mUser
+   VIEW wXferO   REGISTERED AS wXferO
+   VIEW mConList BASED ON LOD  mConList
+
+   // Activate the selected Contact List after dropping any existing Contact List.
+   GET VIEW mConList NAMED "mConList_AD_Suff"
+   IF RESULT >= 0
+      DropObjectInstance( mConList )
+   END
+   ACTIVATE mConList WHERE mConList.ContactList.ID = lConList.ContactList.ID 
+   NAME VIEW mConList "mConList_AD_Suff"
+   wXferO.Root.SearchName = mConList.ContactList.ListName 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: DELETE_ContactList_AD_Suff
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+DELETE_ContactList_AD_Suff( VIEW ViewToWindow )
+
+   VIEW wXferO   REGISTERED AS wXferO
+   VIEW lConList REGISTERED AS lConList_AD_SuffLST
+   VIEW mConList BASED ON LOD  mConList
+   INTEGER nRC
+   
+   // Delete the selected Contact List and remove list entry.
+   
+   ACTIVATE mConList WHERE mConList.ContactList.ID = lConList.ContactList.ID 
+   NAME VIEW mConList "mConListDelete"
+   DELETE ENTITY mConList.ContactList 
+   COMMIT mConList  
+   DropEntity( lConList, "ContactList", zREPOS_AFTER) 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SAVE_ContactList_AD_Suff
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+SAVE_ContactList_AD_Suff( VIEW ViewToWindow )
+
+   VIEW wXferO   REGISTERED AS wXferO
+   VIEW lConList REGISTERED AS lConList_AD_SuffLST
+   VIEW mConList BASED ON LOD  mConList
+   INTEGER nRC
+   INTEGER iCnt
+   
+   // Save the current Contact List so that it can be loaded from th list.
+   GET VIEW mConList NAMED "mConList_AD_Suff"
+   IF RESULT >= 0
+      iCnt = 0
+      FOR EACH mConList.ContactListItem WHERE mConList.ContactListItem.wSelected = "Y"
+         iCnt = iCnt + 1
+      END
+      IF iCnt = 0
+         MessageSend ( ViewToWindow, "", "Access",
+                       "No entries have been selected for the contact list. Please select at least one.",
+                       zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN 2                           
+      END
+      
+      FOR EACH mConList.ContactListItem WHERE mConList.ContactListItem.wSelected = ""
+         DELETE ENTITY mConList.ContactListItem NONE
+      END
+      mConList.ContactList.ListName = wXferO.Root.SearchName 
+      COMMIT mConList 
+      SET CURSOR FIRST lConList.ContactList WHERE lConList.ContactList.ID = mConList.ContactList.ID 
+      IF RESULT < zCURSOR_SET
+         INCLUDE lConList.ContactList FROM mConList.ContactList 
+         OrderEntityForView( lConList, "ContactList", "ContactList.ListName A" )
+      ELSE
+         DropObjectInstance(lConList)
+      END 
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: REMOVE_EntriesFromList_AD_Suff
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+REMOVE_EntriesFromList_AD_Suff( VIEW ViewToWindow )
+
+   VIEW wXferO   REGISTERED AS wXferO
+   VIEW mConList BASED ON LOD  mConList
+   VIEW lConList REGISTERED AS lConList_AD_SuffLST
+   INTEGER nRC
+
+   nRC = GetViewByName( mConList, "mConList_AD_Suff", ViewToWindow, zLEVEL_TASK)
+   IF nRC >= 0
+      FOR EACH mConList.ContactListItem WHERE mConList.ContactListItem.wSelected = "Y"
+         DELETE ENTITY mConList.ContactListItem NONE
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_UpdateConList_AD_Suff
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_UpdateConList_AD_Suff( VIEW ViewToWindow )
+
+  VIEW lConList        REGISTERED AS lConList_AD_SuffLST
+  VIEW mConListDetails BASED ON LOD  mConList
+  
+  ACTIVATE mConListDetails WHERE mConListDetails.ContactList.ID = lConList.ContactList.ID
+  NAME VIEW mConListDetails "mConListDetails"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_EmailSelected_AD_Area
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_EmailSelected_AD_Area( VIEW ViewToWindow )
+
+   VIEW mConList BASED ON LOD mConList
+   VIEW wWebXfer REGISTERED AS wWebXfer
+   VIEW mUser    REGISTERED AS mUser
+   INTEGER Count
+   STRING ( 10000 ) szEmailErrors
+   STRING ( 10000 ) szErrorMsg
+   STRING ( 10000 ) szEmailList
+   STRING ( 100 ) szLangConv  
+   
+   szEmailErrors = ""
+   GET VIEW mConList NAMED "mConList_AD_Suff"
+   
+   IF RESULT < 0 
+      MessageSend( ViewToWindow, "", "Email _AD_Area",
+                   "A Student is required.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+
+      RETURN 2 
+   END
+   
+   // Make sure at least one entry was selected.
+   FOR EACH mConList.ContactListItem
+      IF mConList.ContactListItem.wSelected = "Y"
+         Count = Count + 1
+      END
+   END
+   IF Count = 0
+      MessageSend( ViewToWindow, "StudentReq", "Email _AD_Area", 
+                   "A _AD_UpdR is required.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2 
+   END
+   
+   // Create subobject of email addresses for each SELECTED Prospect.
+   
+   FOR EACH wWebXfer.EmailListEntry 
+      DELETE ENTITY wWebXfer.EmailListEntry NONE 
+   END
+   FOR EACH mConList.ContactListItem
+      IF mConList.ContactListItem.wSelected = "Y" AND 
+         mConList._AD_UpdR.PreferredEmail != ""
+         
+         CREATE ENTITY wWebXfer.EmailListEntry 
+         wWebXfer.EmailListEntry.PersonName   = mConList._AD_UpdR.dFullNameLFM 
+         wWebXfer.EmailListEntry.eMailAddress = mConList._AD_UpdR.PreferredEmail
+         wWebXfer.EmailListEntry.ID           = mConList._AD_UpdR.ID 
+         szEmailList = szEmailList + mConList._AD_UpdR.PreferredEmail + "; "
+      END
+      IF mConList.ContactListItem.wSelected = "Y" AND 
+         mConList._AD_UpdR.PreferredEmail = ""
+         IF szEmailErrors != ""
+           szEmailErrors = szEmailErrors + "," + NEW_LINE
+         END
+         // We must give an error for each Student that was not emailed.
+         szEmailErrors = szEmailErrors + mConList._AD_UpdR.dFullNameLFM    
+      END
+      mConList.ContactListItem.wSelected = ""
+   END
+   
+   IF szEmailErrors != ""
+      //The following line causes extensive errors.
+      szErrorMsg = "There was an error sending emails to the following recipient(s): " + NEW_LINE + szEmailErrors  
+      MessageSend( ViewToWindow, "", "Send Email",
+                   szErrorMsg,
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GOTO_MergeDocsFor_AD_Area
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+GOTO_MergeDocsFor_AD_Area( VIEW ViewToWindow )
+
+   VIEW mConList  REGISTERED AS mConList_AD_Suff
+   VIEW sAppMgr   REGISTERED AS sAppMgr 
+   
+   // Set the Area Name in sAppMgr for the merge routine and name the mConList "mConListMergeDocs" 
+   NAME VIEW mConList "mConListMergeDocs"
+   sAppMgr.FunctionalArea.FunctionalAreaName = "_AD_Area"
+
+END
+

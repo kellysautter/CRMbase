@@ -1,0 +1,233 @@
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: ObjectConstraints
+**    
+*************************************************************************************************/
+OBJECT CONSTRAINT OPERATION
+ObjectConstraints( VIEW lUser BASED ON LOD lUser,
+                   SHORT Event,
+                   SHORT State )
+   STRING ( 254 ) szString
+
+   CASE Event
+   OF   zOCE_ACTIVATE:
+     
+      FOR EACH lUser.User
+         IF lUser.Person EXISTS 
+            szString = lUser.Person.dFullNameLFM 
+            lUser.User.wFullNameLFM = szString 
+         ELSE
+            lUser.User.wFullNameLFM = lUser.User.UserName
+         END
+         
+      END
+
+        /* end zOCE_ACTIVATE */
+   OF   zOCE_ACTIVATE_EMPTY:
+
+        /* end zOCE_ACTIVATE_EMPTY */
+   OF   zOCE_COMMIT:
+
+        /* end zOCE_COMMIT */
+   OF   zOCE_DROPOI:
+
+        /* end zOCE_DROPOI */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: dPersonFullName
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dPersonFullNameFML( VIEW lUser BASED ON LOD lUser,
+                    STRING ( 32 ) InternalEntityStructure,
+                    STRING ( 32 ) InternalAttribStructure,
+                    SHORT GetOrSetFlag )
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+         PersonName_FirstMiddleLast( lUser, InternalEntityStructure, InternalAttribStructure, GetOrSetFlag )
+
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: dPersonFullNameLFM
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dPersonFullNameLFM( VIEW lUser BASED ON LOD lUser,
+                    STRING ( 32 ) InternalEntityStructure,
+                    STRING ( 32 ) InternalAttribStructure,
+                    SHORT GetOrSetFlag )
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+         PersonName_LastFirstMiddle( lUser, InternalEntityStructure, InternalAttribStructure, GetOrSetFlag )
+
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dPersonRoles
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dPersonRoles( VIEW lUser BASED ON LOD lUser,
+              STRING ( 32 ) InternalEntityStructure,
+              STRING ( 32 ) InternalAttribStructure,
+              SHORT GetOrSetFlag )
+
+   STRING ( 50 ) szType
+   STRING ( 49 ) szTypeN
+   STRING ( 20 ) szAdminDiv
+   SHORT         StringLength
+     STRING ( 100 ) szLangConv 
+
+   szType = ""
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+      
+          szType = ""
+         IF lUser.Faculty EXISTS AND lUser.Faculty.ID > 0
+            GetTextConv(szLangConv,lUser,"Instructor","")
+            szType = szType + szLangConv+", "
+         END
+        IF lUser.Prospect EXISTS AND lUser.Prospect.ID > 0
+            GetTextConv(szLangConv,lUser,"Prospect","")
+            szType = szType + szLangConv+", "
+         END
+
+
+         IF lUser.Staff EXISTS AND lUser.Staff.ID > 0
+            GetTextConv(szLangConv,lUser,"Staff","")
+            szType = szType + szLangConv+", "         END
+         IF lUser.Donor EXISTS AND lUser.Donor.ID > 0
+            GetTextConv(szLangConv,lUser,"Donor","")
+            szType = szType + szLangConv+", "
+         END
+         IF lUser.Student EXISTS AND lUser.Student.ID > 0
+            GetTextConv(szLangConv,lUser,"Student","")
+            szType = szType + szLangConv+", "
+         END
+         IF lUser.Alumni EXISTS AND lUser.Alumni.ID > 0
+            GetTextConv(szLangConv,lUser,"Alumni","")
+            szType = szType + szLangConv+", "
+          END
+         IF lUser.Employee EXISTS AND lUser.Employee.ID > 0
+            GetTextConv(szLangConv,lUser,"Employee","")
+            szType = szType + szLangConv+", "
+         END
+         StringLength = zGetStringLen( szType )
+         StringLength = StringLength - 2
+         szTypeN = szType[1:StringLength]
+         StoreStringInRecord ( lUser,
+                               InternalEntityStructure, InternalAttribStructure, szTypeN )
+
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dStatus
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dActive( VIEW lUser BASED ON LOD lUser,
+         STRING ( 32 ) InternalEntityStructure,
+         STRING ( 32 ) InternalAttribStructure,
+         SHORT GetOrSetFlag )
+
+   STRING ( 50 ) szStatus
+   STRING ( 1 ) szActive 
+   szActive="N" 
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+   
+   IF lUser.User.Status != "I" 
+       IF lUser.Student EXISTS 
+          IF lUser.Student.Status="A"
+            szActive="Y" 
+          END
+       END
+       IF lUser.Employee EXISTS 
+          IF lUser.Employee.Status="A"
+             szActive="Y" 
+          END
+       END
+       FOR each lUser.Prospect  
+          IF lUser.Prospect.Status="A"
+             szActive="Y" 
+          END
+       END
+
+   END 
+        StoreStringInRecord ( lUser,
+                               InternalEntityStructure, InternalAttribStructure, szActive )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: dAppNotSubmitted
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dAppSubmitted( VIEW lUser BASED ON LOD lUser,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+ STRING ( 1 ) szStatus
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+IF lUser.User.ProspectInitialApplicationPerson = "" AND lUser.User.OnlineProspectInitialCreatedDate != ""
+  szStatus="Y"
+ELSE szStatus="N"
+END
+ StoreStringInRecord ( lUser,
+                               InternalEntityStructure, InternalAttribStructure, szStatus )
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END

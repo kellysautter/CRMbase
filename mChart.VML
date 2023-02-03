@@ -1,0 +1,1022 @@
+
+/*************************************************************************************************
+**    
+**    OPERATION: CreatePieChart
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+CreatePieChart( VIEW mChart BASED ON LOD mChart )
+
+    INTEGER iCnt
+
+    FOR EACH mChart.CodeLine 
+        DELETE ENTITY mChart.CodeLine  
+    END 
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript'>"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "// Load Charts and the corechart package."
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.load('current', {'packages':['corechart']});"
+      
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.setOnLoadCallback(drawPieChart" + mChart.Chart.Tag + ");"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "function drawPieChart" + mChart.Chart.Tag + "() {"
+    
+    
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    var chart = new google.visualization.PieChart(document.getElementById('" + mChart.Chart.Tag + "'));"    
+    
+
+    // Create the Columns
+    // It looks like if you have addColumn, you need to define "data" a little differently than if you don't and the first
+    // line of the rows contains the title. 
+    IF mChart.Column EXISTS
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = new google.visualization.DataTable();"
+        
+        iCnt = 0
+        FOR EACH mChart.Column 
+            CREATE ENTITY mChart.CodeLine 
+            mChart.CodeLine.Line = "data.addColumn(" + mChart.Column.Line  + ");"
+            iCnt = iCnt + 1
+            //data.addColumn('string', 'Topping');
+            //data.addColumn('number', 'Slices');
+        END
+        
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    data.addRows(["
+    ELSE 
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = google.visualization.arrayToDataTable(["
+    END
+
+    iCnt = 0
+    FOR EACH mChart.Row 
+        // Set options for Current Order Status
+        IF iCnt > 0
+            mChart.CodeLine.Line = mChart.CodeLine.Line + ","
+        END
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "[" + mChart.Row.Line  + "]"
+        iCnt = iCnt + 1
+        //data.addRows([
+        //  ['Open', 12],
+        //  ['Scheduled', 23],
+        //  ['Closed', 60],
+        //  ['Delivered', 26],
+        //  ['Delivery In Progress', 26],
+        //  ['Pickup In Progress', 16],
+        //  ['Reviewed', 20]
+        //]);
+
+    END
+    IF iCnt > 0
+        mChart.CodeLine.Line = mChart.CodeLine.Line + "]);"     
+    END
+
+    // Create the Options
+    IF mChart.Option EXISTS 
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = mChart.Option.Line
+    END
+    // THIS IS THE OLD WAY
+    /*
+    // Create the Options
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    var options = {"
+    iCnt = 0
+    FOR EACH mChart.Option 
+        // Set options for Current Order Status
+        IF iCnt > 0
+            mChart.CodeLine.Line = mChart.CodeLine.Line + ","
+        END
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = mChart.Option.Line 
+        iCnt = iCnt + 1
+        //title:'Current Order Status',
+        //               width:600,
+        //               height:300,
+        //               is3D: true,};
+    END
+    IF iCnt > 0
+        mChart.CodeLine.Line = mChart.CodeLine.Line + "};"     
+    END
+    */
+
+    // Instantiate and draw the chart for Sarah's pizza.
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    chart.draw(data, options);"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "}"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "</script>"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CreateBarChart
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+CreateBarChart( VIEW mChart BASED ON LOD mChart )
+
+    INTEGER iCnt
+
+    FOR EACH mChart.CodeLine 
+        DELETE ENTITY mChart.CodeLine  
+    END 
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript'>"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "// Load Charts and the corechart package."
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.load('current', {'packages':['corechart','bar']});"
+      
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.setOnLoadCallback(drawBarChart" + mChart.Chart.Tag + ");"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "function drawBarChart" + mChart.Chart.Tag + "() {"
+        
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    var chart = new google.visualization.BarChart(document.getElementById('" + mChart.Chart.Tag + "'));"    
+
+    //CREATE ENTITY mChart.CodeLine 
+    //mChart.CodeLine.Line = "    var data = new google.visualization.DataTable();"
+
+    // Create the Columns
+    // It looks like if you have addColumn, you need to define "data" a little differently than if you don't and the first
+    // line of the rows contains the title. 
+    IF mChart.Column EXISTS
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = new google.visualization.DataTable();"
+        
+        iCnt = 0
+        FOR EACH mChart.Column 
+            CREATE ENTITY mChart.CodeLine 
+            mChart.CodeLine.Line = "data.addColumn(" + mChart.Column.Line  + ");"
+            iCnt = iCnt + 1
+            //data.addColumn('string', 'Topping');
+            //data.addColumn('number', 'Slices');
+        END
+        
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    data.addRows(["
+    ELSE 
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = google.visualization.arrayToDataTable(["
+    END
+    
+    // Create the rows
+    iCnt = 0
+    FOR EACH mChart.Row 
+        // Set options for Current Order Status
+        IF iCnt > 0
+            mChart.CodeLine.Line = mChart.CodeLine.Line + ","
+        END
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "[" + mChart.Row.Line  + "]"
+        iCnt = iCnt + 1
+        //data.addRows([
+        //  ['Open', 12],
+        //  ['Scheduled', 23],
+        //  ['Closed', 60],
+        //  ['Delivered', 26],
+        //  ['Delivery In Progress', 26],
+        //  ['Pickup In Progress', 16],
+        //  ['Reviewed', 20]
+        //]);
+
+    END
+    IF iCnt > 0
+        mChart.CodeLine.Line = mChart.CodeLine.Line + "]);"     
+    END
+
+    // Create the Options
+    IF mChart.Option EXISTS 
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = mChart.Option.Line
+    END
+
+    // Instantiate and draw the chart.
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    chart.draw(data, options);"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "}"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "</script>"
+
+/*
+      var data = google.visualization.arrayToDataTable([
+        ['Genre', 'Idle Hours', 
+         'Driving Hours', 'Parked Hours', { role: 'annotation' } ],
+        ['Sunday', 10, 8, 6, ''],
+        ['Monday', 12,  12, 0, ''],
+        ['Tuesday', 15,  6, 3, ''],
+        ['Wednesday', 13, 7, 4, ''],
+        ['Thursday', 12,  4, 8, ''],
+        ['Friday', 10, 9, 5, ''],
+        ['Saturday', 8, 12, 4, '']
+      ]);
+      var options = {
+        title: 'Fleet Utilization',
+        width: 600,
+        height: 400,
+        legend: { position: 'top', maxLines: 3 },
+        bar: { groupWidth: '75%' },
+        isStacked: true,
+      };
+      
+*/
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CreateColumnChart
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+CreateColumnChart( VIEW mChart BASED ON LOD mChart )
+
+
+    INTEGER iCnt
+
+    FOR EACH mChart.CodeLine 
+        DELETE ENTITY mChart.CodeLine  
+    END 
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript'>"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "// Load Charts and the corechart package."
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.load('current', {'packages':['corechart','bar']});"
+      
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.setOnLoadCallback(drawColumnChart" + mChart.Chart.Tag + ");"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "function drawColumnChart" + mChart.Chart.Tag + "() {"
+        
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    var chart = new google.visualization.ColumnChart(document.getElementById('" + mChart.Chart.Tag + "'));"    
+
+    // Create the Columns
+    // It looks like if you have addColumn, you need to define "data" a little differently than if you don't and the first
+    // line of the rows contains the title. 
+    IF mChart.Column EXISTS
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = new google.visualization.DataTable();"
+        
+        iCnt = 0
+        FOR EACH mChart.Column 
+            CREATE ENTITY mChart.CodeLine 
+            mChart.CodeLine.Line = "data.addColumn(" + mChart.Column.Line  + ");"
+            iCnt = iCnt + 1
+            //data.addColumn('string', 'Topping');
+            //data.addColumn('number', 'Slices');
+        END
+        
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    data.addRows(["
+    ELSE 
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = google.visualization.arrayToDataTable(["
+    END
+
+    iCnt = 0
+    FOR EACH mChart.Row 
+        // Set options for Current Order Status
+        IF iCnt > 0
+            mChart.CodeLine.Line = mChart.CodeLine.Line + ","
+        END
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "[" + mChart.Row.Line  + "]"
+        iCnt = iCnt + 1
+        //data.addRows([
+        //  ['Open', 12],
+        //  ['Scheduled', 23],
+        //  ['Closed', 60],
+        //  ['Delivered', 26],
+        //  ['Delivery In Progress', 26],
+        //  ['Pickup In Progress', 16],
+        //  ['Reviewed', 20]
+        //]);
+
+    END
+    IF iCnt > 0
+        mChart.CodeLine.Line = mChart.CodeLine.Line + "]);"     
+    END
+    
+    // Create the Options
+    IF mChart.Option EXISTS 
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = mChart.Option.Line
+    END
+
+    // Instantiate and draw the chart.
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    chart.draw(data, options);"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "}"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "</script>"
+
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: CreateComboChart
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+CreateComboChart( VIEW mChart BASED ON LOD mChart )
+
+
+    INTEGER iCnt
+
+    FOR EACH mChart.CodeLine 
+        DELETE ENTITY mChart.CodeLine  
+    END 
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript'>"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "// Load Charts and the corechart package."
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.load('current', {'packages':['corechart']});"
+      
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.setOnLoadCallback(drawComboChart" + mChart.Chart.Tag + ");"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "function drawComboChart" + mChart.Chart.Tag + "() {"
+        
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    var chart = new google.visualization.ComboChart(document.getElementById('" + mChart.Chart.Tag + "'));"    
+
+
+    // Create the Columns
+    // It looks like if you have addColumn, you need to define "data" a little differently than if you don't and the first
+    // line of the rows contains the title. 
+    IF mChart.Column EXISTS
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = new google.visualization.DataTable();"
+        
+        iCnt = 0
+        FOR EACH mChart.Column 
+            CREATE ENTITY mChart.CodeLine 
+            mChart.CodeLine.Line = "data.addColumn(" + mChart.Column.Line  + ");"
+            iCnt = iCnt + 1
+            //data.addColumn('string', 'Topping');
+            //data.addColumn('number', 'Slices');
+        END
+        
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    data.addRows(["
+    ELSE 
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = google.visualization.arrayToDataTable(["
+    END
+
+    iCnt = 0
+    FOR EACH mChart.Row 
+        // Set options for Current Order Status
+        IF iCnt > 0
+            mChart.CodeLine.Line = mChart.CodeLine.Line + ","
+        END
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "[" + mChart.Row.Line  + "]"
+        iCnt = iCnt + 1
+
+    END
+    IF iCnt > 0
+        mChart.CodeLine.Line = mChart.CodeLine.Line + "]);"     
+    END
+    
+    // Create the Options
+    IF mChart.Option EXISTS 
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = mChart.Option.Line
+    END
+
+    // Instantiate and draw the chart.
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    chart.draw(data, options);"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "}"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "</script>"
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: CreateTimeLine
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+CreateTimeLine( VIEW mChart BASED ON LOD mChart )
+
+
+    INTEGER iCnt
+
+    FOR EACH mChart.CodeLine 
+        DELETE ENTITY mChart.CodeLine  
+    END 
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "<script type='text/javascript'>"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "// Load Charts and the corechart package."
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.load('current', {packages:['timeline']});"
+      
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "google.charts.setOnLoadCallback(drawTimeline" + mChart.Chart.Tag + ");"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "function drawTimeline" + mChart.Chart.Tag + "() {"
+        
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    var chart = new google.visualization.Timeline(document.getElementById('" + mChart.Chart.Tag + "'));"    
+   
+
+    // Create the Columns
+    // It looks like if you have addColumn, you need to define "data" a little differently than if you don't and the first
+    // line of the rows contains the title. 
+    IF mChart.Column EXISTS
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = new google.visualization.DataTable();"
+        
+        iCnt = 0
+        FOR EACH mChart.Column 
+            CREATE ENTITY mChart.CodeLine 
+            mChart.CodeLine.Line = "data.addColumn(" + mChart.Column.Line  + ");"
+            iCnt = iCnt + 1
+            //data.addColumn('string', 'Topping');
+            //data.addColumn('number', 'Slices');
+        END
+        
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    data.addRows(["
+    ELSE 
+        // Create the rows
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "    var data = google.visualization.arrayToDataTable(["
+    END
+
+    iCnt = 0
+    FOR EACH mChart.Row 
+        // Set options for Current Order Status
+        IF iCnt > 0
+            mChart.CodeLine.Line = mChart.CodeLine.Line + ","
+        END
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = "[" + mChart.Row.Line  + "]"
+        iCnt = iCnt + 1
+
+    END
+    IF iCnt > 0
+        mChart.CodeLine.Line = mChart.CodeLine.Line + "]);"     
+    END
+    
+    // Create the Options
+    IF mChart.Option EXISTS 
+        CREATE ENTITY mChart.CodeLine 
+        mChart.CodeLine.Line = mChart.Option.Line
+    END
+
+    // Instantiate and draw the chart.
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "    chart.draw(data, options);"
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "}"
+
+    CREATE ENTITY mChart.CodeLine 
+    mChart.CodeLine.Line = "</script>"
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CreatePieChartRS
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+CreatePieChartRS( VIEW mChart  BASED ON LOD mChart,
+                  VIEW zqFrame BASED ON LOD zqFrame,
+                  VIEW vResultSet,
+                  STRING ( 50 ) szGroupNameGraph )
+
+    VIEW vResultSet2
+    STRING ( 50 )  szLoopingEntityName
+    STRING ( 50 )  szNumericEntityName
+    STRING ( 50 )  szNumericAttributeName
+    STRING ( 50 )  szTitleEntityName
+    STRING ( 50 )  szTitleAttributeName
+    STRING ( 50 )  szRootEntityName
+    STRING ( 20 )  szDecimal
+    STRING ( 50 )  szTitle
+    STRING ( 500 ) szRowData
+    STRING ( 10 )  szHeight
+    STRING ( 10 )  szWidth
+    INTEGER        nRC
+    
+    // Create Pie Chart java script lines from a result set.
+    
+    // Initialize the object containing the lines.
+    FOR EACH mChart.CodeLine 
+        DELETE ENTITY mChart.CodeLine  
+    END 
+    //SetJavaScriptLine( mChart, "" )
+
+    // Build the Pie Chart header data, including the loading google charts.
+    SetJavaScriptLine( mChart, "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>" )
+    SetJavaScriptLine( mChart, "<script type='text/javascript'>" )
+    SetJavaScriptLine( mChart, "// Load Charts and the corechart package." )
+    SetJavaScriptLine( mChart, "google.charts.load('current', {'packages':['corechart']});" )
+    
+    szRowData = "google.charts.setOnLoadCallback(drawPieChart" + szGroupNameGraph + ");"
+    SetJavaScriptLine( mChart, szRowData )
+    
+    szRowData = "function drawPieChart" + szGroupNameGraph + "() {"
+    SetJavaScriptLine( mChart, szRowData )
+    
+    // Set up header for the slices.
+    szRowData = "    var chart = new google.visualization.PieChart(document.getElementById('" + szGroupNameGraph + "'));" 
+    SetJavaScriptLine( mChart, szRowData )
+    SetJavaScriptLine( mChart, "    var data = google.visualization.arrayToDataTable([" )
+    SetJavaScriptLine( mChart, "['Title', 'Total']," )
+    
+    // Set up Result Set mapping entity and attribute names.
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Looping Entity"
+    szLoopingEntityName = zqFrame.GraphMappingParameter.EntityName
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Pie Slice Title Attribute"
+    szTitleEntityName    = zqFrame.GraphMappingParameter.EntityName
+    szTitleAttributeName = zqFrame.GraphMappingParameter.AttributeName 
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Pie Slice Size Numeric Attribute"
+    szNumericEntityName    = zqFrame.GraphMappingParameter.EntityName
+    szNumericAttributeName = zqFrame.GraphMappingParameter.AttributeName 
+    
+    // Create the Pie Slices by looping through Result Set entities.
+    // The generated data is of the form:
+    //data.addRows([
+    //  ['Open', 12],
+    //  ['Scheduled', 23],
+    //  ['Closed', 60],
+    //  ['Delivered', 26],
+    //  ['Delivery In Progress', 26],
+    //  ['Pickup In Progress', 16],
+    //  ['Reviewed', 20]
+    //]);
+    
+    // We will begin by positioning on the first root entity, because the looping entity could be a subentity on the first root entity.
+    // However, we will skip positioning on Root Entity if this is a Summary result set.
+    IF zqFrame.SelectedObjectExtensionSummary DOES NOT EXIST
+       szRootEntityName = zqFrame.zqFrame.QueryObjectRootEntityName 
+       nRC = SetCursorFirstEntity( vResultSet, szRootEntityName, "" )
+    END
+    
+    nRC = SetCursorFirstEntity( vResultSet, szLoopingEntityName, "" )
+    LOOP WHILE nRC >= zCURSOR_SET
+       GetStringFromAttributeByContext( szDecimal, vResultSet, szNumericEntityName, szNumericAttributeName, "", 20 )
+       // Chart fails when the decimal has a comma.
+       zSearchAndReplace( szDecimal, 20, ",", "" )
+       GetStringFromAttributeByContext( szTitle, vResultSet, szTitleEntityName, szTitleAttributeName, "", 20 )
+       
+       // Add a comma at end, unless this is the last row.
+       CreateViewFromView( vResultSet2, vResultSet )
+       nRC = SetCursorNextEntity( vResultSet2, szLoopingEntityName, "" )
+       DropView( vResultSet2 )
+       IF nRC >= zCURSOR_SET
+          // There is another row, so add the comma.
+          szRowData = "[" + QUOTES + szTitle + QUOTES + ", " + szDecimal + "],"
+       ELSE
+          // There is no next row, so don't add the comma, but add closing characters.
+          szRowData = "[" + QUOTES + szTitle + QUOTES + ", " + szDecimal + "]]);"
+       END
+       SetJavaScriptLine( mChart, szRowData )
+       
+       nRC = SetCursorNextEntity( vResultSet, szLoopingEntityName, "" )
+    END
+
+    // Create the Option entry.
+    szTitle = zqFrame.GraphDefinition.Title 
+    IF zqFrame.GraphDefinition.GraphHeight != ""
+       szHeight = zqFrame.GraphDefinition.GraphHeight 
+    ELSE
+       szHeight = "400"
+    END
+    IF zqFrame.GraphDefinition.GraphWidth != ""
+       szWidth = zqFrame.GraphDefinition.GraphWidth 
+    ELSE
+       szWidth = "1200"
+    END
+    szRowData = "var options = {title:'" + szTitle + "', width:" + szWidth + ",height:" + szHeight + ", is3D: true,};"
+    SetJavaScriptLine( mChart, szRowData )
+
+    // Complete the java script.
+    SetJavaScriptLine( mChart, "    chart.draw(data, options);" )
+    SetJavaScriptLine( mChart, "}" )
+    SetJavaScriptLine( mChart, "</script>" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: CreateBarChartRS
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+CreateBarChartRS( VIEW mChart  BASED ON LOD mChart,
+                  VIEW zqFrame BASED ON LOD zqFrame,
+                  VIEW vResultSet,
+                  STRING ( 50 ) szGroupNameGraph )
+
+    VIEW vResultSet2
+    STRING ( 50 )   szLoopingEntityName
+    STRING ( 50 )   szNumericEntityName
+    STRING ( 50 )   szNumericAttributeName
+    STRING ( 50 )   szTitleEntityName
+    STRING ( 50 )   szTitleAttributeName
+    STRING ( 50 )   szRootEntityName
+    STRING ( 50 )   szBarTitle
+    STRING ( 50 )   szBarValueTitle
+    STRING ( 20 )   szDecimal
+    STRING ( 50 )   szTitle
+    STRING ( 5000 ) szRowData
+    STRING ( 10 )   szHeight
+    STRING ( 10 )   szWidth
+    INTEGER         nRC
+    
+    // Create Bar Chart java script lines from a result set.
+    
+    // Initialize the object containing the lines.
+    FOR EACH mChart.CodeLine 
+        DELETE ENTITY mChart.CodeLine  
+    END 
+    //SetJavaScriptLine( mChart, "" )
+
+    // Build the Bar Chart header data, including the loading google charts.
+    SetJavaScriptLine( mChart, "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>" )
+    SetJavaScriptLine( mChart, "<script type='text/javascript'>" )
+    SetJavaScriptLine( mChart, "// Load Charts and the corechart package." )
+    SetJavaScriptLine( mChart, "google.charts.load('current', {'packages':['corechart','bar']});" )
+    
+    szRowData = "google.charts.setOnLoadCallback(drawBarChart" + szGroupNameGraph + ");"
+    SetJavaScriptLine( mChart, szRowData )
+    
+    szRowData = "function drawBarChart" + szGroupNameGraph + "() {"
+    SetJavaScriptLine( mChart, szRowData )
+    
+    //szRowData = "google.charts.setOnLoadCallback(drawBarChart" + szGroupNameGraph + ");"
+    //SetJavaScriptLine( mChart, szRowData )
+    
+    szRowData = "    var chart = new google.visualization.BarChart(document.getElementById('" + szGroupNameGraph + "'));" 
+    SetJavaScriptLine( mChart, szRowData )
+    szRowData = "    var data = google.visualization.arrayToDataTable(["
+    SetJavaScriptLine( mChart, szRowData )
+    
+    // Set up header for the slices.
+    //SetJavaScriptLine( mChart, "    var data = google.visualization.arrayToDataTable([" )
+    
+    // Set up Result Set mapping entity and attribute names.
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Looping Entity"
+    szLoopingEntityName = zqFrame.GraphMappingParameter.EntityName
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Bar Title Attribute"
+    szTitleEntityName    = zqFrame.GraphMappingParameter.EntityName
+    szTitleAttributeName = zqFrame.GraphMappingParameter.AttributeName 
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Bar Size Numeric Attribute"
+    szNumericEntityName    = zqFrame.GraphMappingParameter.EntityName
+    szNumericAttributeName = zqFrame.GraphMappingParameter.AttributeName 
+    
+    // Titles
+    // Of form: SetJavaScriptLine( mChart, "['Title', 'Avg. Load Time']" )
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Bar Title Attribute"
+    szBarTitle      = zqFrame.GraphMappingParameter.AttributeDisplayTitle 
+    szRowData = "['Title', '" + szBarTitle + "'],"
+    SetJavaScriptLine( mChart, szRowData )
+    
+    // Bar Entries
+    
+    // Create the Bars by looping through Result Set entities.
+    // We will begin by positioning on the first root entity, because the looping entity could be a subentity on the first root entity.
+    // However, we will skip positioning on Root Entity if this is a Summary result set.
+    IF zqFrame.SelectedObjectExtensionSummary DOES NOT EXIST
+       szRootEntityName = zqFrame.zqFrame.QueryObjectRootEntityName 
+       nRC = SetCursorFirstEntity( vResultSet, szRootEntityName, "" )
+    END
+    
+    nRC = SetCursorFirstEntity( vResultSet, szLoopingEntityName, "" )
+    LOOP WHILE nRC >= zCURSOR_SET
+       GetStringFromAttributeByContext( szDecimal, vResultSet, szNumericEntityName, szNumericAttributeName, "", 20 )
+       // Chart fails when the decimal has a comma.
+       zSearchAndReplace( szDecimal, 20, ",", "" )
+       GetStringFromAttributeByContext( szTitle, vResultSet, szTitleEntityName, szTitleAttributeName, "", 20 )
+       
+       // Add a comma at end, unless this is the last row.
+       CreateViewFromView( vResultSet2, vResultSet )
+       nRC = SetCursorNextEntity( vResultSet2, szLoopingEntityName, "" )
+       DropView( vResultSet2 )
+       IF nRC >= zCURSOR_SET
+          // There is another row, so add the comma.
+          szRowData = "[" + QUOTES + szTitle + QUOTES + ", " + szDecimal + "],"
+       ELSE
+          // There is no next row, so don't add the comma, but add closing characters.
+          szRowData = "[" + QUOTES + szTitle + QUOTES + ", " + szDecimal + "]]);"
+       END
+       SetJavaScriptLine( mChart, szRowData )
+       
+       nRC = SetCursorNextEntity( vResultSet, szLoopingEntityName, "" )
+    END
+
+    // Option entry.
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Bar Size Numeric Attribute"
+    szBarValueTitle = zqFrame.GraphMappingParameter.AttributeDisplayTitle 
+    szTitle = zqFrame.GraphDefinition.Title 
+    IF zqFrame.GraphDefinition.GraphHeight != ""
+       szHeight = zqFrame.GraphDefinition.GraphHeight 
+    ELSE
+       szHeight = "400"
+    END
+    IF zqFrame.GraphDefinition.GraphWidth != ""
+       szWidth = zqFrame.GraphDefinition.GraphWidth 
+    ELSE
+       szWidth = "1200"
+    END
+    szRowData = "var options = {title:'" + szTitle + "', width:" + szWidth + ",height:" + szHeight + "," + " chartArea: { top: '7%' }, " +
+    //szRowData = "var options = {width:" + szWidth + ",height:" + szHeight + "," + " chartArea: { top: '7%' }, " +
+                " bar: {groupWidth: '60%'}, " + " hAxis: {title: '" + szBarValueTitle + "',},}; "
+    SetJavaScriptLine( mChart, szRowData )
+
+    // Complete the java script.
+    SetJavaScriptLine( mChart, "    chart.draw(data, options);" )
+    SetJavaScriptLine( mChart, "}" )
+    SetJavaScriptLine( mChart, "</script>" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: Create2_LevelBarChart
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+Create2_LevelBarChart( VIEW mChart  BASED ON LOD mChart,
+                       VIEW zqFrame BASED ON LOD zqFrame,
+                       VIEW vResultSet,
+                       STRING ( 50 ) szGroupNameGraph )
+
+    VIEW vResultSet2
+    STRING ( 50 )   szLevel1LoopingEntityName
+    STRING ( 50 )   szLevel2LoopingEntityName
+    STRING ( 50 )   szLevel2NumericEntityName
+    STRING ( 50 )   szLevel2NumericAttributeName
+    STRING ( 50 )   szLevel1TitleEntityName
+    STRING ( 50 )   szLevel1TitleAttributeName
+    STRING ( 50 )   szLevel2TitleEntityName
+    STRING ( 50 )   szLevel2TitleAttributeName
+    STRING ( 50 )   szRootEntityName
+    STRING ( 50 )   szBarTitle
+    STRING ( 50 )   szBarValueTitle
+    STRING ( 20 )   szDecimal
+    STRING ( 50 )   szTitle
+    STRING ( 50 )   szTitleInternalValue
+    STRING ( 5000 ) szRowData
+    STRING ( 10 )   szHeight
+    STRING ( 10 )   szWidth
+    INTEGER         nRC
+    INTEGER         Count
+    
+    // Create Bar Chart java script lines from a result set.
+    
+    // Initialize the object containing the lines.
+    FOR EACH mChart.CodeLine 
+        DELETE ENTITY mChart.CodeLine  
+    END 
+
+    // Build the Bar Chart header data, including the loading google charts.
+    SetJavaScriptLine( mChart, "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>" )
+    SetJavaScriptLine( mChart, "<script type='text/javascript'>" )
+    SetJavaScriptLine( mChart, "// Load Charts and the corechart package." )
+    SetJavaScriptLine( mChart, "google.charts.load('current', {'packages':['corechart','bar']});" )
+    SetJavaScriptLine( mChart, "google.charts.setOnLoadCallback(drawBarChartChart1);" )
+    
+    SetJavaScriptLine( mChart, "function drawBarChartChart1() {" )
+    SetJavaScriptLine( mChart, "    var chart = new google.visualization.BarChart(document.getElementById('Chart1'));" )
+    SetJavaScriptLine( mChart, "        var data = google.visualization.arrayToDataTable([" )
+    //szRowData = "function drawChart" + szGroupNameGraph + "() {"
+    //SetJavaScriptLine( mChart, szRowData )
+    //szRowData = "    var data = google.visualization.arrayToDataTable(["
+    //SetJavaScriptLine( mChart, szRowData )
+    
+    // START VARIABLE AREA
+    
+    // Set up Result Set mapping entity and attribute names.
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Looping Entity"
+    szLevel1LoopingEntityName = zqFrame.GraphMappingParameter.EntityName
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Level-1 Title Attribute"
+    szLevel1TitleEntityName    = zqFrame.GraphMappingParameter.EntityName
+    szLevel1TitleAttributeName = zqFrame.GraphMappingParameter.AttributeName 
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Level-2 Looping Entity"
+    szLevel2LoopingEntityName = zqFrame.GraphMappingParameter.EntityName
+    
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Level-2 Title Attribute"
+    szLevel2TitleEntityName    = zqFrame.GraphMappingParameter.EntityName
+    szLevel2TitleAttributeName = zqFrame.GraphMappingParameter.AttributeName 
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Level-2 Size Numeric Attribute"
+    szLevel2NumericEntityName    = zqFrame.GraphMappingParameter.EntityName
+    szLevel2NumericAttributeName = zqFrame.GraphMappingParameter.AttributeName 
+    
+    // TITLE LINE
+    
+    // We first need to create a list of the unique Level-2 Title entries. This is necessary because the Level-2 entities under
+    // any specific Level-1 entity may not have all the combinations.
+    // Loop through each Level-2 entity under each Level-1 entity to find unique entries.
+    FOR EACH mChart.TempUniqueTitle 
+       DELETE ENTITY mChart.TempUniqueTitle NONE 
+    END
+    IF zqFrame.SelectedObjectExtensionSummary DOES NOT EXIST
+       szRootEntityName = zqFrame.zqFrame.QueryObjectRootEntityName 
+       nRC = SetCursorFirstEntity( vResultSet, szRootEntityName, "" )
+    END
+    nRC = SetCursorFirstEntity( vResultSet, szLevel1LoopingEntityName, "" )
+    LOOP WHILE nRC >= zCURSOR_SET
+       nRC = SetCursorFirstEntity( vResultSet, szLevel2LoopingEntityName, "" )
+       LOOP WHILE nRC >= zCURSOR_SET
+          GetStringFromAttributeByContext( szTitle, vResultSet, szLevel2TitleEntityName, szLevel2TitleAttributeName, "", 20 )
+          SET CURSOR FIRST mChart.TempUniqueTitle WHERE mChart.TempUniqueTitle.Name = szTitle
+          IF RESULT < zCURSOR_SET
+             CREATE ENTITY mChart.TempUniqueTitle 
+             mChart.TempUniqueTitle.Name = szTitle 
+             GetStringFromAttribute( szTitleInternalValue, vResultSet, szLevel2TitleEntityName, szLevel2TitleAttributeName )
+             mChart.TempUniqueTitle.InternalName = szTitleInternalValue
+          END 
+          nRC = SetCursorNextEntity( vResultSet, szLevel2LoopingEntityName, "" )
+       END
+       nRC = SetCursorNextEntity( vResultSet, szLevel1LoopingEntityName, "" )
+    END
+    
+    // Now create the Title line, beginning with the first Title from the Level 1 entry and the others from the TempUniqueTitle entries.
+    SET CURSOR FIRST zqFrame.GraphMappingParameter WHERE zqFrame.GraphMappingParameter.Name = "Level-1 Title Attribute" 
+    szTitle = zqFrame.GraphMappingParameter.AttributeDisplayTitle 
+    szRowData = "    ['" + szTitle + "'"
+    FOR EACH mChart.TempUniqueTitle 
+       szRowData = szRowData + ", '" + mChart.TempUniqueTitle.Name + "'"
+    END
+    szRowData = szRowData + "],"
+    SetJavaScriptLine( mChart, szRowData )
+    
+    // DATA LINES
+    
+    // Next create each data line, made up of the title and each numeric value.
+    // Loop first through the main looping entity and then through each unique Level-2 entry.
+    nRC = SetCursorFirstEntity( vResultSet, szLevel1LoopingEntityName, "" )
+    LOOP WHILE nRC >= zCURSOR_SET
+       GetStringFromAttributeByContext( szTitle, vResultSet, szLevel1TitleEntityName, szLevel1TitleAttributeName, "", 20 )
+       szRowData = "    ['" + szTitle + "'"
+       
+       FOR EACH mChart.TempUniqueTitle 
+          szTitleInternalValue = mChart.TempUniqueTitle.InternalName 
+          nRC = SetCursorFirstEntityByString( vResultSet, szLevel2TitleEntityName, szLevel2TitleAttributeName, szTitleInternalValue, szLevel1LoopingEntityName )
+          IF nRC >= zCURSOR_SET
+             // There is a match on Level-2 entity within the Level-1 entity, so use that value.
+             GetStringFromAttribute( szDecimal, vResultSet, szLevel2NumericEntityName, szLevel2NumericAttributeName )
+             // Chart fails when the decimal has a comma.
+             zSearchAndReplace( szDecimal, 20, ",", "" )
+          ELSE
+             // There is NO match on Level-2 entity within the Level-1 entity, so use a value of zero.
+             szDecimal = "0"
+          END
+          szRowData = szRowData + ", " + szDecimal
+       END
+       szRowData = szRowData + "]"
+       
+       // We need to check if this is the last main looping entity (szLevel1LoopingEntityName) before writing out the line.
+       // This is because each entry except the last is terminated with a comma.
+       nRC = SetCursorNextEntity( vResultSet, szLevel1LoopingEntityName, "" )
+       IF nRC >= zCURSOR_SET
+          szRowData = szRowData + ","
+       END
+       SetJavaScriptLine( mChart, szRowData )
+    END
+    
+    // End Var section.
+    SetJavaScriptLine( mChart, "  ]);" )
+    
+    // Option entry.
+    IF zqFrame.GraphDefinition.GraphHeight != ""
+       szHeight = zqFrame.GraphDefinition.GraphHeight 
+    ELSE
+       szHeight = "500"
+    END
+    IF zqFrame.GraphDefinition.GraphWidth != ""
+       szWidth = zqFrame.GraphDefinition.GraphWidth 
+    ELSE
+       szWidth = "900"
+    END
+    
+    szRowData = "var options = {width:" + szWidth + ",height:" + szHeight + ","
+    SetJavaScriptLine( mChart, szRowData )
+    //SetJavaScriptLine( mChart, "  var options = {" )
+    SetJavaScriptLine( mChart, "    chart: {" )
+    szTitle = zqFrame.GraphDefinition.Title 
+    szRowData = "      title: '" + szTitle + "'," 
+    SetJavaScriptLine( mChart, szRowData )
+    SetJavaScriptLine( mChart, "      subtitle: ''," )
+    SetJavaScriptLine( mChart, "    }" )
+    SetJavaScriptLine( mChart, "  };" )
+
+    // Complete the java script.
+    szRowData = "  var chart = new google.charts.Bar(document.getElementById('" + szGroupNameGraph + "'));"
+    SetJavaScriptLine( mChart, szRowData )
+    SetJavaScriptLine( mChart, "    chart.draw(data, google.charts.Bar.convertOptions(options));" )
+    SetJavaScriptLine( mChart, "}" )
+    SetJavaScriptLine( mChart, "</script>" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SetJavaScriptLine
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+SetJavaScriptLine( VIEW mChart BASED ON LOD mChart,
+                   STRING ( 10000 ) JavaScriptLine )
+
+   // Create the line as a mChart.CodeLine entity.
+   CREATE ENTITY mChart.CodeLine 
+   mChart.CodeLine.Line = JavaScriptLine + NEW_LINE
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: WriteChartToFile
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+WriteChartToFile( VIEW mChart BASED ON LOD mChart,
+                  STRING ( 500 ) szDirectoryFileName )
+
+   STRING ( 500 ) szOutputLine
+   STRING ( 500 ) szMsg
+   INTEGER         lFileHandle
+   
+   // Open the output file to contain the Chart lines
+   lFileHandle = SysOpenFile( mChart, szDirectoryFileName, COREFILE_WRITE )
+   IF lFileHandle < 0
+      szMsg = "Cannot open Output File, " + szDirectoryFileName
+      MessageSend( mChart, "", "Generate Column Chart",
+                   szMsg, zMSGQ_OBJECT_CONSTRAINT_WARNING, 0 )
+      RETURN -1
+   END
+   
+   FOR EACH mChart.CodeLine 
+      szOutputLine = mChart.CodeLine.Line + NEW_LINE
+      SysWriteLine( mChart, lFileHandle, szOutputLine )
+   END
+   
+   SysCloseFile( mChart, lFileHandle, 0 )
+
+END

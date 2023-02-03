@@ -1,0 +1,72 @@
+
+/*************************************************************************************************
+**
+**    OPERATION: CANCEL_ContactListUpdate
+**
+**
+*************************************************************************************************/
+DIALOG OPERATION
+CANCEL_ContactListUpdate( VIEW ViewToWindow )
+
+   VIEW mConListUpdate BASED ON LOD mConList
+
+   // Drop the Contact List Object.
+   GET VIEW mConListUpdate NAMED "mConListUpdate"
+   DropObjectInstance( mConListUpdate )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: SAVE_ContactListUpdate
+**
+**
+*************************************************************************************************/
+DIALOG OPERATION
+SAVE_ContactListUpdate( VIEW ViewToWindow )
+
+   VIEW mConListUpdate BASED ON LOD mConList
+
+   // Drop the Contact List Object.
+   GET VIEW mConListUpdate NAMED "mConListUpdate"
+   IF RESULT >=0
+      COMMIT mConListUpdate
+   END
+   DropObjectInstance( mConListUpdate )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: PostBuildContactListUpdate
+**    
+*************************************************************************************************/
+DIALOG OPERATION
+PostBuildContactListUpdate( VIEW ViewToWindow )
+
+   VIEW mConListUpdate REGISTERED AS mConListUpdate
+   VIEW sAppMgr        REGISTERED AS sAppMgr
+   STRING ( 100 ) szLangConv  
+   
+   IF sAppMgr.SplitWindow DOES not EXIST 
+      CREATE ENTITY sAppMgr.SplitWindow 
+   END 
+
+   IF mConListUpdate.ContactList.FindCriteria = ""
+      SetCtrlState( ViewToWindow, "GBFindCriteria", zCONTROL_STATUS_VISIBLE, FALSE )
+   ELSE
+      SetCtrlState( ViewToWindow, "GBFindCriteria", zCONTROL_STATUS_VISIBLE, TRUE )
+   END
+   
+   IF mConListUpdate.ContactList.DynamicFlag = ""
+      SetCtrlState( ViewToWindow, "GBRecurring", zCONTROL_STATUS_VISIBLE, FALSE )
+   ELSE
+      SetCtrlState( ViewToWindow, "GBRecurring", zCONTROL_STATUS_VISIBLE, TRUE )
+   END
+   IF sAppMgr.FunctionalSubArea EXISTS 
+      SetCtrlState( ViewToWindow, "gbCategory", zCONTROL_STATUS_VISIBLE, TRUE )
+   ELSE
+      SetCtrlState( ViewToWindow, "gbCategory", zCONTROL_STATUS_VISIBLE, FALSE )
+   END
+
+END

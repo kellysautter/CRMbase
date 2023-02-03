@@ -1,0 +1,12 @@
+z1000-Zeidon    2ADC4ED7 TZWDVORO 09/27/22   19:08:11 1.0a2    
+eViewObjRef 1
+aZKey      719081175
+aNextZKeyToAssign 719081175
+aName      mUGroupsLST
+
+eLOD       2
+aZKey      714545988
+aName      mUGroups
+aDesc      User Groups
+aDLL_Name  LODOPS_A
+

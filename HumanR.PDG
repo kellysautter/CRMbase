@@ -1,0 +1,1056 @@
+z1000-Zeidon    HUMANR   TZDGSRCO 09/16/22   09:34:16 1.0a2    
+eDomainGroup 1
+aZKey      514031631
+aNextZKeyToAssign 514031810
+aName      HumanR
+aDesc      HumanResources
+aExtension C
+aLanguageType C
+aDomainAndGlobalOpGroupName TZAPDMAA
+
+eDomain    2
+aZKey      514031633
+aName      HR_EmployeeClassification
+aDesc      Classification
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      514031634
+aName      HR_EmployeeClassification
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031635
+aExternalValue Hourly Staff
+aInternalValue H
+
+eTableEntry 4
+aZKey      514031636
+aExternalValue Salaried Staff
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031637
+aExternalValue Faculty
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031638
+aExternalValue Admin. Faculty
+aInternalValue AF
+
+eTableEntry 4
+aZKey      514031639
+aExternalValue Admin. Staff
+aInternalValue AS
+
+eTableEntry 4
+aZKey      514031640
+aExternalValue Administrator
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031641
+aExternalValue Student
+aInternalValue ST
+
+eTableEntry 4
+aZKey      514031642
+aExternalValue Adjunct Faculty
+aInternalValue AJ
+
+eTableEntry 4
+aZKey      514031643
+aExternalValue Contracted
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031644
+aExternalValue Grad. Assistant
+aInternalValue GA
+
+eSelectedOperation 3
+aName      zdmDynamicTable
+aZKey      514031632
+aType      M
+
+eDomain    2
+aZKey      514031645
+aName      HR_IPEDS_OccupationalCategory
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031646
+aName      HR_IPEDS_OccupationalCategory
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031647
+
+eTableEntry 4
+aZKey      514031648
+aExternalValue DonC Test Value
+aInternalValue DonC
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031649
+aName      HR_SOC_Code
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 7
+aContextRestriction N
+
+eContext   3
+aZKey      514031650
+aName      HR_SOC_Code
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031651
+
+eTableEntry 4
+aZKey      514031652
+aExternalValue Don C Test Only
+aInternalValue 15-0000
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031653
+aName      HR_TuitionDiscountApplStatus
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031654
+aName      HR_TuitionDiscountApplStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031655
+
+eTableEntry 4
+aZKey      514031656
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031657
+aExternalValue Inactive
+aInternalValue I
+
+eDomain    2
+aZKey      514031658
+aName      HR_IPEDS_Category
+aDesc      Category for reporting on IPEDS report
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031659
+aName      HR_IPEDS_Category
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031660
+
+eTableEntry 4
+aZKey      514031661
+aExternalValue Primarily Instruction
+aInternalValue PI
+
+eTableEntry 4
+aZKey      514031662
+aExternalValue Executive/Administrative/Managerial
+aInternalValue EAM
+
+eTableEntry 4
+aZKey      514031663
+aExternalValue Other Professional
+aInternalValue OP
+
+eTableEntry 4
+aZKey      514031664
+aExternalValue Technical/Paraprofessional
+aInternalValue TP
+
+eTableEntry 4
+aZKey      514031665
+aExternalValue Clerical/Secretarial
+aInternalValue CS
+
+eTableEntry 4
+aZKey      514031666
+aExternalValue Skilled Crafts
+aInternalValue SK
+
+eTableEntry 4
+aZKey      514031667
+aExternalValue Service/Maintenance
+aInternalValue SM
+
+eTableEntry 4
+aZKey      514031668
+aExternalValue Instructional
+aInternalValue IN
+
+eTableEntry 4
+aZKey      514031669
+aExternalValue Non-Instructional
+aInternalValue NI
+
+eContext   3
+aZKey      514031670
+aName      HR_IPEDS_CategoryNew
+
+eTableEntry 4
+aZKey      514031671
+
+eTableEntry 4
+aZKey      514031672
+aExternalValue Instructional
+aInternalValue IN
+
+eTableEntry 4
+aZKey      514031673
+aExternalValue Non-Instructional
+aInternalValue NI
+
+eDomain    2
+aZKey      514031674
+aName      HR_PositionStatus
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031675
+aName      HR_PositionStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031676
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031677
+aExternalValue Inactive
+aInternalValue I
+
+eDomain    2
+aZKey      514031678
+aName      HR_InsuranceType
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031679
+aName      HR_InsuranceType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031680
+aExternalValue HMO
+aInternalValue HMO
+
+eTableEntry 4
+aZKey      514031681
+aExternalValue PPO
+aInternalValue PPO
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031682
+aName      HR_DoctorateFirstProfessionalOpt
+aDesc      Either Doctorate or First Professional Degree
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031683
+aDesc      Doctorate or First Professional Degree
+aName      HR_DoctorateFirstProfessionalOpt
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031684
+aExternalValue Doctorate
+aInternalValue Doc
+
+eTableEntry 4
+aZKey      514031685
+aExternalValue First Professional
+aInternalValue FP
+
+eDomain    2
+aZKey      514031686
+aName      HR_HighestEmployeeDegree
+aDesc      Highest degree the employee has currently earned
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031687
+aName      HR_HighestEmployeeDegree
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031688
+aExternalValue BA/BS
+aInternalValue BA/BS
+
+eTableEntry 4
+aZKey      514031689
+aExternalValue MA
+aInternalValue MA
+
+eTableEntry 4
+aZKey      514031690
+aExternalValue PhD
+aInternalValue PhD
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031691
+aName      FacultyTenure
+aDesc      For tenured faculty, the level of tenure
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031692
+aName      FacultyTenure
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031693
+aExternalValue Tenured
+aInternalValue T
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031694
+aName      HR_TenureTrack
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031695
+aName      HR_TenureTrack
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031696
+
+eTableEntry 4
+aZKey      514031697
+aExternalValue Tenured
+aInternalValue Tenured
+
+eTableEntry 4
+aZKey      514031698
+aExternalValue On Tenure Track
+aInternalValue OnTrack
+
+eTableEntry 4
+aZKey      514031699
+aExternalValue Not on Track
+aInternalValue NonTenured
+
+eTableEntry 4
+aZKey      514031700
+aExternalValue Without Faculty Status
+aInternalValue NonFaculty
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031701
+aName      HR_OccupationalActivity
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031702
+aName      HR_OccupationalActivity
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031703
+
+eTableEntry 4
+aZKey      514031704
+aExternalValue Technical and Paraprofessional
+aInternalValue Tech/Para
+
+eTableEntry 4
+aZKey      514031705
+aExternalValue Other Professionals
+aInternalValue OtherProf
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031706
+aName      HR_BudgetReportDetailLevel
+aDesc      Indicates what level of Detail appears for Adjuncts and Overload on the Budget Report
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031707
+aName      HR_BudgetReportDetailLevel
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031708
+aExternalValue No Detail
+aInternalValue N
+
+eTableEntry 4
+aZKey      514031709
+aExternalValue Full Class Detail
+aInternalValue Y
+
+eTableEntry 4
+aZKey      514031710
+aExternalValue Employee Summary
+aInternalValue E
+
+eDomain    2
+aZKey      514031711
+aName      GL_ReportType
+aDesc      Types of Reports, such as BD - Budget
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031712
+aName      GL_ReportType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031713
+aExternalValue BL
+aInternalValue BL
+
+eTableEntry 4
+aZKey      514031714
+aExternalValue PL
+aInternalValue PL
+
+eTableEntry 4
+aZKey      514031715
+aExternalValue TB
+aInternalValue TB
+
+eTableEntry 4
+aZKey      514031716
+aExternalValue BD
+aInternalValue BD
+
+eTableEntry 4
+aZKey      514031717
+aExternalValue BA
+aInternalValue BA
+
+eTableEntry 4
+aZKey      514031718
+aExternalValue BC
+aInternalValue BC
+
+eTableEntry 4
+aZKey      514031719
+aExternalValue Budget by Chart Entry
+aInternalValue BDCH
+
+eTableEntry 4
+aZKey      514031720
+aExternalValue Budget by Chart Entry CC
+aInternalValue BDCHC
+
+eTableEntry 4
+aZKey      514031721
+aExternalValue Budget by Chart Entry Acc
+aInternalValue BDCHA
+
+eTableEntry 4
+aZKey      514031722
+aExternalValue Budget by CC
+aInternalValue BDCC
+
+eTableEntry 4
+aZKey      514031723
+aExternalValue Budget by CC/Acc
+aInternalValue BDCA
+
+eTableEntry 4
+aZKey      514031724
+aExternalValue Budget by Fund/CC/Acc
+aInternalValue BDFCA
+
+eTableEntry 4
+aZKey      514031725
+aExternalValue Budget by Acc
+aInternalValue BDA
+
+eTableEntry 4
+aZKey      514031726
+aExternalValue Budget by Acc/CC
+aInternalValue BDAC
+
+eTableEntry 4
+aZKey      514031727
+aExternalValue Budget by Acc/Fund
+aInternalValue BDAF
+
+eDomain    2
+aZKey      514031728
+aName      HR_PaymentMode
+aDesc      Mode of Payment (Biweekly, Monthly, etc.)
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031729
+aName      HR_PaymentMode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031730
+aExternalValue BiWeekly
+aInternalValue BiWeekly
+
+eTableEntry 4
+aZKey      514031731
+aExternalValue Monthly
+aInternalValue Monthly
+
+eTableEntry 4
+aZKey      514031732
+aExternalValue SemiMonthly
+aInternalValue SemiMthly
+
+eDomain    2
+aZKey      514031734
+aName      HR_NewContractReason
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031734
+aName      HR_NewContractReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031735
+
+eTableEntry 4
+aZKey      514031736
+aExternalValue New Hire
+aInternalValue NewHire
+
+eTableEntry 4
+aZKey      514031737
+aExternalValue Promotion
+aInternalValue Promotion
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031738
+aName      HR_TerminationReason
+aDesc      Dynamic Table of Reasons for Termination
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031739
+aName      HR_TerminationReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031740
+aExternalValue Poor Performance
+aInternalValue PoorP
+
+eTableEntry 4
+aZKey      514031741
+aExternalValue Extendend Absences
+aInternalValue ExtAbs
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031742
+aName      HR_EmployeeClassFeeType
+aDesc      Employee Class Fee Type
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031743
+aName      HR_EmployeeClassFeeType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031744
+aExternalValue Adjunct
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031745
+aExternalValue Overload
+aInternalValue O
+
+eDomain    2
+aZKey      514031747
+aName      HR_ContractDistributionType
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031747
+aDesc      Contract Distribution Type - 
+aName      HR_ContractDistributionType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031748
+aExternalValue General
+aInternalValue G
+
+eTableEntry 4
+aZKey      514031749
+aExternalValue Additional Salary
+aInternalValue SA
+
+eTableEntry 4
+aZKey      514031750
+aExternalValue Additional Salary Months
+aInternalValue SM
+
+eDomain    2
+aZKey      514031751
+aName      EmployeeType
+aDesc      Type of Employee (eg., Student Worker, Faculty )
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031752
+aName      EmployeeType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031753
+aExternalValue Student Worker
+aInternalValue S
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031754
+aName      VehicleRegistrationType
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031755
+aDesc      Type of Registration (eg., Commuter, Resident)
+aName      VehicleRegistrationType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031756
+aExternalValue Commuter
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031757
+aExternalValue Resident
+aInternalValue R
+
+eTableEntry 4
+aZKey      514031758
+aExternalValue Faculty/Staff
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031759
+aExternalValue Tenant
+aInternalValue T
+
+eTableEntry 4
+aZKey      514031760
+aExternalValue RA
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031761
+aExternalValue MC
+aInternalValue M
+
+eTableEntry 4
+aZKey      514031762
+aExternalValue Registered Owner
+aInternalValue G
+
+eDomain    2
+aZKey      514031763
+aName      HR_DistributionDeptCode
+aDesc      Dept Code for salary distribution
+aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aDataType  S
+aMaxStringLth 15
+aContextRestriction N
+
+eContext   3
+aZKey      514031764
+aName      HR_DistributionDeptCode
+aIsDefault Y
+
+eDomain    2
+aZKey      514031765
+aName      HR_ContractYear
+aDesc      Contract year of form, 2004-2005
+aDomainType F
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aDataType  S
+aMaxStringLth 9
+aContextRestriction N
+
+eContext   3
+aZKey      514031766
+aName      HR_ContractYear
+aEditString 9999-9999
+aIsDefault Y
+
+eDomain    2
+aZKey      514031767
+aName      HR_ContractStatus
+aDesc      The Status of the Contract (ex., Active, Open, Closed)
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031768
+aName      ContractSelection
+
+eTableEntry 4
+aZKey      514031769
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031770
+aExternalValue Inactive
+aInternalValue I
+
+eContext   3
+aZKey      514031771
+aName      HR_ContractStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031772
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031773
+aExternalValue Official
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031774
+aExternalValue Open
+aInternalValue O
+
+eTableEntry 4
+aZKey      514031775
+aExternalValue Inactive
+aInternalValue I
+
+eTableEntry 4
+aZKey      514031776
+aExternalValue Proposed
+aInternalValue P
+
+eDomain    2
+aZKey      514031777
+aName      EmployeeStatus
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031778
+aDesc      The current status of the Employee (eg., Active, Inactive)
+aName      EmployeeStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031779
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031780
+aExternalValue Inactive
+aInternalValue I
+
+eTableEntry 4
+aZKey      514031781
+aExternalValue Prospect
+aInternalValue P
+
+eTableEntry 4
+aZKey      514031782
+aExternalValue Terminated
+aInternalValue T
+
+eDomain    2
+aZKey      514031783
+aName      HR_RetirementsBenefitsType
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 4
+aContextRestriction N
+
+eContext   3
+aZKey      514031784
+aName      HR_RetirementsBenefitsType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031785
+aExternalValue Pre-Tax
+aInternalValue Pre
+
+eTableEntry 4
+aZKey      514031786
+aExternalValue Post-Tax
+aInternalValue Post
+
+eTableEntry 4
+aZKey      514031787
+aExternalValue None
+aInternalValue None
+
+eDomain    2
+aZKey      514031788
+aName      HR_MedicalCode
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031789
+aName      HR_MedicalCode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031790
+
+eTableEntry 4
+aZKey      514031791
+aExternalValue 2
+aInternalValue 2
+
+eTableEntry 4
+aZKey      514031792
+aExternalValue 3
+aInternalValue 3
+
+eTableEntry 4
+aZKey      514031793
+aExternalValue 4
+aInternalValue 4
+
+eTableEntry 4
+aZKey      514031794
+aExternalValue 5
+aInternalValue 5
+
+eTableEntry 4
+aZKey      514031795
+aExternalValue 7
+aInternalValue 7
+
+eTableEntry 4
+aZKey      514031796
+aExternalValue 8
+aInternalValue 8
+
+eSelectedOperation 3
+
+eDomain    2
+aZKey      514031797
+aName      HR_FacultyRank
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031798
+aName      HR_FacultyRank
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031799
+aExternalValue Assistant Professor
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031800
+aExternalValue Associate Professor
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031801
+aExternalValue Professor
+aInternalValue P
+
+eTableEntry 4
+aZKey      514031802
+aExternalValue Instructor
+aInternalValue I
+
+eTableEntry 4
+aZKey      514031803
+aExternalValue Lecturer
+aInternalValue L
+
+eDomain    2
+aZKey      514031804
+aName      HR_FacultyDegree
+aDomainType T
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aDataType  S
+aMaxStringLth 3
+aContextRestriction N
+
+eContext   3
+aZKey      514031805
+aName      HR_FacultyDegree
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031806
+aExternalValue BA/BS
+aInternalValue BAS
+
+eTableEntry 4
+aZKey      514031807
+aExternalValue MA
+aInternalValue MA
+
+eTableEntry 4
+aZKey      514031808
+aExternalValue MA+
+aInternalValue MA+
+
+eTableEntry 4
+aZKey      514031809
+aExternalValue PhD
+aInternalValue PhD
+
+eTableEntry 4
+aZKey      514031810
+aExternalValue JD
+aInternalValue JD
+
+eOperation 2
+
+i18        13
+i23        13
+i53        13
+i63        13
+i67        13
+i75        13
+i81        13
+i114       13
+i119       13
+i132       13
+i176       13
+i191       13
