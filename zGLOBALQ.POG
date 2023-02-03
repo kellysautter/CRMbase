@@ -1,0 +1,579 @@
+z1000-Zeidon    ZGLOBALQ TZOGSRCO 01/03/22   07:50:59 1.0a2    
+eGlobalOperationGroup 1
+aZKey      621131516
+aNextZKeyToAssign 621131655
+aName      zGLOBALQ
+aDesc      Query Operations
+aExtension VML
+aLanguageType V
+aDomainAndGlobalOpGroupName zGLOBALQ
+
+eOperation 2
+aName      ActivateQueryViewByName
+aZKey      621131517
+aType      G
+aReturnDesc ReturnCode
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131552
+
+eParameter 3
+aShortDesc ReturnedQueryView
+aDataType  V
+aPFlag     Y
+aUFlag     N
+aZKey      621131553
+
+eParameter 3
+aShortDesc QueryViewName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131554
+
+eOperation 2
+aName      QueryConvLangDomain
+aZKey      621131650
+aType      G
+
+eParameter 3
+aShortDesc AnyView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131651
+
+eParameter 3
+aShortDesc ReturnedValue
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      621131652
+
+eParameter 3
+aShortDesc OriginalValue
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131653
+
+eParameter 3
+aShortDesc Context
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131655
+
+eParameter 3
+aShortDesc LanguageCode
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131654
+
+eOperation 2
+aName      InsertOI_DataIntoDOCX_Template
+aZKey      621131645
+aType      G
+aReturnDataType L
+
+eParameter 3
+aShortDesc ResultSet
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131646
+
+eParameter 3
+aShortDesc OutputDirectoryFileName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131647
+
+eParameter 3
+aShortDesc TemplateDirectoryFileName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131648
+
+eParameter 3
+aShortDesc RootEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131649
+
+eOperation 2
+aName      FindSuffixForDirectory
+aZKey      621131641
+aType      G
+aReturnDataType L
+
+eParameter 3
+aShortDesc AnyView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131642
+
+eParameter 3
+aShortDesc szDirectoryName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131643
+
+eParameter 3
+aShortDesc szReturnedSuffixName
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      621131644
+
+eOperation 2
+aName      BuildValueComboBoxTable
+aZKey      621131634
+aType      G
+aReturnDesc nRC
+aReturnDataType L
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131635
+
+eOperation 2
+aName      InitializeQueryFrameForLOD
+aZKey      621131631
+aType      G
+aReturnDesc nRC
+aReturnDataType L
+
+eParameter 3
+aShortDesc zqFrame
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131632
+
+eParameter 3
+aShortDesc vLOD
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131633
+
+eOperation 2
+aName      ExpandQueryGeneralParms
+aZKey      621131628
+aType      G
+aReturnDesc nRC
+aReturnDataType L
+
+eParameter 3
+aShortDesc zqFrame
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131629
+
+eParameter 3
+aShortDesc vLOD
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131630
+
+eOperation 2
+aName      RebuildQueryFrameAttrRecur
+aZKey      621131622
+aType      G
+aReturnDesc nRC
+aReturnDataType L
+
+eParameter 3
+aShortDesc vLODRoot
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131624
+
+eParameter 3
+aShortDesc vLODRecurs
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131625
+
+eOperation 2
+aName      RebuildQueryFrameAttr
+aZKey      621131619
+aType      G
+aReturnDesc nRC
+aReturnDataType L
+
+eParameter 3
+aShortDesc vLODRoot
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131621
+
+eOperation 2
+aName      FormatQueryDisplayRecur
+aZKey      621131613
+aType      G
+aReturnDesc nRC
+aReturnDataType L
+
+eParameter 3
+aShortDesc zqFrame
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131614
+
+eParameter 3
+aShortDesc zqFrameRoot
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131615
+
+eParameter 3
+aShortDesc vLOD
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131616
+
+eOperation 2
+aName      FormatQueryDisplay
+aZKey      621131609
+aType      G
+aReturnDesc nRC
+aReturnDataType L
+
+eParameter 3
+aShortDesc zqFrame
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131610
+
+eParameter 3
+aShortDesc vLOD
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131612
+
+eParameter 3
+aShortDesc szRootEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131627
+
+eOperation 2
+aName      ActivateQueryObject
+aZKey      621131606
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc zqFrame
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131607
+
+eParameter 3
+aShortDesc vResultSet
+aDataType  V
+aPFlag     Y
+aUFlag     N
+aZKey      621131608
+
+eOperation 2
+aName      InsertOI_DataIntoODT_Template
+aZKey      621131601
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ResultSet
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131602
+
+eParameter 3
+aShortDesc OutputDirectoryFileName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131603
+
+eParameter 3
+aShortDesc TemplateDirectoryFileName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131604
+
+eParameter 3
+aShortDesc RootEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131605
+
+eOperation 2
+aName      InsertOI_DataIntoTemplateFile
+aZKey      621131587
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ResultSet
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131588
+
+eParameter 3
+aShortDesc OutputDirectoryFileName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131589
+
+eParameter 3
+aShortDesc szTemplateDirectoryFileName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131590
+
+eParameter 3
+aShortDesc szRootEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131592
+
+eOperation 2
+aName      ParseOutEntityAttribute
+aZKey      621131582
+aType      G
+
+eParameter 3
+aShortDesc AnyView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131583
+
+eParameter 3
+aShortDesc szEntityAttributeMapping
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131584
+
+eParameter 3
+aShortDesc szReturnedEntityName
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      621131585
+
+eParameter 3
+aShortDesc szReturnedAttributeName
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      621131586
+
+eOperation 2
+aName      InitializeQueryGraphMapping
+aZKey      621131580
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc Grapsh
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131581
+
+eOperation 2
+aName      GenerateLineWithTrace
+aZKey      621131521
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc AnyView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131555
+
+eParameter 3
+aShortDesc FileHandle
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      621131556
+
+eParameter 3
+aShortDesc OutputLine
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131557
+
+eParameter 3
+aShortDesc TraceLineFlag
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131558
+
+eOperation 2
+aName      GenerateColumnChartHTML
+aZKey      621131526
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc SourceObjectView
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131559
+
+eParameter 3
+aShortDesc GraphTitle
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131560
+
+eParameter 3
+aShortDesc BaseValueTitle
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131561
+
+eParameter 3
+aShortDesc BaseEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131562
+
+eParameter 3
+aShortDesc ChildEntityName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131563
+
+eParameter 3
+aShortDesc BaseAttributeName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131564
+
+eParameter 3
+aShortDesc ChildTitleName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131565
+
+eParameter 3
+aShortDesc ChildChartValueAttributeName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131566
+
+eParameter 3
+aShortDesc OutputDirectoryAndFileName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131567
+
+eParameter 3
+aShortDesc GenerateTableFlag
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131568
+
+eOperation 2
+aName      GetLPLR_SourceDirectory
+aZKey      621131545
+aType      G
+aReturnDesc ReturnCode
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131575
+
+eParameter 3
+aShortDesc ReturnedDirectory
+aDataType  S
+aPFlag     Y
+aUFlag     N
+aZKey      621131576
+
+eOperation 2
+aName      ActivateUpdateXOD
+aZKey      621131548
+aType      G
+aReturnDesc ReturnCode
+aReturnDataType N
+
+eParameter 3
+aShortDesc vXOD
+aDataType  V
+aPFlag     Y
+aUFlag     N
+aZKey      621131577
+
+eParameter 3
+aShortDesc zqFrame
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      621131578
+
+eParameter 3
+aShortDesc QueryViewName
+aDataType  S
+aPFlag     N
+aUFlag     N
+aZKey      621131579
+

@@ -1,0 +1,2216 @@
+/*************************************************************************************************
+**
+**    OPERATION: ActivateQueryViewByName
+**
+**
+*************************************************************************************************/
+GLOBAL OPERATION
+ActivateQueryViewByName( VIEW ViewToWindow,
+                         VIEW ReturnedQueryView,
+                         STRING ( 32 ) QueryViewName )
+
+   VIEW ExistingQueryView
+   VIEW sHost BASED ON LOD sHost
+   STRING ( 400 ) szFileName
+   STRING ( 32 )  szLOD_Name
+   STRING ( 200 ) szMsg
+   SHORT          nRC
+
+   GET VIEW ExistingQueryView NAMED "QueryView"
+   IF RESULT >= 0
+      DropObjectInstance( ExistingQueryView )
+   END
+   
+   // The Query LOD directory is in sHost.
+   GET VIEW sHost NAMED "sHost"
+   IF RESULT < 0
+      MessageSend( ViewToWindow, "", "Open Query",
+                   "Query Source Directory has not been activated.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN -1
+   ELSE
+      IF sHost.Host.QueryLODsSourceDirectory = ""
+         MessageSend( ViewToWindow, "", "Open Query",
+                      "Query Source Directory has not been initialized.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN -1
+      END
+   END
+
+   // Activate the LOD (Query View) requested.
+   szFileName = sHost.Host.QueryLODsSourceDirectory + QueryViewName + ".LOD"
+   nRC = SfActivateSysOI_FromFile( ReturnedQueryView, "TZZOLODO", ViewToWindow, szFileName, zSingle )
+   IF nRC < 0
+      szMsg = "Error opening related Query View, " + QueryViewName + ". Full path is " + szFileName + "."
+      MessageSend( ViewToWindow, "", "Open Query", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN -1
+   END
+   NAME VIEW ReturnedQueryView "QueryView"
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: ActivateUpdateXOD
+**
+**
+*************************************************************************************************/
+GLOBAL OPERATION
+ActivateUpdateXOD( VIEW vXOD,
+                   VIEW AnyView,
+                   STRING ( 32 ) szXOD_Name )
+
+   VIEW vXOD_Frame
+   STRING ( 32 )  szQueryOI_Name
+   STRING ( 32 )  szAttributeName
+   STRING ( 400 ) szFileName
+   STRING ( 200 ) szMsg
+   STRING ( 50 )  ReportTitle
+   INTEGER        nRC
+
+   // Activate the XOD (returning its view to the caller) and update it with display Result Set
+   // list and Merge Result Set information.
+
+   // Activate the XOD for the query frame so we can use the sample wSubgroupValue attribute.
+   GetApplDirectoryFromView( szFileName, AnyView, zAPPL_DIR_OBJECT, 400 )
+   szFileName = szFileName + "zqFrame.XOD"
+   nRC = SfActivateSysOI_FromFile( vXOD_Frame, "TZZOXODO", AnyView, szFileName, zSingle )
+   IF nRC < 0
+      MessageSend( AnyView, "", "Open Query",
+                   "Error opening zqFrame.XOD.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN -1
+   END
+   NAME VIEW vXOD "QueryXOD"
+   nRC = ActivateOI_FromFile( vXOD_Frame, "TZZOXODO", AnyView, szFileName, 536870912 )
+   SET CURSOR FIRST vXOD_Frame.ATTRIB WHERE vXOD_Frame.ATTRIB.NAME = "wSubgroupValue"
+
+   // Activate the XOD for the query object.
+   GetApplDirectoryFromView( szFileName, AnyView, zAPPL_DIR_OBJECT, 400 )
+   szQueryOI_Name = szXOD_Name
+   szFileName = szFileName + szQueryOI_Name + ".XOD"
+   nRC = SfActivateSysOI_FromFile( vXOD, "TZZOXODO", AnyView, szFileName, zSingle )
+   IF nRC < 0
+      szMsg = "Error opening XOD for " + szQueryOI_Name + "."
+      MessageSend( AnyView, "", "Open Query", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN -1
+   END
+   NAME VIEW vXOD "QueryXOD"
+
+   // Dynamically set those attributes that will be a part of the activate by turning on and off the
+   // "HIDDEN" flag.
+   // Loop through all the attributes for each entity in the XOD and determine if it is part of the query.
+   // We will have to process the XOD recursively.
+   /*CreateViewFromView( vXOD_Recurs,vXOD )
+   SetHiddenFlagsRecurs( vXOD_Recurs, AnyView )
+   DropView( vXOD_Recurs )*/
+
+   nRC = DropViewObject( AnyView, szQueryOI_Name, FALSE )
+
+   // Add the wSubgroupValue attributes for displaying SUM, AVG, etc. values in the list box
+   // if there're not already there.
+   // Also set the INCLUDE flag in the root entity.
+   SET CURSOR FIRST vXOD.ATTRIB WHERE vXOD.ATTRIB.NAME = "wSubgroupValue1"
+   IF RESULT < zCURSOR_SET
+      SET CURSOR LAST vXOD.ATTRIB
+      CREATE ENTITY vXOD.ATTRIB
+      SetMatchingAttributesByName( vXOD, "ATTRIB", vXOD_Frame, "ATTRIB", zSET_ALL )
+      vXOD.ATTRIB.NAME = "wSubgroupValue1"
+      CREATE ENTITY vXOD.ATTRIB
+      SetMatchingAttributesByName( vXOD, "ATTRIB", vXOD_Frame, "ATTRIB", zSET_ALL )
+      vXOD.ATTRIB.NAME = "wSubgroupValue2"
+      CREATE ENTITY vXOD.ATTRIB
+      SetMatchingAttributesByName( vXOD, "ATTRIB", vXOD_Frame, "ATTRIB", zSET_ALL )
+      vXOD.ATTRIB.NAME = "wSubgroupValue3"
+      CREATE ENTITY vXOD.ATTRIB
+      SetMatchingAttributesByName( vXOD, "ATTRIB", vXOD_Frame, "ATTRIB", zSET_ALL )
+      vXOD.ATTRIB.NAME = "wSubgroupValue4"
+   END
+   vXOD.ENTITY.INCLUDE = "Y"
+   vXOD.ENTITY.INCLSRC = "Y"
+   //CommitOI_ToFile( vXOD, szFileName, zASCII )
+
+   DropView( vXOD_Frame )
+
+END
+
+/*************************************************************************************************
+**
+**    OPERATION: GetLPLR_SourceDirectory
+**
+**
+*************************************************************************************************/
+GLOBAL OPERATION
+GetLPLR_SourceDirectory( VIEW ViewToWindow,
+                         STRING ( 400 ) ReturnedDirectory )
+
+   VIEW vTZZOLFLO
+   STRING ( 400 ) szFileName
+   STRING ( 32 )  szApplicationName
+   STRING ( 200 ) szMsg
+   SHORT          nRC
+
+   // Return the LPLR Source directory to the caller.
+   // We will get it from the MetaSource directory in the XLP, which speicifies the source of the Query
+   // View list for both read and write.
+
+   // Try to use the existing view.
+   GET VIEW vTZZOLFLO NAMED "TZZOLFLO"
+   IF RESULT < 0
+      // Get the XLP directory structure and file name.
+      GetApplDirectoryFromView( szFileName, ViewToWindow, zAPPL_DIR_OBJECT, 400 )
+      GetCurrentApplicationName( szApplicationName, 32, ViewToWindow )
+      szFileName = szFileName + szApplicationName + ".XLP"
+
+      // Activate the XLP to the query LODs.
+      // 536870912 is ACTIVATE_SYSTEM in the following activate statement.
+      nRC = ActivateOI_FromFile( vTZZOLFLO, "TZCMLPLO", ViewToWindow, szFileName, 536870912 )
+      IF nRC < 0
+         szMsg = "Cannot activate the Query .XLP from executable directory, " + szFileName + "."
+         MessageSend( ViewToWindow, "", "Open Query",
+                      szMsg,
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         SetWindowActionBehavior( ViewToWindow, zWAB_StayOnWindow, "", "" )
+         RETURN -1
+      END
+      NAME VIEW vTZZOLFLO "TZZOLFLO"
+   END
+
+   // Get the Meta Source name from the root.
+   GetStringFromAttribute( ReturnedDirectory, vTZZOLFLO, "LPLR", "MetaSrcDir" )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GenerateColumnChartHTML
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+GenerateColumnChartHTML( VIEW vSourceOI,
+                         STRING ( 255 ) szGraphTitle,
+                         STRING ( 255 ) szBaseValueTitle,
+                         STRING ( 32 )  szBaseEntityName,
+                         STRING ( 32 )  szChildEntityName,
+                         STRING ( 32 )  szBaseAttributeName,
+                         STRING ( 32 )  szChildTitleAttributeName,
+                         STRING ( 32 )  szChildChartValueAttributeName,
+                         STRING ( 255 ) szOutputDirectoryAndFileName,
+                         STRING ( 1 )   szGenerateTableFlag )
+
+   STRING ( 200 )  szMsg
+   STRING ( 5000 ) szOutputLine
+   STRING ( 1 )    szTraceLineFlag
+   STRING ( 256 )  szBaseValue
+   STRING ( 256 )  szChildValue
+   INTEGER         lFileHandle
+   INTEGER         lAttributeLength
+   INTEGER         LoopCount
+   SHORT           nRC
+   
+   // Build the HTML statements to generate a Column Chart using Google graphsics routine.
+
+   // Open the output file where the HTML will be generated
+   lFileHandle = SysOpenFile( vSourceOI, szOutputDirectoryAndFileName, COREFILE_WRITE )
+   IF lFileHandle < 0
+      szMsg = "Cannot open HTML Output File, " + szOutputDirectoryAndFileName
+      MessageSend( vSourceOI, "", "Generate Column Chart",
+                   szMsg, zMSGQ_OBJECT_CONSTRAINT_WARNING, 0 )
+      RETURN -1
+   END
+   szTraceLineFlag = "Y"
+   
+   // Generate standard header for Column Chart.
+   szOutputLine = "<html>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "  <head>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "    <script type=^text/javascript^ src=^https://www.google.com/jsapi^></script>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "    <script type=^text/javascript^>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "      google.load(^visualization^, ^1^, {packages:[^corechart^]});"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "      google.setOnLoadCallback(drawChart);"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "      function drawChart() {"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = ""
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   
+   // Build the basic chart table with a row for each Base entity and a column for each Child entity.
+   
+   // Build the "var" statements.
+   szOutputLine = "        var data = google.visualization.arrayToDataTable(["
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   
+   // Generate Title row, which has columns for Base Title and each Child Title.
+   nRC = SetCursorFirstEntity( vSourceOI, szBaseEntityName, "" )
+   szBaseValue = "Temporary Base Title"
+   szOutputLine = "          ['" + szBaseValue + "'"
+   nRC = SetCursorFirstEntity( vSourceOI, szChildEntityName, "" )
+   LOOP WHILE nRC >= zCURSOR_SET
+      GetStringFromAttribute( szChildValue, vSourceOI, szChildEntityName, szChildTitleAttributeName )
+      szOutputLine = szOutputLine + ", '" + szChildValue + "'"
+      
+      nRC = SetCursorNextEntity( vSourceOI, szChildEntityName, "" )
+   END
+   szOutputLine = szOutputLine + "],"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   
+   // Generate a row for each Base entity, which has columns for Base Value and each Child Value.
+   nRC = SetCursorFirstEntity( vSourceOI, szBaseEntityName, "" )
+   LOOP WHILE nRC >= zCURSOR_SET
+   
+      // Base Attribute
+      GetAttributeLength( lAttributeLength, vSourceOI, szBaseEntityName, szBaseAttributeName )
+      IF lAttributeLength > 255
+         IssueError( vSourceOI,0,0, "Base Attribute Length is greater than 255 characters." )
+         RETURN -1
+      END
+      GetStringFromAttribute( szBaseValue, vSourceOI, szBaseEntityName, szBaseAttributeName )
+      szOutputLine = "          ['" + szBaseValue + "'"
+      
+      // Child Attributes
+      nRC = SetCursorFirstEntity( vSourceOI, szChildEntityName, "" )
+      LOOP WHILE nRC >= zCURSOR_SET
+         GetStringFromAttribute( szChildValue, vSourceOI, szChildEntityName, szChildChartValueAttributeName )
+         IF szChildValue = ""
+            szChildValue = "0"
+         END
+         szOutputLine = szOutputLine + ", " + szChildValue 
+         
+         nRC = SetCursorNextEntity( vSourceOI, szChildEntityName, "" )
+      END
+      szOutputLine = szOutputLine + "]"
+      
+      // Go to next entry and generate the line.
+      nRC = SetCursorNextEntity( vSourceOI, szBaseEntityName, "" )
+      IF nRC >= zCURSOR_SET
+         // There will be another line, so put comma at end of generated line.
+         szOutputLine = szOutputLine + ","
+      END
+      GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   END
+   // Conclude the table entries.
+   szOutputLine = "        ]);"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = ""
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   
+   // Generate Title line.
+   szOutputLine = "        var options = {"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "          title: '" + szGraphTitle + "',"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "          hAxis: {title: '" + szBaseValueTitle + "', titleTextStyle: {color: 'red'}}"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "        };"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = ""
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   
+   // Generate closing statements from var and chart statements.
+   szOutputLine = ""
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "        chart.draw(data, options);"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "      }"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "    </script>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "  </head>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "  <body>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "    <div id=^chart_div^ style=^width: 900px; height: 500px;^></div>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   
+   // If generating a table of values is requested, build the statements here.
+   IF szGenerateTableFlag = "Y"
+      szOutputLine = "  <div>"
+      GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+      szOutputLine = "   <table width=^800^ border=^1^ cellpadding=^5^ cellspacing=^2^>"
+      GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+      
+      // Begin Table.
+      szOutputLine = "      <tr bgcolor=^#5290d5^>"
+      GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+      szOutputLine = "         <th>&nbsp;</th>"
+      GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+      
+      // Build Header Row, with a column for each Child entity.
+      nRC = SetCursorFirstEntity( vSourceOI, szBaseEntityName, "" )
+      nRC = SetCursorFirstEntity( vSourceOI, szChildEntityName, "" )
+      LOOP WHILE nRC >= zCURSOR_SET
+         GetStringFromAttribute( szChildValue, vSourceOI, szChildEntityName, szChildTitleAttributeName )
+         szOutputLine = "         <th align=^right^>" + szChildValue + "</th>"
+         GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+         
+         nRC = SetCursorNextEntity( vSourceOI, szChildEntityName, "" )
+      END
+      
+      szOutputLine = "      </tr>"
+      GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+      
+      // Generate a row for each Base Entity.
+      nRC = SetCursorFirstEntity( vSourceOI, szBaseEntityName, "" )
+      LOOP WHILE nRC >= zCURSOR_SET
+         szOutputLine = "      <tr>"
+         GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+         
+         GetStringFromAttribute( szChildValue, vSourceOI, szBaseEntityName, szBaseAttributeName )
+         szOutputLine = "         <th align=^right^>" + szChildValue + "</th>"
+         GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+         
+         LOOP WHILE nRC >= zCURSOR_SET
+            GetStringFromAttribute( szChildValue, vSourceOI, szChildEntityName, szChildChartValueAttributeName )
+            szOutputLine = "    <th align=^right^>" + szChildValue + "</th>"
+            GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+            
+            nRC = SetCursorNextEntity( vSourceOI, szChildEntityName, "" )
+         END
+         szOutputLine = "      </tr>"
+         GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+         
+         nRC = SetCursorNextEntity( vSourceOI, szBaseEntityName, "" )
+      END
+      
+      szOutputLine = "   </table>"
+      GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+      szOutputLine = "  <div>"
+      GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   END
+   
+   // Generate closing statements.
+   szOutputLine = "  </body>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   szOutputLine = "</html>"
+   GenerateLineWithTrace( vSourceOI, lFileHandle, szOutputLine, szTraceLineFlag )
+   
+   SysCloseFile( vSourceOI, lFileHandle, 0 )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: GenerateLineWithTrace
+**    Write out a generated line to an output file with option trace.
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+GenerateLineWithTrace( VIEW AnyView,
+                       INTEGER lFileHandle,
+                       STRING ( 5000 ) szOutputLine,
+                       STRING ( 1 )   szTraceLineFlag )
+
+   // This is just a SysWriteLine with an options TraceLineS statement.
+   IF szTraceLineFlag = "Y"
+      TraceLineS( "*** Line: ", szOutputLine )
+   END
+   WL_QC( lFileHandle, szOutputLine, "^", 0 )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: InsertOI_DataIntoTemplateFile
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+InsertOI_DataIntoTemplateFile( VIEW ResultSet,
+                               STRING ( 1000 ) szOutputFileName,
+                               STRING ( 1000 ) szTemplateFileName,
+                               STRING ( 1000 ) szRootEntityName )
+
+   STRING ( 500000000 ) szTemplateData
+   STRING ( 500000000 ) szOutputData
+   STRING ( 500000000 ) szRepeatableMappingData
+   STRING ( 500000000 ) szCopyData
+   STRING ( 10000 )    szReturnedMappingData
+   STRING ( 200 )      szMsg
+   STRING ( 200 )      szMappingData
+   STRING ( 100 )      szEntityName
+   STRING ( 100 )      szAttributeName
+   STRING ( 100 )      szLoopingEntityName
+   STRING ( 10 )       szPrefix
+   STRING ( 10 )       szSuffix
+   INTEGER nRC
+   INTEGER nRC_Attributes
+   INTEGER FileHandleInput
+   INTEGER FileHandleOutput
+   INTEGER Length
+   INTEGER InputPtr
+   INTEGER InputPtrR
+   INTEGER InputPtrRStart
+   INTEGER CopyLength
+   INTEGER MappingGroupCopyLength
+   INTEGER FindStringPtr
+   INTEGER RecordCount
+
+   // Use the Template File and the Result Set to create a new output file where each root entry in the Result Set
+   // creates a group of characters in the output file that is made up of the data format of the Template with the merged
+   // data from the Result Set.
+   
+   FileHandleInput = SysOpenFile( ResultSet, szTemplateFileName, COREFILE_READ )
+   IF FileHandleInput < 0
+      szMsg = "File '" + szTemplateFileName + "' could not be opened."
+      MessageSend( ResultSet, "", "Test", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      TraceLineS( "*** Invalid File Name: ", szTemplateFileName )
+      RETURN 2
+   END
+   nRC = SysReadFile( ResultSet, FileHandleInput, szTemplateData, 50000000 )
+   SysCloseFile( ResultSet, FileHandleInput, 0 )
+   Length = zstrlen( szTemplateData )
+   
+   // Loop through each Root entity in the Result Set, merging the Result Set data into the template.
+   nRC = SetCursorFirstEntity( ResultSet, szRootEntityName, "" )
+   szOutputData = ""
+   RecordCount = 0
+   LOOP WHILE nRC >= zCURSOR_SET
+      // Copy each character from the Input to the Output, merging in any object variable data.
+      InputPtr  = 1
+      
+      // If this is any record but the first, add in the page break
+      RecordCount = RecordCount + 1
+      IF RecordCount > 1
+         szCopyData = szTemplateData[InputPtr:CopyLength]
+         //szOutputData = szOutputData + "\x0D\x0A\\par \\page \\hich\\af0\\dbch\\af28\\loch\\f0 "
+         szOutputData = szOutputData + "\\par"
+      END
+      
+      // Loop through all input characters, copying groups of characters not involved in a merge and merging variable data
+      // when we come across merge syntax.
+      LOOP WHILE InputPtr <= Length
+         // Continue to loop until we find a "[" character, which is the start of a merge test.
+         FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "[Z:" )
+         IF FindStringPtr < 0
+            // No Zeidon delimiter was found, so just copy the rest of the input string.
+            CopyLength = 50000000
+            szCopyData = szTemplateData[InputPtr:CopyLength]
+            szOutputData = szOutputData + szCopyData
+            InputPtr  = InputPtr + CopyLength
+         ELSE
+            // The Zeidon delimiter was found, So copy all characters up to the delimiter.
+            CopyLength = FindStringPtr - InputPtr + 1
+            szCopyData = szTemplateData[InputPtr:CopyLength]
+            szOutputData = szOutputData + szCopyData
+            InputPtr  = InputPtr + CopyLength
+            
+            // Process the Zeidon Delimiter.
+            FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "]" )
+            CopyLength = FindStringPtr - InputPtr + 2    // Add one character for closing bracket and one for starting character.
+            szMappingData = szTemplateData[InputPtr:CopyLength]
+            szPrefix = szMappingData[1:6]
+            
+            IF szPrefix = "[Z:#S:"
+            
+               // Group Looping Command, so loop through Result Set szEntityName entry, mapping each subobject attribute specified.
+               
+               // Make sure the looping group, "[Z:#S:", has a looping end, "[Z:#E]". 
+               FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "[Z:#E]" )
+               IF FindStringPtr < 0
+                  MessageSend( ResultSet, "", "Test", "Group Start, '[Z:#S:' does not have Group End, '[Z:#E]'.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+                  RETURN 2
+               END
+               
+               // Copy the repeatable area to its own variable, szRepeatableMappingData.
+               CopyLength = FindStringPtr - InputPtr + 7   
+               szRepeatableMappingData = szTemplateData[InputPtr:CopyLength]
+               MappingGroupCopyLength = CopyLength
+               
+               // Parse out the looping entry from szRepeatableMappingData.
+               // Note that the string up to the "]" character should be the looping entity name.
+               InputPtrR = 7     // Skip past header
+               FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "]" )
+               CopyLength = FindStringPtr - InputPtrR + 1    // Add one character for closing bracket and one for starting character.
+               szLoopingEntityName = szRepeatableMappingData[InputPtrR:CopyLength]
+               InputPtrRStart = InputPtrR + CopyLength + 1
+               
+               // Loop through each Result Entity and map the Attribute values specified in szRepeatableMappingData.
+               // Note that InputPtrR should be pointing to the first character after the looping entity mapping characters.
+               nRC = SetCursorFirstEntity( ResultSet, szLoopingEntityName, "" )
+               LOOP WHILE nRC >= zCURSOR_SET
+                  
+                  // Loop through each Attribute, mapping the data to the output area.
+                  
+                  szSuffix = szRepeatableMappingData[InputPtrRStart:6]
+                  InputPtrR = InputPtrRStart
+                  LOOP WHILE szSuffix != "[Z:#E]"
+                     IF szRepeatableMappingData[InputPtrR:3] = "[Z:"
+                        // No action
+                     ELSE 
+                        // Copy the characters up to the next mapping entry.
+                        FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "[Z:" )
+                        CopyLength = FindStringPtr - InputPtrR + 1
+                        szCopyData = szRepeatableMappingData[InputPtrR:CopyLength]
+                        szOutputData = szOutputData + szCopyData
+                        InputPtrR  = InputPtrR + CopyLength
+                     END
+                     
+                     // Map the variable data, unless it's "[Z:#E]".
+                     IF szRepeatableMappingData[InputPtrR:6] != "[Z:#E]"
+                        FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "]" )
+                        CopyLength = FindStringPtr - InputPtrR + 2    // Add one character for closing bracket and one for starting character.
+                        szMappingData = szRepeatableMappingData[InputPtrR:CopyLength]
+                        ParseOutEntityAttribute( ResultSet, szMappingData, szEntityName, szAttributeName )
+                        GetStringFromAttributeByContext( szReturnedMappingData, ResultSet, szEntityName, szAttributeName, "", 10000 )
+                        szOutputData = szOutputData + szReturnedMappingData
+                        InputPtrR  = InputPtrR + CopyLength
+                     END
+                     
+                     szSuffix = szRepeatableMappingData[InputPtrR:6]
+                  
+                  END
+                  
+                  nRC = SetCursorNextEntity( ResultSet, szLoopingEntityName, "" )
+               END
+               
+               
+               
+            ELSE
+               
+               // Single Mapping Command, so replace mapping text with data from Result Set.
+               ParseOutEntityAttribute( ResultSet, szMappingData, szEntityName, szAttributeName )
+               GetStringFromAttributeByContext( szReturnedMappingData, ResultSet, szEntityName, szAttributeName, "", 10000 )
+               szOutputData = szOutputData + szReturnedMappingData
+               MappingGroupCopyLength = CopyLength
+               
+            END
+            
+            // Set up pointer to after delimiter.
+            InputPtr  = InputPtr + MappingGroupCopyLength
+         END
+      END
+      
+      nRC = SetCursorNextEntity( ResultSet, szRootEntityName, "" )
+   END
+   
+   FileHandleOutput = SysOpenFile( ResultSet, szOutputFileName, COREFILE_CREATE )
+   SysWriteFile( ResultSet, FileHandleOutput, szOutputData, 50000000 )
+   SysCloseFile( ResultSet, FileHandleOutput, 0 )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: InsertOI_DataIntoODT_Template
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+InsertOI_DataIntoODT_Template( VIEW ResultSet,
+                               STRING ( 1000 ) szOutputFileName,
+                               STRING ( 1000 ) szTemplateFileName,
+                               STRING ( 1000 ) szRootEntityName )
+   
+   VIEW sHost   REGISTERED AS sHost
+   VIEW ResultSet2
+   STRING ( 500000000 ) szTemplateData
+   STRING ( 500000000 ) szOutputData
+   STRING ( 500000000 ) szRepeatableMappingData
+   STRING ( 500000000 ) szCopyData
+   STRING ( 10000 )    szReturnedMappingData
+   STRING ( 1000 )     szUnzipDirectoryName
+   STRING ( 1000 )     szUnzipDirectoryContentName
+   STRING ( 1000 )     szUnzipSubDirectoryName
+   STRING ( 100 )      szZipDirectoryNameSuffix
+   STRING ( 200 )      szMappingData
+   STRING ( 100 )      szEntityName
+   STRING ( 100 )      szAttributeName
+   STRING ( 100 )      szLoopingEntityName
+   STRING ( 10 )       szPrefix
+   STRING ( 10 )       szSuffix
+   STRING ( 50 )       szPageBreakString
+   STRING ( 50 )       szSymbolChars
+   INTEGER nRC
+   INTEGER nRC_Attributes
+   INTEGER FileHandleInput
+   INTEGER FileHandleOutput
+   INTEGER Length
+   INTEGER InputPtr
+   INTEGER InputPtrR
+   INTEGER InputPtrRStart
+   INTEGER CopyLength
+   INTEGER CopyBodyEnd
+   INTEGER HeaderLength
+   INTEGER MappingGroupCopyLength
+   INTEGER FindStringPtr
+   INTEGER RecordCount
+   INTEGER SymbolStart
+   INTEGER PageBreakStart
+   INTEGER PageBreakLength
+
+   // Use the Template File and the Result Set to create a new output file where each root entry in the Result Set
+   // creates a group of characters in the output file that is made up of the data format of the Template with the merged
+   // data from the Result Set.
+   
+   // Since the file is an ODT file, we will first unzip the Template into a Unzip/Zip directory and then merge just the data from the
+   // Content file in that directory and finally rezip the file to create the Output File.
+   // Note that the repeatable data in the Content file starts with the first "<text:p" entry and ends with the first "</office:text>" entry.
+   
+   // Unzip/Zip Directory is for ODT.
+   szUnzipDirectoryName = sHost.Host.OD_FileUnzipZipDirectory
+   
+   nRC = UnZipFile( szTemplateFileName, szUnzipDirectoryName )
+   IF nRC < 0
+      MessageSend( ResultSet, "", "Test", "The Template file could not be unzipped.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   szUnzipDirectoryContentName = szUnzipDirectoryName + "content.xml"
+  
+   FileHandleInput = SysOpenFile( ResultSet, szUnzipDirectoryContentName, COREFILE_READ )
+   IF FileHandleInput < 0
+      MessageSend( ResultSet, "", "Test", "Content File could not be opened.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   nRC = SysReadFile( ResultSet, FileHandleInput, szTemplateData, 50000000 )
+   SysCloseFile( ResultSet, FileHandleInput, 0 )
+   Length = zstrlen( szTemplateData )
+   
+   // Copy the content header (everything up to the first text entry (<text:p"). That will be the start of the repeatable area
+   // when the are multiple entries in ResultSet requiring multiple pages..
+   InputPtr = 1
+   FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "<text:p" )
+   HeaderLength = FindStringPtr 
+   szOutputData = szTemplateData[InputPtr:HeaderLength]
+   
+   // Get the length of the area to copy, which is from the first text field up to either the PageBreak entry or the end of all text, <"/office:text>" )
+   // First look for the Page Break entry.
+   InputPtr = 1
+   FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "#PAGE BREAK#" )
+   IF FindStringPtr > 0
+      // A Page Break was found, so set up the Page Break string.
+      // The template page break text will be of the form, "<text:p text:style-name="Pxx">#PAGE BREAK#</text:p>".
+      // The page break text to be inserted will be of form, <text:p text:style-name="Pxx"/>
+      // How far back we need to go to get to the first character depends on whether xx is one or two characters. We'll look back 3 or 4 characters
+      // to see if the "P" is there to determine the length.
+      
+      // Note that ZeidonStringFind assumes the pointer returned has a zero base instead of a 1 base.
+      // This means that finding "Test" in the string, "xxxTest", will return a 3 instead of a 4.
+      
+      szSymbolChars = szTemplateData[ FindStringPtr:20]     // For debug purposes only to show position returned.
+      SymbolStart = FindStringPtr - 4    // First look back 4 characters.
+      IF szTemplateData[ SymbolStart:1] = "P"
+         // Break symbol is of form, Pxx.
+         PageBreakStart = FindStringPtr - 29
+         szPageBreakString = szTemplateData[ PageBreakStart:29] + "/>"
+         PageBreakLength = 29
+         CopyBodyEnd =  FindStringPtr - InputPtr - 28
+      ELSE
+         // Break symbol is of form, Px.
+         PageBreakStart = FindStringPtr - 28
+         szPageBreakString = szTemplateData[ PageBreakStart:28] + "/>" 
+         PageBreakLength = 28
+         CopyBodyEnd =  FindStringPtr - InputPtr - 27
+      END
+   ELSE
+      // A Page Break was not found, so search to end of text, </office:text>.
+      InputPtr = 1
+      FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "</office:text>" )
+      CopyBodyEnd = FindStringPtr - InputPtr + 1
+      szPageBreakString = ""     // A null value here will indicate no Page Break.
+   END
+   
+   // Loop through each Root entity in the Result Set, merging the Result Set data into the template.
+   nRC = SetCursorFirstEntity( ResultSet, szRootEntityName, "" )
+   RecordCount = 0
+   LOOP WHILE nRC >= zCURSOR_SET
+      // Copy each character from the beginning of the body (the data after the header) to the end of the body (the data up to
+      // the "</office:text>" characters to the Output variable, merging in any object variable data.
+      InputPtr = HeaderLength + 1
+      
+      // Loop through all input characters, copying groups of characters not involved in a merge and merging variable data
+      // when we come across merge syntax.
+      LOOP WHILE InputPtr < CopyBodyEnd
+         // Continue to loop until we find a "[" character, which is the start of a merge test.
+         FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "[Z:" )
+         IF FindStringPtr < 0
+            // No Zeidon delimiter was found in rest of template, so copy rest of template to Output and add Page Break text if it exists.
+            CopyLength = CopyBodyEnd - InputPtr
+            // KJS 11/02/20 - We are missing a ">". Going to try adding 1 to CopyLength
+            CopyLength = CopyLength + 1
+            szCopyData = szTemplateData[InputPtr:CopyLength]
+            szOutputData = szOutputData + szCopyData
+            InputPtr = InputPtr + CopyLength
+            
+            // If there is a Page Break string AND there is another root entity, add the string here.
+            IF szPageBreakString != ""
+               CreateViewFromView( ResultSet2, ResultSet )
+               nRC = SetCursorNextEntity( ResultSet2, szRootEntityName, "" )
+               IF nRC >= zCURSOR_SET
+                  szOutputData = szOutputData + szPageBreakString
+                  InputPtr = InputPtr + PageBreakLength
+               END
+               DropView( ResultSet2 )
+            END
+         ELSE
+            // The Zeidon delimiter was found, So copy all characters up to the delimiter.
+            CopyLength = FindStringPtr - InputPtr + 1
+            szCopyData = szTemplateData[InputPtr:CopyLength]
+            szOutputData = szOutputData + szCopyData
+            InputPtr  = InputPtr + CopyLength
+            
+            // Process the Zeidon Delimiter.
+            FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "]" )
+            CopyLength = FindStringPtr - InputPtr + 2    // Add one character for closing bracket and one for starting character.
+            szMappingData = szTemplateData[InputPtr:CopyLength]
+            szPrefix = szMappingData[1:6]
+            
+            IF szPrefix = "[Z:#S:"
+            
+               // Group Looping Command, so loop through Result Set szEntityName entry, mapping each subobject attribute specified.
+               
+               // Make sure the looping group, "[Z:#S:", has a looping end, "[Z:#E]". 
+               FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "[Z:#E]" )
+               IF FindStringPtr < 0
+                  MessageSend( ResultSet, "", "Test", "Group Start, '[Z:#S:' does not have Group End, '[Z:#E]'.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+                  RETURN 2
+               END
+               
+               // Copy the repeatable area to its own variable, szRepeatableMappingData.
+               CopyLength = FindStringPtr - InputPtr + 7   
+               szRepeatableMappingData = szTemplateData[InputPtr:CopyLength]
+               MappingGroupCopyLength = CopyLength
+               
+               // Parse out the looping entry from szRepeatableMappingData.
+               // Note that the string up to the "]" character should be the looping entity name.
+               InputPtrR = 7     // Skip past header
+               FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "]" )
+               CopyLength = FindStringPtr - InputPtrR + 1    // Add one character for closing bracket and one for starting character.
+               szLoopingEntityName = szRepeatableMappingData[InputPtrR:CopyLength]
+               InputPtrRStart = InputPtrR + CopyLength + 1
+               
+               // Loop through each Result Entity and map the Attribute values specified in szRepeatableMappingData.
+               // Note that InputPtrR should be pointing to the first character after the looping entity mapping characters.
+               nRC = SetCursorFirstEntity( ResultSet, szLoopingEntityName, "" )
+               LOOP WHILE nRC >= zCURSOR_SET
+                  
+                  // Loop through each Attribute, mapping the data to the output area.
+                  
+                  szSuffix = szRepeatableMappingData[InputPtrRStart:6]
+                  InputPtrR = InputPtrRStart
+                  LOOP WHILE szSuffix != "[Z:#E]"
+                     IF szRepeatableMappingData[InputPtrR:3] = "[Z:"
+                        // No action
+                     ELSE 
+                        // Copy the characters up to the next mapping entry.
+                        FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "[Z:" )
+                        CopyLength = FindStringPtr - InputPtrR + 1
+                        szCopyData = szRepeatableMappingData[InputPtrR:CopyLength]
+                        szOutputData = szOutputData + szCopyData
+                        InputPtrR  = InputPtrR + CopyLength
+                     END
+                     
+                     // Map the variable data, unless it's "[Z:#E]".
+                     IF szRepeatableMappingData[InputPtrR:6] != "[Z:#E]"
+                        FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "]" )
+                        CopyLength = FindStringPtr - InputPtrR + 2    // Add one character for closing bracket and one for starting character.
+                        szMappingData = szRepeatableMappingData[InputPtrR:CopyLength]
+                        ParseOutEntityAttribute( ResultSet, szMappingData, szEntityName, szAttributeName )
+                        GetStringFromAttributeByContext( szReturnedMappingData, ResultSet, szEntityName, szAttributeName, "", 10000 )
+                        // KJS 11/02/20 - Replace the character & with &amp;
+                        zSearchAndReplace( szReturnedMappingData, 10000, "&", "&amp;" )
+                        szOutputData = szOutputData + szReturnedMappingData
+                        InputPtrR  = InputPtrR + CopyLength
+                     END
+                     
+                     szSuffix = szRepeatableMappingData[InputPtrR:6]
+                  
+                  END
+                  
+                  nRC = SetCursorNextEntity( ResultSet, szLoopingEntityName, "" )
+               END
+               
+            ELSE
+               
+               // Single Mapping Command, so replace mapping text with data from Result Set.
+               ParseOutEntityAttribute( ResultSet, szMappingData, szEntityName, szAttributeName )
+               GetStringFromAttributeByContext( szReturnedMappingData, ResultSet, szEntityName, szAttributeName, "", 10000 )
+               // KJS 11/02/20 - Replace the character & with &amp;
+               zSearchAndReplace( szReturnedMappingData, 10000, "&", "&amp;" )
+               szOutputData = szOutputData + szReturnedMappingData
+               MappingGroupCopyLength = CopyLength
+               
+            END
+            
+            // Set up pointer to after delimiter.
+            InputPtr  = InputPtr + MappingGroupCopyLength
+         END
+      END
+      
+      nRC = SetCursorNextEntity( ResultSet, szRootEntityName, "" )
+   END
+   
+   // Copy all the content characters after the body end characters. InputPtr should be pointing to the end of the body.
+   //FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "</office:body>" )
+   //CopyLength = 500             // This just needs to be greater than the remaining characters in the Template.
+   //szOutputData = szOutputData + szTemplateData[InputPtr:CopyLength]
+   
+   // Copy the file ending string.
+   szOutputData = szOutputData + "</office:text></office:body></office:document-content>"
+   
+   // Write the new output back on the content.xml file.
+   FileHandleOutput = SysOpenFile( ResultSet, szUnzipDirectoryContentName, COREFILE_CREATE )
+   SysWriteFile( ResultSet, FileHandleOutput, szOutputData, 50000000 )
+   SysCloseFile( ResultSet, FileHandleOutput, 0 )
+   
+   // Finally, Zip the directory contents back to the Output file.
+   FindSuffixForDirectory( ResultSet, szUnzipDirectoryName, szZipDirectoryNameSuffix )
+   nRC = ZipDirectory( szUnzipDirectoryName, szOutputFileName, szZipDirectoryNameSuffix )
+   IF nRC < 0
+      MessageSend( ResultSet, "", "", "The Result file could not be zipped.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: InsertOI_DataIntoDOCX_Template
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+InsertOI_DataIntoDOCX_Template( VIEW ResultSet,
+                                STRING ( 1000 ) szOutputFileName,
+                                STRING ( 1000 ) szTemplateFileName,
+                                STRING ( 1000 ) szRootEntityName )
+   
+   VIEW sHost   REGISTERED AS sHost
+   VIEW ResultSet2
+   VIEW QueryView
+   STRING ( 500000000 ) szTemplateData
+   STRING ( 500000000 ) szOutputData
+   STRING ( 500000000 ) szRepeatableMappingData
+   STRING ( 500000000 ) szCopyData
+   STRING ( 10000 )    szReturnedMappingData
+   STRING ( 1000 )     szUnzipDirectoryName
+   STRING ( 1000 )     szUnzipDirectoryContentName
+   STRING ( 1000 )     szUnzipSubDirectoryName
+   STRING ( 1000 )     szPageBreakHeader
+   STRING ( 100 )      szZipDirectoryNameSuffix
+   STRING ( 200 )      szMappingData
+   STRING ( 200 )      szMsg
+   STRING ( 100 )      szEntityName
+   STRING ( 100 )      szAttributeName
+   STRING ( 100 )      szLoopingEntityName
+   STRING ( 10 )       szPrefix
+   STRING ( 10 )       szSuffix
+   STRING ( 50 )       szPageBreakString
+   STRING ( 50 )       szSymbolChars
+   INTEGER nRC
+   INTEGER nRC_Attributes
+   INTEGER FileHandleInput
+   INTEGER FileHandleOutput
+   INTEGER Length
+   INTEGER InputPtr
+   INTEGER InputPtrR
+   INTEGER InputPtrRStart
+   INTEGER CopyLength
+   INTEGER CopyBodyEnd
+   INTEGER HeaderLength
+   INTEGER MappingGroupCopyLength
+   INTEGER FindStringPtr
+   INTEGER RecordCount
+   INTEGER SymbolStart
+   INTEGER PageBreakStart
+   INTEGER PageBreakLength
+   INTEGER PageBreakPtr
+
+   // Use the Template File and the Result Set to create a new output file where each root entry in the Result Set
+   // creates a group of characters in the output file that is made up of the data format of the Template with the merged
+   // data from the Result Set.
+   
+   // Since the file is a DOCX file, we will first unzip the Template into a Unzip/Zip directory and then merge just the data from the
+   // word\document file in that directory and finally rezip the file to create the Output File.
+   // Note that the repeatable data in the Content file starts with the first "<w:p" entry and ends with the first "<w:sectPr" entry.
+   
+   // Unzip/Zip Directory is for DOCX.
+   szUnzipDirectoryName = sHost.Host.DOCX_FileUnzipZipDirectory
+   
+   // Get the view to the Query LOD for use in validating Entity and Attribute Names.
+   GET VIEW QueryView NAMED "QueryView"
+   
+   nRC = UnZipFile( szTemplateFileName, szUnzipDirectoryName )
+   IF nRC < 0
+      MessageSend( ResultSet, "", "Run PQ", "The Template file could not be unzipped.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   //szUnzipDirectoryContentName = szUnzipDirectoryName + "word\document.xml"
+  
+   // KJS 08/20/20 - Do we need this here. I would assume we do.
+   IF sHost.Host.OSSystem = "Windows"
+      szUnzipDirectoryContentName = szUnzipDirectoryName + "word\document.xml"
+   ELSE
+      szUnzipDirectoryContentName = szUnzipDirectoryName + "word/document.xml"
+   END
+   FileHandleInput = SysOpenFile( ResultSet, szUnzipDirectoryContentName, COREFILE_READ )
+   IF FileHandleInput < 0
+      MessageSend( ResultSet, "", "Run PQ", "Word/document File could not be opened.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   nRC = SysReadFile( ResultSet, FileHandleInput, szTemplateData, 50000000 )
+   SysCloseFile( ResultSet, FileHandleInput, 0 )
+   Length = zstrlen( szTemplateData )
+   
+   // Copy the content header (everything up to the first text entry (<w:p). That will be the start of the repeatable area
+   // when the are multiple entries in ResultSet requiring multiple pages..
+   InputPtr = 1
+   FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "<w:p" )
+   HeaderLength = FindStringPtr 
+   szOutputData = szTemplateData[InputPtr:HeaderLength]
+   szPageBreakHeader = szTemplateData[FindStringPtr:30]
+   
+   // Save the first statement of the form, <w:p w:rsidRDefault="009F6CB0" w:rsidR="009F6CB0"> for use in page break.
+   PageBreakPtr = FindStringPtr + 1
+   szPageBreakHeader = szTemplateData[PageBreakPtr:1]
+   LOOP WHILE szTemplateData[PageBreakPtr:1] != ">"
+      PageBreakPtr = PageBreakPtr + 1
+      szPageBreakHeader = szPageBreakHeader + szTemplateData[PageBreakPtr:1]
+   END
+   
+   // Get the length of the area to copy, which is from the first text field up to either the PageBreak entry or the end of all text, <"<w:sectPr" )
+   // First look for the Page Break entry.
+   InputPtr = 1
+   FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "#PAGE BREAK#" )
+   IF FindStringPtr > 0
+      // A Page Break was found, so set up the Page Break string.
+      // The template page break text will be of the form, "<text:p text:style-name="Pxx">#PAGE BREAK#</text:p>".
+      // The page break text to be inserted will be of form, <text:p text:style-name="Pxx"/>
+      // How far back we need to go to get to the first character depends on whether xx is one or two characters. We'll look back 3 or 4 characters
+      // to see if the "P" is there to determine the length.
+      
+      // Note that ZeidonStringFind assumes the pointer returned has a zero base instead of a 1 base.
+      // This means that finding "Test" in the string, "xxxTest", will return a 3 instead of a 4.
+      
+      szSymbolChars = szTemplateData[ FindStringPtr:20]     // For debug purposes only to show position returned.
+      SymbolStart = FindStringPtr - 4    // First look back 4 characters.
+      IF szTemplateData[ SymbolStart:1] = "P"
+         // Break symbol is of form, Pxx.
+         PageBreakStart = FindStringPtr - 29
+         szPageBreakString = szTemplateData[ PageBreakStart:29] + "/>"
+         PageBreakLength = 29
+         CopyBodyEnd =  FindStringPtr - InputPtr - 28
+      ELSE
+         // Break symbol is of form, Px.
+         PageBreakStart = FindStringPtr - 28
+         szPageBreakString = szTemplateData[ PageBreakStart:28] + "/>" 
+         PageBreakLength = 28
+         CopyBodyEnd =  FindStringPtr - InputPtr - 27
+      END
+   ELSE
+      // A Page Break was not found, so search to end of text, "<w:sectPr".
+      InputPtr = 1
+      FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "<w:sectPr" )
+      CopyBodyEnd = FindStringPtr - InputPtr + 1
+      szPageBreakString = ""     // A null value here will indicate no Page Break.
+   END
+   
+   // Loop through each Root entity in the Result Set, merging the Result Set data into the template.
+   nRC = SetCursorFirstEntity( ResultSet, szRootEntityName, "" )
+   RecordCount = 0
+   LOOP WHILE nRC >= zCURSOR_SET 
+      // Copy each character from the beginning of the repeatable data () to the end of that area ("<w:sectPr")
+      // the "</office:text>" characters to the Output variable, merging in any object variable data.
+      InputPtr = HeaderLength + 1
+      
+      // If this is any record except the first, insert page break characters.
+      RecordCount = RecordCount + 1
+      IF RecordCount > 1
+         // Copy in the header plus the additional 5 page break lines.
+         szOutputData = szOutputData + szPageBreakHeader + "<w:pPr><w:pStyle w:val=" +
+                        QUOTES + "Standard" + QUOTES + "/><w:pageBreakBefore/></w:pPr></w:p>"
+      END
+      
+      // Loop through all input characters, copying groups of characters not involved in a merge and merging variable data
+      // when we come across merge syntax.
+      LOOP WHILE InputPtr < CopyBodyEnd
+         // Continue to loop until we find a "[" character, which is the start of a merge test.
+         FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "[Z:" )
+         IF FindStringPtr < 0
+            // No Zeidon delimiter was found in rest of template, so copy rest of template to Output and add Page Break text if it exists.
+            CopyLength = CopyBodyEnd - InputPtr + 1
+            szCopyData = szTemplateData[InputPtr:CopyLength]
+            szOutputData = szOutputData + szCopyData
+            InputPtr = InputPtr + CopyLength
+            
+            // If there is a Page Break string AND there is another root entity, add the string here.
+            IF szPageBreakString != ""
+               CreateViewFromView( ResultSet2, ResultSet )
+               nRC = SetCursorNextEntity( ResultSet2, szRootEntityName, "" )
+               IF nRC >= zCURSOR_SET
+                  szOutputData = szOutputData + szPageBreakString
+                  InputPtr = InputPtr + PageBreakLength
+               END
+               DropView( ResultSet2 )
+            END
+         ELSE
+            // The Zeidon delimiter was found, So copy all characters up to the delimiter.
+            CopyLength = FindStringPtr - InputPtr + 1
+            szCopyData = szTemplateData[InputPtr:CopyLength]
+            szOutputData = szOutputData + szCopyData
+            InputPtr  = InputPtr + CopyLength
+            
+            // Process the Zeidon Delimiter.
+            FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "]" )
+            CopyLength = FindStringPtr - InputPtr + 2    // Add one character for closing bracket and one for starting character.
+            szMappingData = szTemplateData[InputPtr:CopyLength]
+            szPrefix = szMappingData[1:6]
+            
+            IF szPrefix = "[Z:#S:"
+            
+               // Group Looping Command, so loop through Result Set szEntityName entry, mapping each subobject attribute specified.
+               
+               // Make sure the looping group, "[Z:#S:", has a looping end, "[Z:#E]". 
+               FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "[Z:#E]" )
+               IF FindStringPtr < 0
+                  MessageSend( ResultSet, "", "Test", "Group Start, '[Z:#S:' does not have Group End, '[Z:#E]'.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+                  RETURN 2
+               END
+               
+               // Copy the repeatable area to its own variable, szRepeatableMappingData.
+               CopyLength = FindStringPtr - InputPtr + 7   
+               szRepeatableMappingData = szTemplateData[InputPtr:CopyLength]
+               MappingGroupCopyLength = CopyLength
+               
+               // Parse out the looping entry from szRepeatableMappingData.
+               // Note that the string up to the "]" character should be the looping entity name.
+               InputPtrR = 7     // Skip past header
+               FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "]" )
+               CopyLength = FindStringPtr - InputPtrR + 1    // Add one character for closing bracket and one for starting character.
+               szLoopingEntityName = szRepeatableMappingData[InputPtrR:CopyLength]
+               InputPtrRStart = InputPtrR + CopyLength + 1
+               
+               // Loop through each Result Entity and map the Attribute values specified in szRepeatableMappingData.
+               // Note that InputPtrR should be pointing to the first character after the looping entity mapping characters.
+               nRC = SetCursorFirstEntity( ResultSet, szLoopingEntityName, "" )
+               LOOP WHILE nRC >= zCURSOR_SET
+                  
+                  // Loop through each Attribute, mapping the data to the output area.
+                  
+                  szSuffix = szRepeatableMappingData[InputPtrRStart:6]
+                  InputPtrR = InputPtrRStart
+                  LOOP WHILE szSuffix != "[Z:#E]"
+                     IF szRepeatableMappingData[InputPtrR:3] = "[Z:"
+                        // No action
+                     ELSE 
+                        // Copy the characters up to the next mapping entry.
+                        FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "[Z:" )
+                        CopyLength = FindStringPtr - InputPtrR + 1
+                        szCopyData = szRepeatableMappingData[InputPtrR:CopyLength]
+                        szOutputData = szOutputData + szCopyData
+                        InputPtrR  = InputPtrR + CopyLength
+                     END
+                     
+                     // Map the variable data, unless it's "[Z:#E]".
+                     IF szRepeatableMappingData[InputPtrR:6] != "[Z:#E]"
+                        FindStringPtr = ZeidonStringFind( szRepeatableMappingData, InputPtrR, "]" )
+                        CopyLength = FindStringPtr - InputPtrR + 2    // Add one character for closing bracket and one for starting character.
+                        szMappingData = szRepeatableMappingData[InputPtrR:CopyLength]
+                        ParseOutEntityAttribute( ResultSet, szMappingData, szEntityName, szAttributeName )
+                        GetStringFromAttributeByContext( szReturnedMappingData, ResultSet, szEntityName, szAttributeName, "", 10000 )
+                        // KJS 11/02/20 - Replace the character & with &amp;
+                        zSearchAndReplace( szReturnedMappingData, 10000, "&", "&amp;" )
+                        szOutputData = szOutputData + szReturnedMappingData
+                        InputPtrR  = InputPtrR + CopyLength
+                     END
+                     
+                     szSuffix = szRepeatableMappingData[InputPtrR:6]
+                  
+                  END
+                  
+                  nRC = SetCursorNextEntity( ResultSet, szLoopingEntityName, "" )
+               END
+               
+            ELSE
+               
+               // Single Mapping Command, so replace mapping text with data from Result Set.
+               ParseOutEntityAttribute( ResultSet, szMappingData, szEntityName, szAttributeName )
+               
+               // Validate the Entity Name and Attribute Name returned as they could have been specified in error.
+               SET CURSOR FIRST QueryView.LOD_Entity WHERE QueryView.LOD_Entity.Name = szEntityName
+               IF RESULT < zCURSOR_SET
+                  szMsg = "Invalid mapping Entity Name of, '" + szEntityName + "'."
+                  MessageSend( ResultSet, "", "Run PQ", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+                  RETURN 2
+               END
+               SET CURSOR FIRST QueryView.ER_Attribute WITHIN QueryView.LOD_Entity 
+                          WHERE QueryView.ER_Attribute.Name = szAttributeName
+               IF RESULT < zCURSOR_SET
+                  szMsg = "Invalid mapping Attribute Name of, '" + szEntityName + "." + szAttributeName + "'."
+                  MessageSend( ResultSet, "", "Run PQ", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+                  RETURN 2
+               END
+               GetStringFromAttributeByContext( szReturnedMappingData, ResultSet, szEntityName, szAttributeName, "", 10000 )
+               // KJS 11/02/20 - Replace the character & with &amp;
+               zSearchAndReplace( szReturnedMappingData, 10000, "&", "&amp;" )
+               szOutputData = szOutputData + szReturnedMappingData
+               MappingGroupCopyLength = CopyLength
+               
+            END
+            
+            // Set up pointer to after delimiter.
+            InputPtr  = InputPtr + MappingGroupCopyLength
+         END
+      END
+      
+      nRC = SetCursorNextEntity( ResultSet, szRootEntityName, "" )
+   END
+   
+   // Copy all the content characters after the body end characters. InputPtr should be pointing to the end of the body.
+   FindStringPtr = ZeidonStringFind( szTemplateData, InputPtr, "<w:sectPr" )
+   CopyLength = 500             // This just needs to be greater than the remaining characters in the Template.
+   szOutputData = szOutputData + szTemplateData[InputPtr:CopyLength]
+   
+   // Write the new output back on the content.xml file.
+   FileHandleOutput = SysOpenFile( ResultSet, szUnzipDirectoryContentName, COREFILE_CREATE )
+   SysWriteFile( ResultSet, FileHandleOutput, szOutputData, 50000000 )
+   SysCloseFile( ResultSet, FileHandleOutput, 0 )
+   
+   // Finally, Zip the directory contents back to the Output file.
+   FindSuffixForDirectory( ResultSet, szUnzipDirectoryName, szZipDirectoryNameSuffix )
+   nRC = ZipDirectory( szUnzipDirectoryName, szOutputFileName, szZipDirectoryNameSuffix )
+   IF nRC < 0
+      MessageSend( ResultSet, "", "", "The Result file could not be zipped.", zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FindSuffixForDirectory
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+FindSuffixForDirectory( VIEW AnyView,
+                        STRING ( 500 ) szFullDirectoryName,
+                        STRING ( 500 ) szReturnedSuffix )
+
+   INTEGER Length
+   INTEGER Position
+   STRING ( 500 ) szSuffix
+   STRING ( 1 )  szStartNewStringFlag
+
+   // Returned the last string value (ie., between last "\xxx\"
+   
+   Length = zstrlen( szFullDirectoryName )
+   Length = Length 
+   Position = 1
+   szStartNewStringFlag  = ""
+   LOOP WHILE Position < Length
+      IF szFullDirectoryName[ Position:1] = "\" OR szFullDirectoryName[ Position:1] = "/"
+         // If we've hit a slash, we will restart setting the suffix.
+         szStartNewStringFlag = "Y"
+      ELSE
+         // Add character to suffix.
+         IF szStartNewStringFlag = "Y"
+            szStartNewStringFlag  = ""
+            szSuffix = szFullDirectoryName[ Position:1]
+         ELSE
+            szSuffix = szSuffix + szFullDirectoryName[ Position:1]
+         END
+      END
+      Position = Position + 1
+   END
+   szReturnedSuffix = szSuffix
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ParseOutEntityAttribute
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+ParseOutEntityAttribute( VIEW AnyView,
+                         STRING ( 200 ) szEntityAttributeMapping,
+                         STRING ( 100 ) szReturnedEntityName,
+                         STRING ( 100 ) szReturnedAttributeName )
+
+   STRING ( 10 ) szPrefix
+   INTEGER       InputPtr
+   INTEGER       FindStringPtr
+   INTEGER       CopyLength
+
+   // Parse out the Entity and optional Attribute Name from a string of the form:
+   // [Z:#S:AwardLetterFederalCOAItem] or 
+   // [Z:AwardLetterFederalCOAItem.SpringAmount]
+   
+   szPrefix = szEntityAttributeMapping[1:6]
+   IF szPrefix = "[Z:#S:"
+      // Mapping is only Entity.
+      InputPtr = 6
+      FindStringPtr = ZeidonStringFind( szEntityAttributeMapping, InputPtr, "]" )
+      CopyLength = FindStringPtr - 6
+      szReturnedEntityName = szEntityAttributeMapping[7:CopyLength]
+   ELSE
+      // Mapping is Entity/Attribute.
+      InputPtr = 3
+      
+      // Entity Name
+      FindStringPtr = ZeidonStringFind( szEntityAttributeMapping, InputPtr, "." )
+      CopyLength = FindStringPtr - 3
+      szReturnedEntityName = szEntityAttributeMapping[4:CopyLength]
+      
+      // Attribute Name
+      InputPtr = InputPtr + CopyLength + 2
+      FindStringPtr = ZeidonStringFind( szEntityAttributeMapping, InputPtr, "]" )
+      CopyLength = FindStringPtr - InputPtr + 1
+      szReturnedAttributeName = szEntityAttributeMapping[InputPtr:CopyLength]
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: InitializeQueryGraphMapping
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+InitializeQueryGraphMapping( VIEW zqMGraph BASED ON LOD zqFrame )
+
+   // This operation builds the mapping subobjects for Query that enables the user to specify the
+   // mapping criteria for formatting a specific graph from the query result set data.
+   
+   FOR EACH zqMGraph.GraphTypeDefinition 
+      DELETE ENTITY zqMGraph.GraphTypeDefinition NONE 
+   END
+   
+   // Pie Chart.
+   CREATE ENTITY zqMGraph.GraphTypeDefinition  
+   zqMGraph.GraphTypeDefinition.Type = "Pie Chart"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name        = "Looping Entity"
+   zqMGraph.GraphTypeMappingParameter.MappingType = "E"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name        = "Pie Slice Title Attribute"
+   zqMGraph.GraphTypeMappingParameter.MappingType = "A"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name        = "Pie Slice Size Numeric Attribute" 
+   zqMGraph.GraphTypeMappingParameter.MappingType = "A"
+   
+   // Basic Bar Chart.
+   CREATE ENTITY zqMGraph.GraphTypeDefinition 
+   zqMGraph.GraphTypeDefinition.Type = "Basic Bar Chart"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name = "Looping Entity"
+   zqMGraph.GraphTypeMappingParameter.MappingType     = "E"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name        = "Bar Title Attribute"
+   zqMGraph.GraphTypeMappingParameter.MappingType     = "A"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name        = "Bar Size Numeric Attribute"
+   zqMGraph.GraphTypeMappingParameter.MappingType     = "A"
+   
+   // Two Level Bar Chart.
+   CREATE ENTITY zqMGraph.GraphTypeDefinition 
+   zqMGraph.GraphTypeDefinition.Type = "2-Level Bar Chart"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name = "Looping Entity"
+   zqMGraph.GraphTypeMappingParameter.MappingType     = "E"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name        = "Level-1 Title Attribute"
+   zqMGraph.GraphTypeMappingParameter.MappingType     = "A"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name = "Level-2 Looping Entity"
+   zqMGraph.GraphTypeMappingParameter.MappingType     = "E"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name        = "Level-2 Title Attribute"
+   zqMGraph.GraphTypeMappingParameter.MappingType     = "A"
+   CREATE ENTITY zqMGraph.GraphTypeMappingParameter 
+   zqMGraph.GraphTypeMappingParameter.Name        = "Level-2 Size Numeric Attribute"
+   zqMGraph.GraphTypeMappingParameter.MappingType     = "A"
+   
+   
+   SET CURSOR FIRST zqMGraph.GraphTypeDefinition
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildQueryFamilyRole
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+BuildQueryFamilyRole( VIEW qPerson )
+
+   VIEW mPerson2 BASED ON LOD mPerson
+   STRING ( 1 )  szRole
+   STRING ( 32 ) ParentRoleName
+   STRING ( 32 ) ParentPersonName
+   STRING ( 32 ) DescendantRoleName
+   STRING ( 32 ) DescendantPersonName
+   SHORT nRC
+
+   // This is the same as BuildFamilyRole except that it doesn't use zLodContainsEntity operation.
+   
+   CreateViewFromView( mPerson2, qPerson)
+   ParentRoleName       = "HusbandOrParentRole"
+   ParentPersonName     = "HusbandOrParent"
+   DescendantRoleName   = "WifeOrChildRole"
+   DescendantPersonName = "WifeOrChild"
+
+   TraceLineS("In Build Family Role: ","2")
+   FOR EACH mPerson2.Person
+ TraceLineS("In Build Family Role: ","3")
+      nRC = SetCursorFirstEntity( mPerson2, ParentRoleName, "" )
+      LOOP WHILE nRC >= zCURSOR_SET 
+ TraceLineS("In Build Family Role: ","4")
+         // Make sure that the child entity exists, although it should if data is correct.
+         nRC = CheckExistenceOfEntity( mPerson2, ParentPersonName )
+         IF nRC >= 0
+  TraceLineS("In Build Family Role: ","5")
+            //nRC = CompareAttributeToString( mPerson2, ParentPersonName, "Deceased", "Y" )
+            //IF nRC != 0
+               CREATE ENTITY mPerson2.FamilyRole
+               IncludeSubobjectFromSubobject( mPerson2, "FamilyPerson",
+                                              mPerson2, ParentPersonName, zPOS_AFTER )
+               IF ParentRoleName != "HusbandOrParentRole"
+                  SetAttributeFromAttribute( mPerson2, "FamilyRole",   "LivesWith",
+                                             mPerson2, ParentRoleName, "LivesWith" )
+               END
+               GetStringFromAttribute( szRole, mPerson2, ParentRoleName, "Role" )
+               IF szRole = "F"
+                  mPerson2.FamilyRole.FamilyRole = "Father"
+               ELSE
+               IF szRole = "M"
+                  mPerson2.FamilyRole.FamilyRole = "Mother"
+               ELSE
+               IF szRole = "G"
+                  mPerson2.FamilyRole.FamilyRole = "Guardian"
+               ELSE
+               IF szRole = "P"
+                  mPerson2.FamilyRole.FamilyRole = "Grandparent"
+               ELSE
+               IF szRole = "O"
+                  mPerson2.FamilyRole.FamilyRole = "Other"
+               ELSE
+               IF szRole = "B"
+                  mPerson2.FamilyRole.FamilyRole = "Sibling"
+               ELSE
+               IF szRole = "D"
+                  mPerson2.FamilyRole.FamilyRole = "Divorced"
+               ELSE
+                  mPerson2.FamilyRole.FamilyRole = "Husband"
+               END
+               END
+               END
+               END
+               END
+               END
+               END
+               
+               // We'll only make the ParentPersonAlumni check below if the object contains entity, ParentPersonAlumni.
+               nRC = zLodContainsEntity( mPerson2, "ParentPersonAlumni" )
+               IF nRC >= 0
+                  IF mPerson2.ParentPersonAlumni EXISTS
+                     mPerson2.FamilyPerson.dPersonIsAlumniFlag = "Y"
+                  END
+               END
+            //END
+         END
+         nRC = SetCursorNextEntity( mPerson2, ParentRoleName, "" )
+      END
+ TraceLineS("In Build Family Role: ","6")
+      nRC = SetCursorFirstEntity( mPerson2, DescendantRoleName, "" )
+ TraceLineS("In Build Family Role: ","7")
+      LOOP WHILE nRC >= zCURSOR_SET 
+ TraceLineS("In Build Family Role: ","8")
+         nRC = CheckExistenceOfEntity( mPerson2, DescendantPersonName )
+         IF nRC >= 0
+ 
+            //nRC = CompareAttributeToString( mPerson2, DescendantPersonName, "Deceased", "Y" )
+            //IF nRC != 0
+               CREATE ENTITY mPerson2.FamilyRole
+               IncludeSubobjectFromSubobject( mPerson2, "FamilyPerson",
+                                              mPerson2, DescendantPersonName, zPOS_AFTER )
+               IF ParentRoleName != "HusbandOrParentRole"
+                  SetAttributeFromAttribute( mPerson2, "FamilyRole",   "LivesWith",
+                                             mPerson2, DescendantRoleName, "LivesWith" )
+               END
+               GetStringFromAttribute( szRole, mPerson2, DescendantRoleName, "Role" )
+               IF szRole = "S"
+                  mPerson2.FamilyRole.FamilyRole = "Wife"
+               ELSE
+               IF szRole = "O"
+                  mPerson2.FamilyRole.FamilyRole = "Other"
+               ELSE
+               IF szRole = "B"
+                  mPerson2.FamilyRole.FamilyRole = "Sibling"
+               ELSE
+               IF szRole = "D"
+                  mPerson2.FamilyRole.FamilyRole = "Divorced"
+               ELSE
+                  mPerson2.FamilyRole.FamilyRole = "Child"
+               END
+               END
+               END
+               END
+
+               // We'll only make the DescendantPersonAlumni check below if the object contains entity, DescendantPersonAlumni.
+               nRC = zLodContainsEntity( mPerson2, "DescendantPersonAlumni" )
+               IF nRC >= 0
+                  IF mPerson2.DescendantPersonAlumni EXISTS
+                     mPerson2.FamilyPerson.dPersonIsAlumniFlag = "Y"
+                  END
+               END
+            //END
+    
+         END
+      
+         nRC = SetCursorNextEntity( mPerson2, DescendantRoleName, "" )
+      END
+    
+   END
+ TraceLineS("In Build Family Role: ","9")
+   DropView( mPerson2 )
+    TraceLineS("In Build Family Role: ","10")
+
+END
+
+
+/*************************************************************************************************
+**    
+**    OPERATION: ActivateQueryObject
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+ActivateQueryObject( VIEW zqFrame BASED ON LOD zqFrame,
+                     VIEW vResultSet )
+
+   VIEW wXferO      REGISTERED AS wXferO
+   VIEW zqFrameRoot BASED ON LOD  zqFrame
+   VIEW vQualObject
+   VIEW vQualTemp
+   VIEW vConvertObject
+   STRING ( 32 )  szObjectName
+   STRING ( 32 )  szEntityName
+   SHORT          nRC
+
+   // Format a qualification object from the query criteria in zqFrame and activate the query object
+   // based on the qualification. Then apply any postactivate qualification from zqFrame.
+
+   GET VIEW vQualObject NAMED "vQualObject"
+   IF RESULT >= 0
+      DropObjectInstance( vQualObject )
+   END
+   GET VIEW vResultSet NAMED "ResultSet"
+   IF RESULT >= 0
+      DropObjectInstance( vResultSet )
+   END
+   GET VIEW vResultSet NAMED "OriginalResultSet"
+   IF RESULT >= 0
+      DropObjectInstance( vResultSet )
+   END
+
+   // Build the qualification information and activate the object.
+   // Note that the BuildQualFromFrame operation requires an instance of the object to be
+   // queried for data conversion.
+   szObjectName = zqFrame.zqFrame.QueryObjectName
+   ActivateEmptyObjectInstance( vConvertObject, szObjectName, zqFrame, zSINGLE )
+   nRC = BuildQualFromFrame( zqFrame, vQualObject, vConvertObject )
+   IF nRC < 0
+      RETURN -1
+   END
+   DropObjectInstance( vConvertObject )
+   IF nRC < 0
+      RETURN -1
+   END
+   NAME VIEW vQualObject "vQualObjectQ"
+   SET CURSOR FIRST vQualObject.QualAttrib
+   IF RESULT >= zCURSOR_SET
+
+      // Fix the "not equal" SQL problem by adding a test for NULL.
+      FOR EACH vQualObject.QualAttrib
+         IF vQualObject.QualAttrib.Oper = "<>" AND 
+            vQualObject.QualAttrib.Value != "" 
+
+            CreateViewFromView( vQualTemp, vQualObject )
+            CreateEntity( vQualTemp, "QualAttrib", zPOS_BEFORE )
+            SetAttributeFromString( vQualTemp, "QualAttrib", "Oper", "(" )
+
+            CreateEntity( vQualTemp, "QualAttrib", zPOS_AFTER )
+            SetMatchingAttributesByName( vQualTemp, "QualAttrib",
+                                         vQualObject, "QualAttrib", zSET_ALL )
+            SetAttributeFromString( vQualTemp, "QualAttrib", "Oper", "IS NULL" )
+            SetAttributeFromString( vQualTemp, "QualAttrib", "Value", "" )
+
+            CreateEntity( vQualTemp, "QualAttrib", zPOS_AFTER )
+            SetAttributeFromString( vQualTemp, "QualAttrib", "Oper", "OR" )
+
+            CreateEntity( vQualObject, "QualAttrib", zPOS_AFTER )
+            SetAttributeFromString( vQualObject, "QualAttrib", "Oper", ")" )
+
+            DropView( vQualTemp )
+         END
+      END
+
+      SET CURSOR FIRST vQualObject.QualAttrib
+      nRC = ActivateObjectInstance( vResultSet, szObjectName, zqFrame, vQualObject, zMULTIPLE )
+   ELSE
+      nRC = ActivateObjectInstance( vResultSet, szObjectName, zqFrame, 0, zMULTIPLE )
+   END
+
+   IF nRC >= 0
+      NAME VIEW vResultSet "ResultSet"
+      
+      // If the object supports Seasonal Address, call the operation to process.
+      // We will do this by searching the object definition for entity, "CurrentMailingAddress" )
+      // Seasonal Address check removed by DonC on 9/19/18.
+      /*nRC = zGetFirstEntityNameForView( vResultSet, szEntityName )
+      LOOP WHILE nRC >= zCURSOR_SET AND szEntityName != "CurrentMailingAddress"
+         nRC = zGetNextEntityNameForView( vResultSet, szEntityName )
+      END
+      IF szEntityName = "CurrentMailingAddress"
+         GenerateSeasonalAddresses( vResultSet, wXferO, szObjectName )
+      END*/
+   END
+   
+   // nRC = -1 means that there were no values returned so let's return -3 to indicate this...
+   IF nRC = -1
+      RETURN -3
+   END
+
+   IF nRC = 2
+      MessageSend( zqFrame, "", "Query",
+                   "The maximum number of Query entries has been reached. Qualify the Query further for correct results.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+   END
+
+   // Go to perform post activate processing.
+   nRC = PostActivateProc( zqFrame, vResultSet )
+   IF nRC < 0
+      RETURN nRC
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FormatQueryDisplay
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+FormatQueryDisplay( VIEW zqFrame BASED ON LOD zqFrame,
+                    VIEW vLOD,
+                    STRING ( 32 ) szRootEntityName )
+
+   VIEW zqFrameRoot  BASED ON LOD zqFrame
+   STRING ( 32 ) szEntityName
+   STRING ( 1 )  szDisplayOrderFlag
+   INTEGER       Count
+
+   // Create the ParentEntity subobject for formatting the CSV and Report data efficiently.
+   // We could have used a combination of the GeneralParameter subobject and vLOD, but it
+   // wouldn't be as efficient.
+   
+   SET CURSOR FIRST zqFrame.GeneralParameter 
+              WHERE zqFrame.GeneralParameter.DisplayOrder != ""
+   IF RESULT >= zCURSOR_SET
+      szDisplayOrderFlag = "Y"
+      Count = 0
+      FOR EACH zqFrame.GeneralParameter 
+         Count = Count + 1
+         zqFrame.GeneralParameter.OriginalOrder = Count
+      END
+      OrderEntityForView( zqFrame, "GeneralParameter", "DisplayOrder A" )
+   ELSE
+      szDisplayOrderFlag = ""
+   END
+
+   // Create entity entries recursively, starting with root entity.
+   CreateViewFromView( zqFrameRoot, zqFrame )
+   NAME VIEW zqFrame "zqFrameRoot"
+   FOR EACH zqFrame.ParentEntity
+      DELETE ENTITY zqFrame.ParentEntity NONE
+   END
+   SET CURSOR FIRST zqFrame.ParentEntity
+   SET CURSOR FIRST vLOD.LOD   // Make sure we have cursor position, as return from subobject may lose it. 
+   FormatQueryDisplayRecur( zqFrame, zqFrameRoot, vLOD )
+   
+   // Make sure we have good position on top entity. 
+   SetCursorFirstEntity( zqFrame, szRootEntityName, "" )
+   SetCursorFirstEntity( zqFrameRoot, szRootEntityName, "" ) 
+   DropView( zqFrameRoot )
+   
+   // Reset order, if necessary.
+   IF szDisplayOrderFlag = "Y"
+      OrderEntityForView( zqFrame, "GeneralParameter", "OriginalOrder A" )
+   END 
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FormatQueryDisplayRecur
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+FormatQueryDisplayRecur( VIEW zqFrame     BASED ON LOD zqFrame,
+                         VIEW zqFrameRoot BASED ON LOD zqFrame,
+                         VIEW vLOD )
+
+   VIEW zqFrame2 BASED ON LOD zqFrame
+   STRING ( 32 ) szEntityName
+   STRING ( 5 )  szGroupOper
+   STRING ( 1 )  RegularMappingFlag
+   STRING ( 1 )  DataType
+   STRING ( 2 )  szCardMax
+   STRING ( 1 )  szFoundFlag
+   INTEGER       Length
+   SHORT         nRC
+
+   // Create the ParentEntity subobject for formatting the CSV and Report data efficiently.
+   // We could have used a combination of the GeneralParameter subobject and vLOD, but it
+   // wouldn't be as efficient.
+   // We also need to put attributes with the correct Entity. Normally this is the Entity for
+   // which they are defined in the LOD. However, there are four conditions when they will be
+   // put with a different Entity.
+   // 1. This attribute is defined as a Subgroup Search Type (MAX, AVG, etc.), ON the ROOT entity.
+   //    In this case, no Attribute is created for a ParentEntity subobject. These are handled
+   //    separately as totals.
+   // 2. This attribute is defined as a Subgroup Search Type (MAX, AVG, etc.), WITHOUT a Scoping
+   //    Entity. In this case the Attribute is put on its parent Entity.
+   // 3. This attribute is defined as a Subgroup Search Type (MAX, AVG, etc.), WITH a Scoping
+   //    Entity. In this case the Attribute is put on the Scoping Entity.
+   // 4. The Entity holding the Attribute has max cardinality of 1 with its parent. In this
+   //    case the Attribute is put on the first parent with max cardinality > 1.
+   
+   // **** NOTE: We're currently NOT supporting group operation like SUM and AVG on the web interface. (DonC 3/13/2019)
+
+   // Create ParentEntity values.
+   CREATE ENTITY zqFrame.ParentEntity 
+   szEntityName = vLOD.LOD_EntityParent.Name
+//TraceLineS( "@@@@@@@ Entity: ", szEntityName )
+   zqFrame.ParentEntity.EntityName = szEntityName
+   IF vLOD.ER_RelLinkRec EXISTS
+      CreateViewFromView( zqFrame2, zqFrameRoot )
+      IF vLOD.ER_RelLinkRec.CardMax = "1"
+         szCardMax = 1
+      ELSE
+         szCardMax = 99
+      END
+      SetAttributeFromString( zqFrame, "ParentEntity", "LOD_MaxCardinality", szCardMax )
+      SET CURSOR FIRST zqFrame2.GeneralParameter 
+                 WHERE zqFrame2.GeneralParameter.EntityName = szEntityName 
+                   AND zqFrame2.GeneralParameter.ForceFormatMaxCardinalityOne = "Y"
+      IF RESULT >= zCURSOR_SET
+         // The entity has been requested for formatting as Max Cardinality 1, so force that cardinality.
+         szCardMax = 1
+      END
+      SetAttributeFromString( zqFrame, "ParentEntity", "MaxCardinality", szCardMax )
+      DropView( zqFrame2 )
+   ELSE
+      IF vLOD.LOD_EntityParent.Work = "Y" OR vLOD.LOD_EntityParent.Derived = "Y"
+         // Don C modification on 3/19/2012 so that max cardinality could be forced on work entities.
+         // Set max cardinality of 99 or work entity, unless the force max cardinality attribue it set.
+         CreateViewFromView( zqFrame2, zqFrameRoot )
+         SET CURSOR FIRST zqFrame2.GeneralParameter 
+                    WHERE zqFrame2.GeneralParameter.EntityName = szEntityName 
+                      AND zqFrame2.GeneralParameter.ForceFormatMaxCardinalityOne = "Y"
+         IF RESULT >= zCURSOR_SET
+            // The entity has been requested for formatting as Max Cardinality 1, so force that cardinality.
+            SetAttributeFromString( zqFrame, "ParentEntity", "MaxCardinality", "1" )
+         ELSE
+            SetAttributeFromString( zqFrame, "ParentEntity", "MaxCardinality", "99" )
+         END
+         DropView( zqFrame2 )
+      END
+   END
+   
+   // Add any General Parameter Display Attributes under the appropriate ParentEntity.
+   FOR EACH zqFrameRoot.GeneralParameter
+         WHERE zqFrameRoot.GeneralParameter.ListDisplayFlag = "Y"
+           AND zqFrameRoot.GeneralParameter.EntityName = szEntityName
+           AND ( zqFrameRoot.GeneralParameter.EntityName != zqFrameRoot.zqFrame.QueryObjectRootEntityName OR
+                 zqFrameRoot.GeneralParameter.SubgroupSearchType = "" )
+                 
+      // Note that for Case 1 above, we skip the code inside the loop based on the WHERE condition.
+                 
+      // zqFrame2 will be positioned on the Entity that is to display the Attribute, which may be an
+      // Entity up the parent tree. For a regular Attribute, the position won't change.
+      CreateViewFromView( zqFrame2, zqFrame )
+      NAME VIEW zqFrame2 "zqFrame2"
+      szGroupOper = zqFrameRoot.GeneralParameter.SubgroupSearchType
+      IF szGroupOper = "SUM" OR
+         szGroupOper = "AVG" OR
+         szGroupOper = "MAX" OR
+         szGroupOper = "MIN" OR
+         szGroupOper = "NNULL" OR
+         szGroupOper = "COUNT"
+
+         IF zqFrameRoot.GeneralParameter.ScopingEntityName = ""
+            // Case 2 above - The attribute is defined as a Subgroup Search Type without a Scoping
+            // Entity so just put it on its parent.
+            ResetViewFromSubobject( zqFrame2 )
+         ELSE
+            // Case 3 above - The attribute is defined as a Subgroup Search Type with a Scoping
+            // Entity so just put it on the Scoping Entity.
+            nRC = ResetViewFromSubobject( zqFrame2 )
+            LOOP WHILE nRC = 0 AND
+                       zqFrame2.ParentEntity.EntityName != zqFrameRoot.GeneralParameter.ScopingEntityName AND 
+                       zqFrame2.ParentEntity.EntityName != zqFrameRoot.zqFrame.QueryObjectRootEntityName
+               nRC = ResetViewFromSubobject( zqFrame2 )
+            END
+         END
+      ELSE
+         IF zqFrame.ParentEntity.MaxCardinality = 1
+            // Make sure that the GeneralParameter has the correct Max Cardinality.
+            IF zqFrameRoot.GeneralParameter.MaxCardinality != zqFrame.ParentEntity.MaxCardinality
+               zqFrameRoot.GeneralParameter.MaxCardinality = zqFrame.ParentEntity.MaxCardinality
+            END
+            // Case 4 above - We are a regular Attribute with max cardinality of 1, so go up the
+            // tree until we get to the top or until we find a parent with max cardinality > 1.
+            nRC = ResetViewFromSubobject( zqFrame2 )
+            LOOP WHILE nRC = 0 AND 
+                       zqFrame2.ParentEntity.MaxCardinality = 1 AND 
+                       zqFrame2.ParentEntity.EntityName != zqFrameRoot.zqFrame.QueryObjectRootEntityName 
+               nRC = ResetViewFromSubobject( zqFrame2 )
+            END
+         END
+      END
+      SET CURSOR LAST zqFrame2.QueryAttribute
+
+      // Determine the length of the Attribute, which is taken from the LOD, unless there is an
+      // override length.
+// **** TEMP CHANGE: 3/19/2019, DonC first replaced the SET CURSOR .. WITHIN with the loop below, but then commented out
+// everything because the ResetViewFromSubobject for vLOD was not positioning on the parent entity.
+      /*SET CURSOR FIRST vLOD.LOD_Attribute
+      szFoundFlag = ""
+      LOOP WHILE RESULT >= zCURSOR_SET AND szFoundFlag = ""
+         IF vLOD.ER_AttributeRec.Name = zqFrameRoot.GeneralParameter.AttributeName
+            szFoundFlag = "Y"
+         ELSE
+            SET CURSOR NEXT vLOD.LOD_Attribute
+         END
+      END
+      IF szFoundFlag = "Y" 
+      //SET CURSOR FIRST vLOD.ER_AttributeRec WITHIN vLOD.LOD_EntityParent
+      //           WHERE vLOD.ER_AttributeRec.Name = zqFrameRoot.GeneralParameter.AttributeName
+      //IF RESULT >= zCURSOR_SET
+         IF zqFrameRoot.GeneralParameter.OverrideLength = ""
+             // For Table Domains, the Length is always 12.
+             IF vLOD.DomainRec.DomainType = "T"
+                Length = 12
+             ELSE
+                // Otherwise, use length from LOD or based on Data Type.
+                DataType = vLOD.DomainRec.DataType
+                IF DataType = "M" OR DataType = "T" OR DataType = "D"
+                   // Decimal, DateTime or Date
+                   Length = 15
+                ELSE
+                IF DataType = "S"
+                   // String
+                   IF vLOD.ER_AttributeRec.Lth != ""
+                      Length = vLOD.ER_AttributeRec.Lth
+                   ELSE
+                      Length = vLOD.DomainRec.MaxStringLth
+                   END
+                ELSE
+                   // All Others
+                   Length = 12
+                END
+                END
+             END
+          ELSE
+             // User override length.
+             Length = zqFrameRoot.GeneralParameter.OverrideLength
+          END
+      END*/
+Length = 20
+      CREATE ENTITY zqFrame2.QueryAttribute
+      IF szGroupOper = "" OR
+         szGroupOper = "ANY" OR
+         szGroupOper = "ALL"
+
+         // This is not a group operation, so set regular values.
+         zqFrame2.QueryAttribute.AttributeName        = zqFrameRoot.GeneralParameter.AttributeName
+         zqFrame2.QueryAttribute.MappingEntityName    = szEntityName
+         zqFrame2.QueryAttribute.Prompt               = zqFrameRoot.GeneralParameter.Title
+         zqFrame2.QueryAttribute.Length               = Length
+         zqFrame2.QueryAttribute.Type                 = zqFrameRoot.GeneralParameter.DataType
+         zqFrame2.QueryAttribute.DisplayRow           = zqFrameRoot.GeneralParameter.DisplayRow
+         zqFrame2.QueryAttribute.DisplayDomainContext = zqFrameRoot.GeneralParameter.DisplayDomainContext 
+          
+      ELSE
+         // This is a group operation (SUM, AVG, etc.), so set special values.
+         zqFrame2.QueryAttribute.GroupOperation              = szGroupOper
+         zqFrame2.QueryAttribute.GroupOperationEntityName    = zqFrameRoot.GeneralParameter.EntityName
+         zqFrame2.QueryAttribute.GroupOperationAttributeName = zqFrameRoot.GeneralParameter.AttributeName
+         zqFrame2.QueryAttribute.Prompt                      = zqFrameRoot.GeneralParameter.Title
+         zqFrame2.QueryAttribute.Length                      = Length
+         zqFrame2.QueryAttribute.Type                        = zqFrameRoot.GeneralParameter.DataType
+         zqFrame2.QueryAttribute.DisplayRow                  = zqFrameRoot.GeneralParameter.DisplayRow
+         zqFrame2.QueryAttribute.DisplayDomainContext        = zqFrameRoot.GeneralParameter.DisplayDomainContext 
+
+         IF zqFrameRoot.GeneralParameter.ScopingEntityName != ""
+            zqFrame2.QueryAttribute.GroupOperationScopingEntityName = zqFrameRoot.GeneralParameter.ScopingEntityName 
+         ELSE
+            // Scoping default is parent.
+            zqFrame2.QueryAttribute.GroupOperationScopingEntityName = zqFrame2.ParentEntity.EntityName 
+         END
+      END
+      // Make sure order is maintained.
+      zqFrame2.QueryAttribute.DisplayOrder = zqFrameRoot.GeneralParameter.DisplayOrder 
+      OrderEntityForView( zqFrame2, "QueryAttribute", "DisplayOrder A" )
+      DropView( zqFrame2 )
+   END
+
+   // Create rest of recursive structure.
+   // On 4/29/2019 DonC switched SetViewToSubobject to after ChildEntity is created because JOE was setting the view to
+   // the subobject if the entity didn't exist.
+   IF vLOD.LOD_EntityChild EXISTS
+      SetViewToSubobject( vLOD, "LOD_EntityChild" )
+      SetViewToSubobject( zqFrame, "ChildEntity" )
+      FOR EACH vLOD.LOD_EntityParent
+         FormatQueryDisplayRecur( zqFrame, zqFrameRoot, vLOD )
+      END
+//szEntityName = vLOD.LOD_EntityParent.Name 
+//TraceLineS( "@@ Before Reset: ", szEntityName )
+      ResetViewFromSubobject( vLOD )
+//szEntityName = vLOD.LOD_EntityParent.Name 
+//TraceLineS( "@@ After Reset: ", szEntityName )
+      ResetViewFromSubobject( zqFrame )
+   END
+   
+   /*SetViewToSubobject( vLOD, "LOD_EntityChild" )
+   SetViewToSubobject( zqFrame, "ChildEntity" )
+   FOR EACH vLOD.LOD_EntityParent
+      FormatDisplayRecur( zqFrame, zqFrameRoot, vLOD )
+   END
+   ResetViewFromSubobject( vLOD )
+   ResetViewFromSubobject( zqFrame )*/
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RebuildQueryFrameAttr
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+RebuildQueryFrameAttr( VIEW vLOD_Root )
+
+   VIEW  vTZZOLODO
+   VIEW  vLOD_Recurs
+   
+   // Set up the QueryFrameAttribute subobject by making sure that every attribute in the LOD 
+   // has a QueryFrameAttribute entry and that no QueryFrameAttribute exists that isn't in the LOD.
+   // The QueryFrameAttribute entries must be created in hierarchical order.
+   
+   // Just in case there are already some QueryFrameAttribute entries (which there shouldn't be) delete them.
+   FOR EACH vLOD_Root.QueryFrameAttribute
+      DELETE ENTITY vLOD_Root.QueryFrameAttribute NONE
+   END
+   
+   // Make sure that each Entity/Attribute combination in the LOD has a corresponding QueryFrameAttribute entry.
+   CreateViewFromView( vLOD_Recurs, vLOD_Root )
+   NAME VIEW vLOD_Recurs "vLOD_Recurs"
+   RebuildQueryFrameAttrRecur( vLOD_Root, vLOD_Recurs ) 
+   DropView( vLOD_Recurs )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: RebuildQueryFrameAttrRecur
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+RebuildQueryFrameAttrRecur( VIEW vLOD_Root,
+                            VIEW vLOD_Recurs )
+
+   VIEW  vTZZOLODO
+   STRING ( 32 ) szEntityName
+   STRING ( 32 ) szAttributeName
+   STRING ( 90 ) szPrompt
+   INTEGER nRC
+   INTEGER Length
+   
+   // Create QueryFrameAttribute entries from the LOD_EntityParent subobject structure.
+   // Note that the vLOD_Root view is pointing to the last QueryFrameAttribute for the Entity
+   // just processed. 
+   
+   FOR EACH vLOD_Recurs.LOD_EntityParent
+      FOR EACH vLOD_Recurs.LOD_AttributeRec
+         CREATE ENTITY vLOD_Root.QueryFrameAttribute
+         szEntityName    = vLOD_Recurs.LOD_EntityParent.Name
+         szAttributeName = vLOD_Recurs.ER_AttributeRec.Name
+         vLOD_Root.QueryFrameAttribute.EntityName    = szEntityName
+         vLOD_Root.QueryFrameAttribute.AttributeName = szAttributeName
+         szPrompt = szEntityName + "." + szAttributeName
+         Length = zstrlen( szPrompt )
+         IF Length > 50 
+            // Since QueryFrameAttribute.Prompt is only 50 characters, us Attribute Name is the combined name is to large.
+            vLOD_Root.QueryFrameAttribute.Prompt = szAttributeName
+         ELSE
+            vLOD_Root.QueryFrameAttribute.Prompt = szPrompt
+         END
+         IF szAttributeName = "ID"
+            vLOD_Root.QueryFrameAttribute.Title  = szPrompt
+         ELSE
+            vLOD_Root.QueryFrameAttribute.Title  = szAttributeName
+         END
+      END
+      
+      // Process LOD_EntityChild entries recursively.
+      IF vLOD_Recurs.LOD_EntityChild EXISTS
+         SetViewToSubobject( vLOD_Recurs, "LOD_EntityChild" )
+         RebuildQueryFrameAttrRecur( vLOD_Root, vLOD_Recurs )
+         ResetViewFromSubobject( vLOD_Recurs )
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: ExpandQueryGeneralParms
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+ExpandQueryGeneralParms( VIEW zqFrameOrig BASED ON LOD zqFrame,
+                         VIEW QueryView )
+
+   VIEW zqFrame    BASED ON LOD zqFrame
+   VIEW zqFrameWk  BASED ON LOD zqFrame
+   VIEW zqFrameWk2 BASED ON LOD zqFrame
+
+   // Expand the GeneralParamter entries with the attributes from the Query Frame (the LOD).
+   // We will do this in 3 steps:
+   // 1. Move the existing GeneralParamter entries to a work object.
+   // 2. Create new GeneralParamter entries from the Query Frame.
+   // 3. Merge the select values into the new entries.
+
+   CreateViewFromView( zqFrame, zqFrameOrig )
+
+   // Move the existing GeneralParamter entries.
+   ACTIVATE zqFrameWk EMPTY
+   NAME VIEW zqFrameWk "zqFrameWk"
+   CREATE ENTITY zqFrameWk.zqFrame
+   FOR EACH zqFrame.GeneralParameter
+      CREATE ENTITY zqFrameWk.GeneralParameter
+      SetMatchingAttributesByName( zqFrameWk, "GeneralParameter",
+                                   zqFrame,   "GeneralParameter", zSET_ALL )
+      FOR EACH zqFrame.GeneralSubParameter
+         CREATE ENTITY zqFrameWk.GeneralSubParameter
+         SetMatchingAttributesByName( zqFrameWk, "GeneralSubParameter",
+                                      zqFrame,   "GeneralSubParameter", zSET_ALL )
+      END
+      DELETE ENTITY zqFrame.GeneralParameter NONE
+   END
+
+   // Create new GeneralParameter entries from the Query Frame.
+   InitializeQueryFrameForLOD( zqFrame, QueryView )
+
+   // Merge the select values back into the new entries.
+   FOR EACH zqFrameWk.GeneralParameter
+      SET CURSOR FIRST zqFrame.GeneralParameter
+           WHERE zqFrame.GeneralParameter.EntityName    = zqFrameWk.GeneralParameter.EntityName
+             AND zqFrame.GeneralParameter.AttributeName = zqFrameWk.GeneralParameter.AttributeName
+      IF RESULT >= zCURSOR_SET
+         // If this is a duplicate line, create new GeneralParameter.
+         CreateViewFromView( zqFrameWk2, zqFrameWk )
+         SET CURSOR PREVIOUS zqFrameWk2.GeneralParameter
+              WHERE zqFrameWk2.GeneralParameter.EntityName    = zqFrameWk.GeneralParameter.EntityName
+                AND zqFrameWk2.GeneralParameter.AttributeName = zqFrameWk.GeneralParameter.AttributeName
+         IF RESULT >= zCURSOR_SET
+            CREATE ENTITY zqFrame.GeneralParameter
+         END
+         DropView( zqFrameWk2 )
+         SetMatchingAttributesByName( zqFrame,   "GeneralParameter",
+                                      zqFrameWk, "GeneralParameter", zSET_ALL )
+      END
+      FOR EACH zqFrameWk.GeneralSubParameter
+         CREATE ENTITY zqFrame.GeneralSubParameter
+         SetMatchingAttributesByName( zqFrame,   "GeneralSubParameter",
+                                      zqFrameWk, "GeneralSubParameter", zSET_ALL )
+      END
+   END
+
+   DropObjectInstance( zqFrameWk )
+   DropView( zqFrame )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: InitializeQueryFrameForLOD
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+InitializeQueryFrameForLOD( VIEW zqFrame BASED ON LOD zqFrame,
+                            VIEW vLOD_Root )
+
+   VIEW zqFrameRoot BASED ON LOD zqFrame
+   VIEW vLOD_Recurs
+   STRING ( 32 )  RootEntityName
+   STRING ( 400 ) szFileName
+   SHORT nRC
+
+   // Format a zqFrame OI with the characteristics of the LOD Frame.
+
+   RootEntityName = vLOD_Root.LOD_EntityParent.Name
+
+   // Clear any current ObjectEntity entries.
+   FOR EACH zqFrame.ObjectEntity
+      DELETE ENTITY zqFrame.ObjectEntity NONE
+   END
+   
+   // Create the null ObjectEntity entry.
+   CREATE ENTITY zqFrame.ObjectEntity
+
+   // Create GeneralParameter entries in zqFrame by calling recursive routine with vLOD_Recurs.
+   SET CURSOR FIRST vLOD_Root.LOD       // Make sure we have position. (After a Reset View, we sometimes don't have cursor position.)
+   CreateViewFromView( vLOD_Recurs, vLOD_Root )
+   NAME VIEW vLOD_Recurs "vLOD_Recurs"
+   CreateViewFromView( zqFrameRoot, zqFrame )
+   NAME VIEW zqFrameRoot "zqFrameRoot"
+   InitializeFrameRecurs( zqFrame, zqFrameRoot, vLOD_Recurs, vLOD_Root, "", RootEntityName, 1 )
+   DropView( zqFrameRoot )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildValueComboBoxTable
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+BuildValueComboBoxTable( VIEW ViewToWindow )
+
+   VIEW zqFrame    REGISTERED AS zqFrame
+   VIEW DomainT    BASED ON LOD  DomainT
+   VIEW DomainTDyn BASED ON LOD  DomainT
+   VIEW vXDM
+   VIEW QueryView
+   STRING ( 400 ) szFileName
+   STRING ( 400 ) szDirectory
+   STRING ( 90 )  szObjectDomainName
+   STRING ( 90 )  szDomainName
+   INTEGER nRC
+   
+   // Make sure the XDM object is in memory.
+   GET VIEW vXDM NAMED "vXDM"
+   IF RESULT < 0
+      GetApplDirectoryFromView( szDirectory, ViewToWindow, zAPPL_DIR_OBJECT, 400 )
+      szFileName = szDirectory + "/zeidon.xdm" 
+      TraceLineS( "*** XDM Dir: ", szFileName )
+      nRC = SfActivateSysOI_FromFile( vXDM, "TZDMXGPO", ViewToWindow, szFileName, zSingle )
+      IF nRC < 0
+         MessageSend( ViewToWindow, "", "Open XDM",
+                      "Error opening XDM.",
+                      zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+         RETURN 2
+      END
+      NAME VIEW vXDM "vXDM"
+   END
+   
+   // Determine Domain Name and position on correct Domain.
+   // Note that QueryView is already positioned on the correct Entity and Attribute.
+   GET VIEW QueryView NAMED "QueryView"
+   szDomainName = QueryView.Domain.Name
+   SET CURSOR FIRST vXDM.Domain WHERE vXDM.Domain.Name = szDomainName
+   SET CURSOR FIRST vXDM.Context WHERE vXDM.Context.IsDefault = "Y"
+   
+   // Initialize the combo box Domain.
+   szObjectDomainName = "_DM_QueryComboUpd_QueryComboUpd"
+   GET VIEW DomainT NAMED szObjectDomainName
+   IF RESULT >= 0
+      DropObjectInstance( DomainT )
+   END
+   ACTIVATE DomainT EMPTY 
+   NAME VIEW DomainT szObjectDomainName 
+   CREATE ENTITY DomainT.Domain
+   DomainT.Domain.Name = "QueryComboUpd"
+   
+   // Processing depends on whether the Domain is dynamic or static,
+   IF vXDM.Domain.JavaClass = "com.quinsoft.zeidon.domains.StaticTableDomain" OR 
+      vXDM.Domain.JavaClass = "org.nazarene.nazsis.domains.StaticTableDomainLanguageYN"
+      
+      // Domain is Static Table.
+      FOR EACH vXDM.TableEntry
+         CREATE ENTITY DomainT.DomainValue 
+         DomainT.DomainValue.InternalStringValue = vXDM.TableEntry.InternalValue
+         DomainT.DomainValue.ExternalDescription = vXDM.TableEntry.ExternalValue
+      END
+      
+   ELSE
+      
+      // Domain is Dynamic Table.
+      ACTIVATE DomainTDyn WHERE DomainTDyn.Domain.Name = szDomainName
+      IF RESULT >= 0
+         // Domain was found, so build the Domain values.
+         NAME VIEW DomainTDyn "DomainTDyn"
+         FOR EACH DomainTDyn.DomainValue 
+            CREATE ENTITY DomainT.DomainValue 
+            DomainT.DomainValue.InternalStringValue = DomainTDyn.DomainValue.InternalStringValue 
+            DomainT.DomainValue.ExternalDescription = DomainTDyn.DomainValue.ExternalDescription 
+         END
+         DropObjectInstance( DomainTDyn )
+      ELSE
+         // No Domain was found, so build a single error entry.
+         CREATE ENTITY DomainT.DomainValue 
+         DomainT.DomainValue.InternalStringValue = "Err"
+         DomainT.DomainValue.ExternalDescription = "Not Found"
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: QueryConvLangDomain
+**    
+*************************************************************************************************/
+GLOBAL OPERATION
+QueryConvLangDomain( VIEW AnyView,
+                     STRING ( 10000 ) szReturnedValue,
+                     STRING ( 10000 ) szOriginalValue,
+                     STRING ( 50 )    szContext,
+                     STRING ( 50 )    szLanguageCode )
+
+   VIEW zqLang    BASED ON LOD  zqLang
+   STRING ( 50 ) szCurrentLangConvName
+   STRING ( 90 ) szTestReturn
+   
+   // Convert the original string value to the returned value using the Advanced Query language table identified by LanguageCode.
+   // However, if the Context is "UpdateValue", then no conversion is done.
+//TraceLineS( "### QueryConv Language: ", szLanguageCode )
+//TraceLineS( "### QueryConv Context: ", szContext )
+   
+   IF szContext = "UpdateInterface"
+      szReturnedValue = szOriginalValue
+   ELSE
+      // The value is to be converted.
+      
+      // Get view to language translation object.
+      szCurrentLangConvName = "QueryLangConv" + szLanguageCode
+      GET VIEW zqLang NAMED szCurrentLangConvName
+      IF RESULT < 0
+         ACTIVATE zqLang Multiple WHERE zqLang.OriginalDialogText.IsAdvancedQuery = "Y"
+                                    AND zqLang.LanguageText.Language = szLanguageCode
+             RESTRICTING zqLang.LanguageText TO zqLang.LanguageText.Language = szLanguageCode AND 
+                                                zqLang.LanguageText.TextValue != ""
+         NAME VIEW zqLang szCurrentLangConvName
+      END
+      
+      // If original value is in table and not null, return translated value.
+      // Otherwise, return original value.
+      SET CURSOR FIRST zqLang.OriginalDialogText WHERE zqLang.OriginalDialogText.UniqueTextValue = szOriginalValue
+      IF RESULT < zCURSOR_SET
+         szReturnedValue = szOriginalValue
+      ELSE
+         szTestReturn    = zqLang.LanguageText.TextValue
+         szReturnedValue = zqLang.LanguageText.TextValue
+         // If text hasn't been translated (ie., it's null), use original value.
+         IF szReturnedValue = ""
+            szReturnedValue = szOriginalValue
+         END
+      END
+   END
+   //TraceLineS( "### Returned Value: ", szReturnedValue )
+
+END

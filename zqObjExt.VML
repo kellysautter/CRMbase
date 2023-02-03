@@ -1,0 +1,645 @@
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildDisplayValues
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+BuildDisplayValues( VIEW zqObjExt BASED ON LOD zqObjExt,
+                    VIEW zqFrame  BASED ON LOD zqFrame,
+                    VIEW ResultSet )
+   
+   VIEW mQryObEx BASED ON LOD mQryObEx
+   STRING ( 50 )  szRootEntityName
+   STRING ( 50 )  szSummaryEntityName
+   STRING ( 50 )  szSummaryAttributeName
+   STRING ( 50 )  szSummaryEntityName2
+   STRING ( 50 )  szSummaryAttributeName2
+   STRING ( 50 )  szDisplayEntityName
+   STRING ( 50 )  szDisplayAttributeName
+   STRING ( 50 )  szExtensionName
+   STRING ( 50 )  szObjectName
+   STRING ( 200 ) szSummaryDistinctValue
+   STRING ( 200 ) szMultipleLanguageValue
+   STRING ( 50 )  szDisplayValue
+   STRING ( 1 )   szFoundFlag
+   INTEGER        nRC
+   INTEGER        NumberOfLevels
+   DECIMAL        dDecimalValue
+   
+   // Build the summary data in zqObjExt by looping through the entities in ResultSet and using the selection/display
+   // criteria in zqFrame and zqObjExt to evaluate the ResultSet data and create the summary data in zqObjExt.
+   // We will get the ResultSet Root Entity Name from zqFrame, but the rest of the object data from zqObjExt.
+   
+   // Activate Extension object from zqFrame value.
+   szObjectName    = zqFrame.zqFrame.QueryObjectName 
+   szExtensionName = zqFrame.SelectedObjectExtensionSummary.Name 
+   ACTIVATE mQryObEx WHERE mQryObEx.QueryObjectExtension.ID = zqFrame.SelectedObjectExtensionSummary.ID 
+   IF RESULT < 0
+      MessageSend( zqFrame, "", "",
+                   "The Query Extension for this Report has been deleted.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   NAME VIEW mQryObEx "mQryObEx"
+   SetOI_FromBlob( zqObjExt, 0, zqFrame, mQryObEx, "QueryObjectExtension", "QueryExtensionBlob", zIGNORE_ERRORS )
+   NAME VIEW zqObjExt "zqObjExt"
+   DropObjectInstance( mQryObEx )
+   
+   // Position on Summary selected by Query.
+   SET CURSOR FIRST zqObjExt.SummaryEntry WHERE zqObjExt.SummaryEntry.Name = zqFrame.SelectedObjectExtensionSummary.Name 
+   szRootEntityName = zqFrame.ParentEntity.EntityName  
+   
+   // Get Entity/Attribute Names for both levels, if they exist.
+   SET CURSOR FIRST zqObjExt.SummarySelectionCriteria
+   szSummaryEntityName     = zqObjExt.SummarySelectionCriteria.EntityName 
+   szSummaryAttributeName  = zqObjExt.SummarySelectionCriteria.AttributeName 
+   NumberOfLevels = 1    // Default is 1
+   SET CURSOR NEXT zqObjExt.SummarySelectionCriteria 
+   IF RESULT >= zCURSOR_SET
+      szSummaryEntityName2    = zqObjExt.SummarySelectionCriteria.EntityName 
+      szSummaryAttributeName2 = zqObjExt.SummarySelectionCriteria.AttributeName 
+      NumberOfLevels = 2   // Override is 2
+   END 
+   
+   // If Summary is for Range, set up a Summary display values (Summary Rows and Column) for each  Range entry..
+   SET CURSOR FIRST zqObjExt.SummarySelectionCriteria  
+   IF zqObjExt.SummarySelectionCriteria.SummaryType = "Range"
+      FOR EACH zqObjExt.SummarySelectionCriteria 
+         CREATE ENTITY zqObjExt.DisplaySummaryLevel1
+         szMultipleLanguageValue = zqObjExt.SummarySelectionCriteria.Title
+         zqObjExt.DisplaySummaryLevel1.Title = szMultipleLanguageValue
+         CREATE ENTITY zqObjExt.DisplaySummaryLevel1Value
+         szMultipleLanguageValue = zqObjExt.SummaryDisplayAttribute.DisplayName
+         zqObjExt.DisplaySummaryLevel1Value.Title = szMultipleLanguageValue
+         zqObjExt.DisplaySummaryLevel1Value.DecimalValue = 0
+      END
+   END
+   
+   // Loop through Root entities.
+   nRC = SetCursorFirstEntity( ResultSet, szRootEntityName, "" )
+   LOOP WHILE nRC >= zCURSOR_SET
+      // Loop through Summary entity within Root
+      nRC = SetCursorFirstEntity( ResultSet, szSummaryEntityName, szRootEntityName )
+      LOOP WHILE nRC >= zCURSOR_SET
+         
+         // Process by Summary Type.
+         
+         // Distinct Value
+         IF zqObjExt.SummarySelectionCriteria.SummaryType = "Distinct"
+            
+            // Summary is by each unique value of the Summary Attribute.
+            
+            // Add the Level1 Summary entry whether or not there is a second level.
+            GetStringFromAttributeByContext( szSummaryDistinctValue, ResultSet, szSummaryEntityName, szSummaryAttributeName, "", 200 )
+            SET CURSOR FIRST zqObjExt.DisplaySummaryLevel1 WHERE zqObjExt.DisplaySummaryLevel1.Title = szSummaryDistinctValue
+            IF RESULT < zCURSOR_SET
+               CREATE ENTITY zqObjExt.DisplaySummaryLevel1 
+               zqObjExt.DisplaySummaryLevel1.Title = szSummaryDistinctValue 
+               FOR EACH zqObjExt.SummaryDisplayAttribute 
+                  IF zqObjExt.SummaryDisplayAttribute.SummaryLevel = "" OR zqObjExt.SummaryDisplayAttribute.SummaryLevel = 1
+                     CREATE ENTITY zqObjExt.DisplaySummaryLevel1Value 
+                     zqObjExt.DisplaySummaryLevel1Value.Title        = zqObjExt.SummaryDisplayAttribute.DisplayName 
+                     zqObjExt.DisplaySummaryLevel1Value.DecimalValue = 0
+                  END
+               END
+            END 
+            
+            // Add a Level2 Summary entry if there are 2 levels.
+            IF NumberOfLevels = 2
+               SET CURSOR NEXT zqObjExt.SummarySelectionCriteria  
+               GetStringFromAttributeByContext( szSummaryDistinctValue, ResultSet, szSummaryEntityName, szSummaryAttributeName, "", 200 )
+               SET CURSOR FIRST zqObjExt.DisplaySummaryLevel2 WHERE zqObjExt.DisplaySummaryLevel2.Title = szSummaryDistinctValue
+               IF RESULT < zCURSOR_SET
+                  CREATE ENTITY zqObjExt.DisplaySummaryLevel2 
+                  zqObjExt.DisplaySummaryLevel2.Title = szSummaryDistinctValue 
+                  FOR EACH zqObjExt.SummaryDisplayAttribute WHERE zqObjExt.SummaryDisplayAttribute.SummaryLevel = 2
+                     CREATE ENTITY zqObjExt.DisplaySummaryLevel2Value 
+                     zqObjExt.DisplaySummaryLevel2Value.Title        = zqObjExt.SummaryDisplayAttribute.DisplayName 
+                     zqObjExt.DisplaySummaryLevel2Value.DecimalValue = 0
+                  END
+               END 
+            END
+            
+            // Position on correct total value and add either Count or Accumulative valie to it.
+            
+            // Total values for any first level entries.
+            FOR EACH zqObjExt.DisplaySummaryLevel1Value  
+               // Position on corresponding SummaryDisplayAttribute entry to pick up defininition values.
+               SET CURSOR FIRST zqObjExt.SummaryDisplayAttribute 
+                          WHERE zqObjExt.SummaryDisplayAttribute.DisplayName = zqObjExt.DisplaySummaryLevel1Value.Title 
+               // What we do here depends on Type.
+               IF zqObjExt.SummaryDisplayAttribute.Type = "Count"
+                  // Count
+                  zqObjExt.DisplaySummaryLevel1Value.DecimalValue = zqObjExt.DisplaySummaryLevel1Value.DecimalValue + 1
+               ELSE
+               IF zqObjExt.SummaryDisplayAttribute.Type = "Sum"
+                  // Sum
+                  szDisplayEntityName    = zqObjExt.SummaryDisplayAttribute.SourceEntityName 
+                  szDisplayAttributeName = zqObjExt.SummaryDisplayAttribute.SourceAttributeName 
+                  GetDecimalFromAttribute( dDecimalValue, ResultSet, szDisplayEntityName, szDisplayAttributeName )
+                  zqObjExt.DisplaySummaryLevel1Value.DecimalValue = zqObjExt.DisplaySummaryLevel1Value.DecimalValue + dDecimalValue
+               ELSE
+                  
+               END
+               END
+            END
+            
+            // Also total values for the second level, if it exists.
+            IF NumberOfLevels = 2
+               FOR EACH zqObjExt.DisplaySummaryLevel2Value 
+                  // Position on corresponding SummaryDisplayAttribute entry to pick up defininition values.
+                  SET CURSOR FIRST zqObjExt.SummaryDisplayAttribute 
+                             WHERE zqObjExt.SummaryDisplayAttribute.DisplayName = zqObjExt.DisplaySummaryLevel2Value.Title 
+                  // What we do here depends on Type.
+                  IF zqObjExt.SummaryDisplayAttribute.Type = "Count"
+                     // Count
+                     zqObjExt.DisplaySummaryLevel2Value.DecimalValue = zqObjExt.DisplaySummaryLevel2Value.DecimalValue + 1
+                  ELSE
+                  IF zqObjExt.SummaryDisplayAttribute.Type = "Sum"
+                     // Sum
+                     szDisplayEntityName    = zqObjExt.SummaryDisplayAttribute.SourceEntityName 
+                     szDisplayAttributeName = zqObjExt.SummaryDisplayAttribute.SourceAttributeName 
+                     GetDecimalFromAttribute( dDecimalValue, ResultSet, szDisplayEntityName, szDisplayAttributeName )
+                     zqObjExt.DisplaySummaryLevel2Value.DecimalValue = zqObjExt.DisplaySummaryLevel2Value.DecimalValue + dDecimalValue
+                  ELSE
+                     
+                  END
+                  END
+               END
+            END
+                
+         END
+         
+         // Min/Max Ranges
+         IF zqObjExt.SummarySelectionCriteria.SummaryType = "Range"
+            
+            // Summary is by value Range of specified Attribute.
+            // Note that DisplaySummaryLevel1 (summary rows) were created earlier.
+            
+            // Get value to check against Range and position on correct Summary entry to increment count.
+            GetDecimalFromAttribute( dDecimalValue, ResultSet, szSummaryEntityName, szSummaryAttributeName )
+            szFoundFlag = ""
+            FOR EACH zqObjExt.SummarySelectionCriteria 
+               IF szFoundFlag = "" AND dDecimalValue >  zqObjExt.SummarySelectionCriteria.RangeMinimum AND 
+                                       dDecimalValue <= zqObjExt.SummarySelectionCriteria.RangeMaximum 
+                  szFoundFlag = "Y"
+                  szMultipleLanguageValue = zqObjExt.SummarySelectionCriteria.Title 
+                  SET CURSOR FIRST zqObjExt.DisplaySummaryLevel1 WHERE zqObjExt.DisplaySummaryLevel1.Title = szMultipleLanguageValue
+                  zqObjExt.DisplaySummaryLevel1Value.DecimalValue = zqObjExt.DisplaySummaryLevel1Value.DecimalValue + 1
+               END
+            END
+         END
+         
+         nRC = SetCursorNextEntity( ResultSet, szSummaryEntityName, szRootEntityName )
+         
+      END
+      
+      nRC = SetCursorNextEntity( ResultSet, szRootEntityName, "" )
+   END
+   
+   // Build the 
+   BuildFrameSummary( zqObjExt, zqFrame )
+   
+   // Set up a GraphDefinition entity for each Graph Type that can be run, which will be used for Graph selection.
+   FOR EACH zqFrame.GraphDefinition 
+      DELETE ENTITY zqFrame.GraphDefinition NONE
+   END
+   CREATE ENTITY zqFrame.GraphDefinition 
+   zqFrame.GraphDefinition.Type = "Pie Chart"
+   CREATE ENTITY zqFrame.GraphDefinition 
+   zqFrame.GraphDefinition.Type = "Basic Bar Chart"
+   CREATE ENTITY zqFrame.GraphDefinition 
+   zqFrame.GraphDefinition.Type = "2-Level Bar Chart"
+   SET CURSOR FIRST zqFrame.GraphDefinition  
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: BuildFrameSummary
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+BuildFrameSummary( VIEW zqObjExt BASED ON LOD zqObjExt,
+                   VIEW zqFrame  BASED ON LOD zqFrame )
+
+   STRING ( 50 )  szFormatAttributeName
+   STRING ( 10 )  szCount
+   STRING ( 200 ) szSummaryDistinctValue
+   STRING ( 200 ) szMultipleLanguageValue
+   STRING ( 50 )  szDisplayValue
+   INTEGER        NumberOfLevels
+   INTEGER        Count
+   DECIMAL        dDecimalValue
+   
+   // Build the ResultSetDisplay subobject from the DisplaySummaryLevel1Value data in zqObjExt.
+   
+   // Sort the Summary entries at each level, unless this is a Range.
+   IF zqObjExt.SummarySelectionCriteria.SummaryType != "Range"
+      SET CURSOR FIRST zqObjExt.SummarySelectionCriteria  
+      OrderEntityForView( zqObjExt, "DisplaySummaryLevel1", "Title A" )
+      FOR EACH zqObjExt.DisplaySummaryLevel1 
+         IF zqObjExt.DisplaySummaryLevel2 EXISTS
+            OrderEntityForView( zqObjExt, "DisplaySummaryLevel2", "Title A" )
+         END
+      END
+   END
+   SET CURSOR FIRST zqObjExt.DisplaySummaryLevel1  
+   
+   
+   // Format the data in the DisplaySummary1 subobject into the zqFrame ResultSetDisplay rows for
+   // presenting on the Result Set page.
+   
+   FOR EACH zqFrame.ResultSetDisplay 
+      DELETE ENTITY zqFrame.ResultSetDisplay NONE 
+   END
+   CREATE ENTITY zqFrame.ResultSetDisplay  
+   
+   // Build Column Headings
+   
+   // Range Value
+   IF zqObjExt.SummarySelectionCriteria.SummaryType = "Range"
+      // First column heading is  simply "Value Range"
+      // We will utilize the attribute, ValueRangeDisplay, to converf "Value Range" to the appropriate langauge if necessary.
+      zqObjExt.SummaryEntry.ValueRangeDisplay = "Value Range"
+      szDisplayValue = zqObjExt.SummaryEntry.ValueRangeDisplay 
+      SetAttributeFromString( zqFrame, "ResultSetDisplay", "ColumnTitle1", szDisplayValue )
+      // Single data column is from SummaryDisplayAttribute.
+      SET CURSOR FIRST zqObjExt.SummarySelectionCriteria  
+      szDisplayValue = zqObjExt.DisplaySummaryLevel1Value.Title 
+      SetAttributeFromString( zqFrame, "ResultSetDisplay", "ColumnTitle2", szDisplayValue )
+      NumberOfLevels = 1    // Force levels to 1 for Range.
+   END
+   
+   // Distinct Value
+   IF zqObjExt.SummarySelectionCriteria.SummaryType = "Distinct"
+   
+      // First create Heading for Summary Title, both level 1 and level 2 if it exists.
+      SET CURSOR FIRST zqObjExt.SummarySelectionCriteria  
+      szDisplayValue = zqObjExt.SummarySelectionCriteria.Title 
+      IF szDisplayValue = ""
+         szDisplayValue = zqObjExt.SummarySelectionCriteria.EntityName 
+      END
+      SetAttributeFromString( zqFrame, "ResultSetDisplay", "ColumnTitle1", szDisplayValue )
+      Count = 1
+      IF NumberOfLevels = 2
+         SET CURSOR NEXT zqObjExt.SummarySelectionCriteria 
+         szDisplayValue = zqObjExt.SummarySelectionCriteria.Title 
+         IF szDisplayValue = ""
+            szDisplayValue = zqObjExt.SummarySelectionCriteria.EntityName 
+         END
+         SetAttributeFromString( zqFrame, "ResultSetDisplay", "ColumnTitle2", szDisplayValue )
+         Count = 2
+      END
+      
+      // Second Headings for each Summary value to be displayed.
+      // We will add any level 1 headings (if they exist) followed by any level 2 headings (if they exist).
+      FOR EACH zqObjExt.DisplaySummaryLevel1Value 
+         Count = Count + 1
+         szCount = Count
+         szFormatAttributeName = "ColumnTitle" + szCount
+         szDisplayValue = zqObjExt.DisplaySummaryLevel1Value.Title 
+         SetAttributeFromString( zqFrame, "ResultSetDisplay", szFormatAttributeName, szDisplayValue )
+      END
+      FOR EACH zqObjExt.DisplaySummaryLevel2Value 
+         Count = Count + 1
+         szCount = Count
+         szFormatAttributeName = "ColumnTitle" + szCount
+         szDisplayValue = zqObjExt.DisplaySummaryLevel2Value.Title 
+         SetAttributeFromString( zqFrame, "ResultSetDisplay", szFormatAttributeName, szDisplayValue )
+      END
+   END
+   
+   // Create ResultSetDisplay data entries.
+   // If this is a 2-level summary with DisplaySummaryLevel1Value entries, we will get an extra line for those entries.
+   FOR EACH zqObjExt.DisplaySummaryLevel1 
+      CREATE ENTITY zqFrame.ResultSetDisplayRow 
+      Count = 1
+      IF Count <= 6 
+         szCount = Count
+         // Create Level 1 Summary values.
+         szFormatAttributeName = "ColumnValue" + szCount
+         szDisplayValue = zqObjExt.DisplaySummaryLevel1.Title 
+         SetAttributeFromString( zqFrame, "ResultSetDisplayRow", szFormatAttributeName, szDisplayValue )
+         IF NumberOfLevels = 2
+            // If there are 2 levels, we need to skip the level 2 title for this entry.
+            Count = Count + 1
+         END
+         // Add data entries.
+         FOR EACH zqObjExt.DisplaySummaryLevel1Value 
+            Count = Count + 1
+            szCount = Count
+            szFormatAttributeName = "ColumnValue" + szCount
+            szDisplayValue = zqObjExt.DisplaySummaryLevel1Value.DecimalValue 
+            SetAttributeFromString( zqFrame, "ResultSetDisplayRow", szFormatAttributeName, szDisplayValue )
+         END 
+         
+         // Add any Level 2 entries.
+         IF NumberOfLevels = 2
+            FOR EACH zqObjExt.DisplaySummaryLevel2 
+               // Create Level 2 Summary Row.
+               CREATE ENTITY zqFrame.ResultSetDisplayRow 
+               Count = 2
+               szCount = Count
+               // Create 2nd level title.
+               szFormatAttributeName = "ColumnValue" + szCount
+               szDisplayValue = zqObjExt.DisplaySummaryLevel2.Title 
+               SetAttributeFromString( zqFrame, "ResultSetDisplayRow", szFormatAttributeName, szDisplayValue )
+               
+               // Skip any Level 1 display attributes.
+               FOR EACH zqObjExt.DisplaySummaryLevel1Value 
+                  Count = Count + 1
+               END
+               
+               // Add Level 2 display attributes.
+               FOR EACH zqObjExt.DisplaySummaryLevel2Value 
+                  Count = Count + 1
+                  szCount = Count
+                  szFormatAttributeName = "ColumnValue" + szCount
+                  szDisplayValue = zqObjExt.DisplaySummaryLevel2Value.DecimalValue 
+                  SetAttributeFromString( zqFrame, "ResultSetDisplayRow", szFormatAttributeName, szDisplayValue )
+               END
+            END
+         END
+      END
+   END
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FormatCSV_FromSummary
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+FormatCSV_FromSummary( VIEW zqObjExt BASED ON LOD zqObjExt,
+                       VIEW zqFrame  BASED ON LOD zqFrame )
+
+   VIEW wXferO REGISTERED AS wXferO
+   VIEW sHost  REGISTERED AS sHost
+   VIEW mUser  REGISTERED AS mUser
+   INTEGER FilePointer
+   INTEGER NumberOfLevels
+   STRING ( 1000 ) szOutputLine
+   STRING ( 400 )  szFileName
+   STRING ( 200 )  szDisplayValue
+   STRING ( 254 )  szReportTitle
+   STRING ( 50 )   szRangeColumTitle
+   STRING ( 50 )   szUserName
+   STRING ( 200 )  szMsg
+   STRING ( 200 )  szLangConv
+   
+   // Format the Summary Data in zqObjExt to a CSV File with file name specified in wXferO.
+   
+   // Set up Directory / File Name.
+   IF sHost.Host.TempDir = ""
+      MessageSend( zqFrame, "", "",
+                   "A Host Temporary Directoy Name must be specified.",
+                   zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   szUserName = mUser.User.UserName 
+   szReportTitle = "QueryDetailReport"
+   szFileName = sHost.Host.TempDir + szReportTitle + szUserName + ".csv"
+   wXferO.QueryValues.OutputFileName = szFileName
+   TraceLineS( "*** Host TempDir: ", sHost.Host.TempDir )
+   
+   // Open File
+   FilePointer = SysOpenFile( zqFrame, szFileName, COREFILE_CREATE )
+   IF FilePointer < 0
+      GetTextConv(szLangConv, zqFrame, "Invalid Directory for writing CSV Query File: ","")
+      szMsg = szLangConv + szFileName
+      MessageSend( zqFrame, "", "Query", szMsg, zMSGQ_OBJECT_CONSTRAINT_ERROR, 0 )
+      RETURN 2
+   END
+   
+   // Determine Number of Levels for Distinct Summaries.
+   IF zqObjExt.SummarySelectionCriteria.SummaryType = "Distinct"
+      SET CURSOR FIRST zqObjExt.SummarySelectionCriteria
+      NumberOfLevels = 1    // Default is 1
+      SET CURSOR NEXT zqObjExt.SummarySelectionCriteria 
+      IF RESULT >= zCURSOR_SET
+         NumberOfLevels = 2   // Override is 2
+      END
+   ELSE
+      NumberOfLevels = 1    // Default is 1
+   END
+   
+   // Build Title Line.
+   szDisplayValue = zqObjExt.SummaryEntry.Name  
+   szOutputLine  = QUOTES + szDisplayValue + QUOTES
+   SysWriteLine( zqFrame, FilePointer, szOutputLine )
+   
+   // Build Column Headings
+   
+   // Distinct Type
+   IF zqObjExt.SummarySelectionCriteria.SummaryType = "Distinct"
+      // First create Heading for Summary Title, both level 1 and level 2 if it exists.
+      SET CURSOR FIRST zqObjExt.SummarySelectionCriteria  
+      szDisplayValue = zqObjExt.SummarySelectionCriteria.Title 
+      IF szDisplayValue = ""
+         szDisplayValue = zqObjExt.SummarySelectionCriteria.EntityName 
+      END
+      szOutputLine = QUOTES + szDisplayValue + QUOTES
+      IF NumberOfLevels = 2
+         SET CURSOR NEXT zqObjExt.SummarySelectionCriteria 
+         szDisplayValue = zqObjExt.SummarySelectionCriteria.Title 
+         IF szDisplayValue = ""
+            szDisplayValue = zqObjExt.SummarySelectionCriteria.EntityName 
+         END
+         szOutputLine  = szOutputLine + "," + QUOTES + szDisplayValue + QUOTES
+      END
+      
+      // Second Headings for each Summary value to be displayed.
+      // We will add any level 1 headings (if they exist) followed by any level 2 headings (if they exist).
+      FOR EACH zqObjExt.DisplaySummaryLevel1Value 
+         szDisplayValue = zqObjExt.DisplaySummaryLevel1Value.Title 
+         szOutputLine  = szOutputLine + "," + QUOTES + szDisplayValue + QUOTES
+      END
+      FOR EACH zqObjExt.DisplaySummaryLevel2Value 
+         szDisplayValue = zqObjExt.DisplaySummaryLevel2Value.Title 
+         szOutputLine  = szOutputLine + "," + QUOTES + szDisplayValue + QUOTES
+      END
+      SysWriteLine( zqFrame, FilePointer, szOutputLine )
+   END
+   
+   // Range Type
+   IF zqObjExt.SummarySelectionCriteria.SummaryType = "Range"
+      // First column heading is "Value Range"
+      // Second SummaryDisplayAttribute.DisplayName 
+      szDisplayValue    = zqObjExt.SummaryDisplayAttribute.DisplayName
+      szRangeColumTitle = zqObjExt.SummaryEntry.RangeColumnTitle
+      szOutputLine  = QUOTES + szRangeColumTitle + QUOTES + "," + QUOTES + szDisplayValue + QUOTES
+      SysWriteLine( zqFrame, FilePointer, szOutputLine )
+   END
+   
+   // Create ResultSetDisplay data entries.
+   // If this is a 2-level summary with DisplaySummaryLevel1Value entries, we will get an extra line for those entries.
+   FOR EACH zqObjExt.DisplaySummaryLevel1 
+      // Create Level 1 Summary values.
+      szDisplayValue = zqObjExt.DisplaySummaryLevel1.Title 
+      szOutputLine = QUOTES + szDisplayValue + QUOTES
+      IF NumberOfLevels = 2
+         // If there are 2 levels, we need to skip the level 2 title for this entry.
+         szOutputLine = szOutputLine + "," + QUOTES + QUOTES
+      END
+      // Add data entries.
+      FOR EACH zqObjExt.DisplaySummaryLevel1Value 
+         szDisplayValue = zqObjExt.DisplaySummaryLevel1Value.DecimalValue 
+         szOutputLine = szOutputLine + "," + QUOTES + szDisplayValue + QUOTES
+      END 
+      
+      // Add any Level 2 entries.
+      IF NumberOfLevels = 2
+         // If there are 2nd level entries, we need to write out the Level 1 line.
+         SysWriteLine( zqFrame, FilePointer, szOutputLine )
+         FOR EACH zqObjExt.DisplaySummaryLevel2 
+            // Create Level 2 Summary Row.
+            // Create 2nd level title.
+            szDisplayValue = zqObjExt.DisplaySummaryLevel2.Title 
+            szOutputLine = "," + QUOTES + szDisplayValue + QUOTES
+            
+            // Skip any Level 1 display attributes.
+            FOR EACH zqObjExt.DisplaySummaryLevel1Value 
+               szOutputLine = szOutputLine + "," + QUOTES + QUOTES
+            END
+            
+            // Add Level 2 display attributes.
+            FOR EACH zqObjExt.DisplaySummaryLevel2Value 
+               szDisplayValue = zqObjExt.DisplaySummaryLevel2Value.DecimalValue 
+               szOutputLine = szOutputLine + "," + QUOTES + szDisplayValue + QUOTES
+            END
+            SysWriteLine( zqFrame, FilePointer, szOutputLine )
+         END
+      ELSE
+         // If there are no 2nd Level entries, just write out the line.
+         SysWriteLine( zqFrame, FilePointer, szOutputLine )
+      END
+   END
+   
+   // Close File.
+   SysCloseFile( zqFrame, FilePointer, 0 )
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: FormatGraphFromSummary
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+FormatGraphFromSummary( VIEW zqObjExt BASED ON LOD zqObjExt,
+                        VIEW zqFrame  BASED ON LOD zqFrame,
+                        STRING ( 20 ) szGraphName )
+
+   STRING ( 200 ) szDisplayValue
+   
+   // Build out the GraphDefinition subobject for the type of chart selected.
+   
+   // Delete any current definition entries.
+   FOR EACH zqFrame.GraphMappingParameter 
+      DELETE ENTITY zqFrame.GraphMappingParameter NONE 
+   END
+   
+   IF zqFrame.GraphDefinition.Type = "Pie Chart"
+      // Set up Pie Chart.
+      SET CURSOR FIRST zqFrame.GraphTypeDefinition WHERE zqFrame.GraphTypeDefinition.Type = "Pie Chart"
+      szDisplayValue = zqObjExt.SummaryEntry.Name 
+      zqFrame.GraphDefinition.Title = szDisplayValue
+      CREATE ENTITY zqFrame.GraphMappingParameter 
+      zqFrame.GraphMappingParameter.Name                  = "Looping Entity"
+      zqFrame.GraphMappingParameter.MappingType           = "E"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel1"
+      CREATE ENTITY zqFrame.GraphMappingParameter
+      zqFrame.GraphMappingParameter.Name                  = "Pie Slice Title Attribute"
+      zqFrame.GraphMappingParameter.MappingType           = "A"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel1"
+      zqFrame.GraphMappingParameter.AttributeName         = "Title"
+      zqFrame.GraphMappingParameter.AttributeDisplayTitle = "Title"
+      CREATE ENTITY zqFrame.GraphMappingParameter
+      zqFrame.GraphMappingParameter.Name                  = "Pie Slice Size Numeric Attribute"
+      zqFrame.GraphMappingParameter.MappingType           = "A"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel1Value"
+      zqFrame.GraphMappingParameter.AttributeName         = "DecimalValue"
+      zqFrame.GraphMappingParameter.AttributeDisplayTitle = "Title"
+      
+      FormatQueryForChart( zqFrame, zqObjExt, szGraphName ) 
+   END
+   
+   IF zqFrame.GraphDefinition.Type = "Basic Bar Chart"
+      // Set up Pie Chart.
+      SET CURSOR FIRST zqFrame.GraphTypeDefinition WHERE zqFrame.GraphTypeDefinition.Type = "Basic Bar Chart"
+      szDisplayValue = zqObjExt.SummaryEntry.Name
+      zqFrame.GraphDefinition.Title = szDisplayValue
+      CREATE ENTITY zqFrame.GraphMappingParameter 
+      zqFrame.GraphMappingParameter.Name                  = "Looping Entity"
+      zqFrame.GraphMappingParameter.MappingType           = "E"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel1"
+      CREATE ENTITY zqFrame.GraphMappingParameter
+      zqFrame.GraphMappingParameter.Name                  = "Bar Title Attribute"
+      zqFrame.GraphMappingParameter.MappingType           = "A"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel1"
+      zqFrame.GraphMappingParameter.AttributeName         = "Title"
+      zqFrame.GraphMappingParameter.AttributeDisplayTitle = ""       // No Title for color line.
+      CREATE ENTITY zqFrame.GraphMappingParameter
+      zqFrame.GraphMappingParameter.Name                  = "Bar Size Numeric Attribute"
+      zqFrame.GraphMappingParameter.MappingType           = "A"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel1Value"
+      zqFrame.GraphMappingParameter.AttributeName         = "DecimalValue"
+      zqFrame.GraphMappingParameter.AttributeDisplayTitle = zqObjExt.SummaryDisplayAttribute.DisplayName 
+      
+      FormatQueryForChart( zqFrame, zqObjExt, szGraphName ) 
+   END
+   
+   IF zqFrame.GraphDefinition.Type = "2-Level Bar Chart"
+      // Set up Pie Chart.
+      SET CURSOR FIRST zqFrame.GraphTypeDefinition WHERE zqFrame.GraphTypeDefinition.Type = "2-Level Bar Chart"
+      zqFrame.GraphDefinition.Title = zqObjExt.DisplaySummaryLevel1.Title 
+      CREATE ENTITY zqFrame.GraphMappingParameter 
+      zqFrame.GraphMappingParameter.Name                  = "Looping Entity"
+      zqFrame.GraphMappingParameter.MappingType           = "E"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel1"
+      CREATE ENTITY zqFrame.GraphMappingParameter
+      zqFrame.GraphMappingParameter.Name                  = "Level-1 Title Attribute"
+      zqFrame.GraphMappingParameter.MappingType           = "A"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel1"
+      zqFrame.GraphMappingParameter.AttributeName         = "Title"
+      zqFrame.GraphMappingParameter.AttributeDisplayTitle = "Title"
+      
+      CREATE ENTITY zqFrame.GraphMappingParameter 
+      zqFrame.GraphMappingParameter.Name                  = "Level-2 Looping Entity"
+      zqFrame.GraphMappingParameter.MappingType           = "E"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel2"
+      CREATE ENTITY zqFrame.GraphMappingParameter
+      zqFrame.GraphMappingParameter.Name                  = "Level-2 Title Attribute"
+      zqFrame.GraphMappingParameter.MappingType           = "A"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel2"
+      zqFrame.GraphMappingParameter.AttributeName         = "Title"
+      zqFrame.GraphMappingParameter.AttributeDisplayTitle = "Title"
+      
+      CREATE ENTITY zqFrame.GraphMappingParameter
+      zqFrame.GraphMappingParameter.Name                  = "Level-2 Size Numeric Attribute"
+      zqFrame.GraphMappingParameter.MappingType           = "A"
+      zqFrame.GraphMappingParameter.ObjectViewName        = "zqObjExt"
+      zqFrame.GraphMappingParameter.EntityName            = "DisplaySummaryLevel2Value"
+      zqFrame.GraphMappingParameter.AttributeName         = "DecimalValue"
+      zqFrame.GraphMappingParameter.AttributeDisplayTitle = "Title"
+      
+      FormatQueryForChart( zqFrame, zqObjExt, szGraphName ) 
+   END
+   
+   SET CURSOR FIRST zqObjExt.DisplaySummaryLevel1  
+
+END
+

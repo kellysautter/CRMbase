@@ -1,0 +1,13 @@
+z1000-Zeidon    Z1427EEA TZWDVORO 12/30/22   21:13:50 1.0a2    
+eViewObjRef 1
+aZKey      21135082
+aNextZKeyToAssign 21135082
+aName      wWebXfer
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      334015621
+aName      wWebXfer
+aDesc      Web Transfer Work object
+aDLL_Name  LODOPS_W
+

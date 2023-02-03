@@ -1,0 +1,295 @@
+z1000-Zeidon    ZRESULTSETZZOLODO 09/27/22   15:59:31 1.0a2    
+eLOD       1
+aZKey      715593133
+aNextZKeyToAssign 715593158
+aName      zResultSet
+
+eLOD_EntityParent 2
+aName      zResultSet
+aIndentName zResultSet
+aIndentLvl 0
+aZKey      715593134
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+
+eLOD_AttributeRec 3
+aZKey      715593135
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      DisplayValue1
+aZKey      715593136
+
+eDomainRec 5
+aZKey      90000032
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715593137
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      HeaderValue1
+aZKey      715593138
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593139
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      DisplayValue2
+aZKey      715593140
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593141
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      HeaderValue2
+aZKey      715593142
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593143
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      DisplayValue3
+aZKey      715593144
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593145
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      HeaderValue3
+aZKey      715593146
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593147
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      DisplayValue4
+aZKey      715593148
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593149
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      HeaderValue4
+aZKey      715593150
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593151
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      DisplayValue5
+aZKey      715593152
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593153
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      HeaderValue5
+aZKey      715593154
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593155
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      DisplayValue6
+aZKey      715593156
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715593157
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      HeaderValue6
+aZKey      715593158
+
+eDomainRec 5
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+i7         4
+i10        4
+i13        4
+i16        4
+i19        4
+i22        4
+i25        4
+i28        4
+i31        4
+i34        4
+i37        4
+i38        1
+i39        2
+i40        3
+i41        4
+i42        5
+i43        6
+i44        4
+i45        8
+i46        9
+i47        4
+i48        11
+i49        12
+i50        4
+i51        14
+i52        15
+i53        4
+i54        17
+i55        18
+i56        4
+i57        20
+i58        21
+i59        4
+i60        23
+i61        24
+i62        4
+i63        26
+i64        27
+i65        4
+i66        29
+i67        30
+i68        4
+i69        32
+i70        33
+i71        4
+i72        35
+i73        36
+i74        4

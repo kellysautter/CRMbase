@@ -1,0 +1,288 @@
+z1000-Zeidon    ZGLOBALR TZOGSRCO 01/17/22   10:43:41 1.0a2    
+eGlobalOperationGroup 1
+aZKey      210094639
+aNextZKeyToAssign 210094688
+aName      zGLOBALR
+aDesc      Person Global Operations
+aExtension VML
+aLanguageType V
+aDomainAndGlobalOpGroupName zGLOBALD
+
+eOperation 2
+aName      SAVE_PersonData_G
+aZKey      210094640
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094641
+
+eOperation 2
+aName      ACCEPT_ProposedChanges
+aZKey      210094687
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094688
+
+eOperation 2
+aName      UPDATE_PropChange
+aZKey      210094685
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094686
+
+eOperation 2
+aName      LOAD_PropChangeToContactRequest
+aZKey      210094683
+aType      G
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094684
+
+eOperation 2
+aName      RemoveTaskStatus
+aZKey      210094679
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc PersonId
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094680
+
+eParameter 3
+aShortDesc TaskId
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094681
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094682
+
+eOperation 2
+aName      MarkTaskSuspended
+aZKey      210094675
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc PersonId
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094676
+
+eParameter 3
+aShortDesc TaskId
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094677
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094678
+
+eOperation 2
+aName      MarkTaskSkipped
+aZKey      210094671
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc PersonId
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094672
+
+eParameter 3
+aShortDesc TaskId
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094673
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094674
+
+eOperation 2
+aName      MarkTaskComplete
+aZKey      210094667
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc PersonID
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094668
+
+eParameter 3
+aShortDesc TaskID
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094669
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094670
+
+eOperation 2
+aName      AddDefaultTasks
+aZKey      210094663
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc PersonID
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094664
+
+eParameter 3
+aShortDesc ProcessID
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094665
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094666
+
+eOperation 2
+aName      AddTask
+aZKey      210094657
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc PersonId
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094660
+
+eParameter 3
+aShortDesc TaskID
+aDataType  L
+aPFlag     N
+aUFlag     N
+aZKey      210094661
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094662
+
+eOperation 2
+aName      SAVE_VehicleRegistration
+aZKey      210094651
+aType      G
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094652
+
+eOperation 2
+aName      PICK_PrePerson_G
+aZKey      210094643
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094644
+
+eOperation 2
+aName      DELETE_Person_G
+aZKey      210094645
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094646
+
+eOperation 2
+aName      UPDATE_PersonDetail_G
+aZKey      210094647
+aType      G
+aReturnDesc ReturnCode
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094648
+
+eOperation 2
+aName      SAVE_Person_G
+aZKey      210094649
+aType      G
+aReturnDataType N
+
+eParameter 3
+aShortDesc ViewToWindow
+aDataType  V
+aPFlag     N
+aUFlag     N
+aZKey      210094650
+

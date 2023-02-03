@@ -1,0 +1,217 @@
+/*************************************************************************************************
+**
+**    OPERATION: dCurrentDateTime
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dCurrentDateTime( VIEW wXferO BASED ON LOD wXferO,
+                  STRING ( 32 ) InternalEntityStructure,
+                  STRING ( 32 ) InternalAttribStructure,
+                  SHORT GetOrSetFlag )
+
+   STRING (  18  ) szDateTime
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+         SysGetDateTime( szDateTime )
+         StoreStringInRecord ( wXferO,
+                               InternalEntityStructure, InternalAttribStructure, szDateTime )
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**
+**    OPERATION: dCurrentDate
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dCurrentDate( VIEW wXferO BASED ON LOD wXferO,
+              STRING ( 32 ) InternalEntityStructure,
+              STRING ( 32 ) InternalAttribStructure,
+              SHORT GetOrSetFlag )
+   STRING (  8  ) szDate
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+         szDate = wXferO.Root.dCurrentDateTime
+         StoreStringInRecord ( wXferO,
+                               InternalEntityStructure, InternalAttribStructure, szDate )
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+
+/*************************************************************************************************
+**
+**    OPERATION: dCurrentTime
+**
+**
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dCurrentTime( VIEW wXferO BASED ON LOD wXferO,
+              STRING ( 32 ) InternalEntityStructure,
+              STRING ( 32 ) InternalAttribStructure,
+              SHORT GetOrSetFlag )
+   STRING (  18  ) szTime
+
+   CASE GetOrSetFlag
+      OF zDERIVED_GET:
+         szTime = wXferO.Root.dCurrentDateTime
+         StoreStringInRecord ( wXferO,
+                               InternalEntityStructure, InternalAttribStructure, szTime )
+      /* end zDERIVED_GET */
+      OF zDERIVED_SET:
+
+      /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: dSalaryDataName
+**    
+*************************************************************************************************/
+DERIVED ATTRIBUTE OPERATION
+dSalaryDataName( VIEW wXferO BASED ON LOD wXferO,
+                 STRING ( 32 ) InternalEntityStructure,
+                 STRING ( 32 ) InternalAttribStructure,
+                 SHORT GetOrSetFlag )
+
+   STRING ( 20 ) szDisplayName
+   STRING ( 10 ) szDate
+
+   CASE GetOrSetFlag
+   OF   zDERIVED_GET:
+   
+      GetStringFromAttributeByContext( szDate, wXferO, "StandardSalaryData", "EffectiveBeginDate", "", 10 )
+      szDisplayName = wXferO.StandardSalaryData.Year + " - " + szDate
+      
+      StoreStringInRecord ( wXferO,
+                            InternalEntityStructure, InternalAttribStructure, szDisplayName )
+                    
+
+        /* end zDERIVED_GET */
+   OF   zDERIVED_SET:
+
+        /* end zDERIVED_SET */
+   END  /* case */
+
+END
+
+/*************************************************************************************************
+**    
+**    OPERATION: SetUpAllQueryValues
+**    
+**    
+*************************************************************************************************/
+TRANSFORMATION OPERATION
+SetUpAllQueryValues( VIEW wXferO BASED ON LOD wXferO )
+
+   // Set up the necessary QueryObject entries in wXferO for the Reports and Mailing interfaces.
+   IF wXferO.QueryValues DOES NOT EXIST
+      CREATE ENTITY wXferO.QueryValues   
+   END
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Prospects"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Prospects"
+      wXferO.QueryObject.ObjectName      = "qProspct"
+   END
+   wXferO.QueryObject.DisplayEntityName    = "Person"
+   wXferO.QueryObject.DisplayAttributeName = "dFullName"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "People"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "People"
+      wXferO.QueryObject.ObjectName      = "qPerson"
+   END
+   wXferO.QueryObject.DisplayEntityName    = "Person"
+   wXferO.QueryObject.DisplayAttributeName = "dFullName"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Churches"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Churches"
+      wXferO.QueryObject.ObjectName      = "qChurch"
+   END
+   wXferO.QueryObject.DisplayEntityName    = "Church"
+   wXferO.QueryObject.DisplayAttributeName = "Name"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Organizations"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Organizations"
+      wXferO.QueryObject.ObjectName      = "qOrg"
+   END
+   wXferO.QueryObject.DisplayEntityName    = "Organization"
+   wXferO.QueryObject.DisplayAttributeName = "Name"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Schools"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Schools"
+      wXferO.QueryObject.ObjectName      = "qSchool"
+   END
+   wXferO.QueryObject.DisplayEntityName    = "School"
+   wXferO.QueryObject.DisplayAttributeName = "Name"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Alumni"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Alumni"
+      wXferO.QueryObject.ObjectName      = "qAlumni"
+   END
+   wXferO.QueryObject.DisplayEntityName    = "Person"
+   wXferO.QueryObject.DisplayAttributeName = "dFullName"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Donors"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Donors"
+      wXferO.QueryObject.ObjectName      = "qDonor"
+   END 
+   wXferO.QueryObject.DisplayEntityName    = "Donor"
+   wXferO.QueryObject.DisplayAttributeName = "dName"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Student Life"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Student Life"
+      wXferO.QueryObject.ObjectName      = "qStudent"
+   END 
+   wXferO.QueryObject.DisplayEntityName    = "Person"
+   wXferO.QueryObject.DisplayAttributeName = "dFullName"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Student Academics"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Student Academics"
+      wXferO.QueryObject.ObjectName      = "qStudenA"
+   END 
+   wXferO.QueryObject.DisplayEntityName    = "Person"
+   wXferO.QueryObject.DisplayAttributeName = "dFullName"
+   
+   SET CURSOR FIRST wXferO.QueryObject WHERE wXferO.QueryObject.ExternalName = "Lead Faculty/Classes"
+   IF RESULT < zCURSOR_SET
+      CREATE ENTITY wXferO.QueryObject
+      wXferO.QueryObject.ExternalName    = "Lead Faculty"
+      wXferO.QueryObject.ObjectName      = "qLeadFac"
+   END 
+   wXferO.QueryObject.DisplayEntityName    = "FacultyPerson"
+   wXferO.QueryObject.DisplayAttributeName = "dFullNameLFM"
+
+END

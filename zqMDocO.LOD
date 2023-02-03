@@ -1,0 +1,840 @@
+z1000-Zeidon    ZQMDOCO  TZZOLODO 09/27/22   15:59:23 1.0a2    
+eLOD       1
+aZKey      715592371
+aNextZKeyToAssign 715592407
+aName      zqMDocO
+aDesc      Query Merge Document
+
+eLOD_EntityParent 2
+aName      Document
+aIndentName Document
+aIndentLvl 0
+aZKey      715592373
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   Y
+aInclSrc   Y
+aExclude   Y
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aDesc      Information describing a template document, which is probably a letter or e-mail
+
+eLOD_EntityChild 3
+aName      DocumentCategory
+aIndentName    DocumentCategory
+aIndentLvl 3
+aZKey      715592402
+aCreate    N
+aDelete    N
+aUpdate    N
+aInclude   Y
+aInclSrc   Y
+aExclude   Y
+aRecursive N
+aDerived   N
+aParentDeleteBehave E
+aRelLinkIndicator H
+aDesc      Categories for organizing Documents
+
+eLOD_AttributeRec 4
+aZKey      715592403
+
+eER_AttributeRec 5
+aName      ID
+aZKey      110012143
+aNotNull   Y
+
+eDomainRec 6
+aZKey      90000044
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots.
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      715592404
+
+eER_AttributeRec 5
+aName      Name
+aZKey      110012144
+aLth       64
+aNotNull   Y
+aDesc      Name of the document category
+
+eDomainRec 6
+aZKey      90000032
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aDesc      Any Character String
+aContextRestriction N
+
+eER_EntityRec 4
+aName      DocumentCategory
+aZKey      110012142
+aPurpose   F
+aDesc      Categories for organizing Documents
+aER_DiagramPosX 89
+aER_DiagramPosY 1
+
+eER_RelLinkRec 4
+aName      for
+aAutoSeq   N
+aHangingForeignKeyEntity N
+aZKey      110012155
+aCardMin   0
+aCardMax   1
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 5
+aZKey      110012153
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 88
+aER_DiagramE1PosY 3
+aER_DiagramE2PosX 83
+aER_DiagramE2PosY 3
+
+eLOD_EntityChild 3
+aName      QueryObject
+aIndentName    QueryObject
+aIndentLvl 3
+aZKey      715592405
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+
+eLOD_AttributeRec 4
+aZKey      715592406
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      ObjectName
+aZKey      715592407
+
+eDomainRec 6
+aZKey      110000692
+aName      ZeidonMetaName
+aDomainType E
+aDataType  S
+aMaxStringLth 8
+aDesc      Zeidon Meta  Name
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715592374
+
+eER_AttributeRec 4
+aName      ID
+aZKey      110012116
+aNotNull   Y
+aDesc      system generated key
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592375
+
+eER_AttributeRec 4
+aName      Name
+aZKey      110012117
+aLth       64
+aDesc      Stored Query Name
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592376
+
+eER_AttributeRec 4
+aName      Description
+aZKey      110012120
+aDesc      Description of the document
+
+eDomainRec 5
+aZKey      1158059
+aName      Note
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      10000 byte string
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715592377
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      ActiveFlag
+aZKey      110012118
+
+eDomainRec 5
+aZKey      110000006
+aName      Y/N
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      Yes or No
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715592378
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      ObjectName
+aZKey      110012121
+aDesc      Zeidon Object name
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592379
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      FormatOverrideObjectName
+aZKey      110012122
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592380
+
+eER_AttributeRec 4
+aName      TemplateFileName
+aZKey      110012125
+aDesc      name of the template file
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592381
+
+eER_AttributeRec 4
+aName      OutputFileName
+aZKey      110012127
+aDesc      name of the output file
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592382
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      TextTemplateFileName
+aZKey      110012126
+aDesc      name of the template file
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592383
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      TextOutputFileName
+aZKey      110012128
+aDesc      name of the output file
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592384
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      FunctionalAreaName
+aZKey      110012129
+aDesc      Used to tie a Document to a functional area.
+
+eDomainRec 5
+aZKey      110000544
+aName      FunctionalArea
+aDomainType T
+aDataType  S
+aMaxStringLth 30
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715592385
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      GenerateContactActivityFlag
+aZKey      110012130
+aDesc      If 'Y', create a Contact Activity entry containing the name of  the Document sent.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592386
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      GenerateContactEmailContentFlag
+aZKey      110012131
+aDesc      If 'Y', create a Contact Activity entry containing the content of the generated email.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592387
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      DocType
+aZKey      110012119
+aLth       1
+aDesc      can be internal or external
+
+eDomainRec 5
+aZKey      110005203
+aName      DocumentType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      internal or external
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715592388
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      ExternalReportName
+aZKey      110012123
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592389
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      ExternalReportObjectName
+aZKey      110012124
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592390
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      EmailSubjectTitle
+aZKey      110012132
+aDesc      The character string that will appear in each generated email subject field
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592391
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      EmailSubjectTitleNameFlag
+aZKey      110012133
+aDesc      If Y, the Name of the Person/etc will be appended at the end of the Subject.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592392
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      EmailAttachmentFileName
+aZKey      110012134
+aDesc      Name of Attachment File.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592393
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      MailType
+aZKey      110012135
+
+eDomainRec 5
+aZKey      110000674
+aName      MailType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aDesc      Email or Postal Service
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715592394
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      CounselorSelectableFlag
+aZKey      110012136
+aDesc      If Y, the Document is selectable from the Counselor Document Select list
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592395
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      CreatedDateTime
+aZKey      110012137
+aDesc      date and time the activity was created in the sytem
+
+eDomainRec 5
+aZKey      90000089
+aName      DateTime
+aDomainType A
+aDataType  T
+aMaxStringLth 20
+aDesc      Basic Timestamp Domain
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715592396
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      ModifiedDateTime
+aZKey      110012138
+aDesc      date this record was modified
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592397
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      CreatedBy
+aZKey      110012139
+aDesc      32
+user that created this record
+ 
+
+eDomainRec 5
+aZKey      110001835
+aName      GeneralName_Address
+aDomainType E
+aDataType  S
+aMaxStringLth 50
+aDesc      General Text (names, streets, cities, etc.)
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      715592398
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      LastModifiedBy
+aZKey      110012140
+aLth       50
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592399
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      UploadDirectory
+aZKey      110012141
+aDesc      Location on the server where this template has been uploaded
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      715592400
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      wCategoryName
+aZKey      715592401
+aDesc      We need to use a work attribute for sorting when there is no Category.
+
+eDomainRec 5
+
+eER_EntityRec 3
+aName      Document
+aZKey      110012115
+aPurpose   F
+aDesc      Information describing a template document, which is probably a letter or e-mail
+aER_DiagramPosX 74
+aER_DiagramPosY 3
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+
+eER_Attribute 4
+
+eDomain    5
+
+ePOD       2
+aNAME      zqMDocO
+aZKey      715592372
+aTE_SourceZKey 110010889
+
+eTE_DB_Environ 3
+aName      CRMbase
+aZKey      110010888
+aDesc      OakTree Support App
+aType      P
+
+eTE_DBMS_Source 4
+aName      base
+aZKey      110010889
+aParadigm  R
+aDBMS      SQLServer via ODBC
+aGenerateExecutable kzhsqlsb
+aExecutable kzhsqloa
+aGenKeyExecutable kzhgenky
+aDisplayOwner Y
+aDisplayDBMS_ID N
+aDBH_Data  376
+TZDBHODO *********************** ********************************************************************************************************z1000-Zeidon    ZTF_1760_TZDBHODO 11/18/15   13:58:09 1.0a2    
+eODBC      1
+aTimestampPrecision 3
+aTimestampAsString Y
+aBlobsLast Y
+aDropTables Y
+aAddTableNameToFK_Override Y
+aGenCreateIdxs Y
+aGenDropIdxs N
+aGenCreateTables Y
+
+
+
+i18        5
+i21        8
+i30        15
+i33        15
+i36        24
+i39        24
+i42        24
+i45        24
+i51        27
+i54        27
+i60        15
+i63        15
+i66        8
+i69        27
+i72        24
+i78        27
+i84        81
+i90        8
+i93        8
+i96        8
+i98        1
+i99        16
+i100       17
+i101       5
+i102       19
+i103       20
+i104       8
+i105       22
+i106       23
+i107       24
+i108       25
+i109       26
+i110       27
+i111       28
+i112       29
+i113       15
+i114       31
+i115       32
+i116       15
+i117       34
+i118       35
+i119       24
+i120       37
+i121       38
+i122       24
+i123       40
+i124       41
+i125       24
+i126       43
+i127       44
+i128       24
+i129       46
+i130       47
+i131       48
+i132       49
+i133       50
+i134       27
+i135       52
+i136       53
+i137       27
+i138       55
+i139       56
+i140       57
+i141       58
+i142       59
+i143       15
+i144       61
+i145       62
+i146       15
+i147       64
+i148       65
+i149       8
+i150       67
+i151       68
+i152       27
+i153       70
+i154       71
+i155       24
+i156       73
+i157       74
+i158       75
+i159       76
+i160       77
+i161       27
+i162       79
+i163       80
+i164       81
+i165       82
+i166       83
+i167       81
+i168       85
+i169       86
+i170       87
+i171       88
+i172       89
+i173       8
+i174       91
+i175       92
+i176       8
+i177       94
+i178       95
+i179       8
+i180       97
+i181       2
+i182       3
+i183       4
+i184       5
+i185       6
+i186       7
+i187       8
+i188       9
+i189       10
+i190       11
+i191       12
+i192       13
+i193       14
+i194       15
