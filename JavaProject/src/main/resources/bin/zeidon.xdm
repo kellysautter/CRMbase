@@ -1,0 +1,9199 @@
+z1000-Zeidon    ZEIDON   TZDMXGPO 09/15/22   14:03:16 1.0a2    
+eDomainGroup 1
+aName      Base
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031642
+aName      AdjustmentType
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      514031643
+aName      AdjustmentType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031644
+aExternalValue Percent ( 5 = 0.05 )
+aInternalValue Percent
+
+eTableEntry 4
+aZKey      514031645
+aExternalValue Whole Dollar Amount
+aInternalValue WholeDollar
+
+eTableEntry 4
+aZKey      514031646
+aExternalValue Fixed Dollar Amount (set amount)
+aInternalValue FixedDollar
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565617
+aName      AdviseeListType
+aDesc      Advisee list options.  Active, inactive or list of assigned students.
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565618
+aName      AdviseeListType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565619
+aExternalValue Active Advisees
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565620
+aExternalValue Inactive Advisees
+aInternalValue I
+
+eTableEntry 4
+aZKey      513565621
+aExternalValue Students Assigned
+aInternalValue S
+
+eTableEntry 4
+aZKey      513565622
+aExternalValue Students Needing Schedule Approval
+aInternalValue P
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      90000028
+aName      AlphaNumeric
+aDesc      Characters 'a-z', 'A-Z', '0-9'
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmAlphaNumeric
+aDecimalFormat 1234
+
+eContext   3
+aZKey      90000029
+aName      ALPHANUMERIC
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110000043
+aName      AlphaNumericUpperStrip
+aDesc      Strip all non-alphanumerics and upper case all characters
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+aDLL_Name  DomainC
+aOperName  AlphaNumericUpperStrip
+
+eContext   3
+aZKey      110000044
+aName      AlphaNumericUpperStrip
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.BlobDomain
+aZKey      110000002
+aName      Blob
+aDesc      A do nothing domain for blobs
+aDomainType E
+aDataType  B
+aContextRestriction N
+
+eContext   3
+aZKey      110000003
+aName      BLOB
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110000271
+aName      BooleanOperator
+aDesc      Boolean operators AND or OR
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110000272
+aName      BooleanOperator
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000273
+aExternalValue And
+aInternalValue A
+
+eTableEntry 4
+aZKey      110000274
+aExternalValue Or
+aInternalValue O
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110000183
+aName      BooleanTrueFalse
+aDesc      Boolean operator true or false
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110000184
+aName      BooleanTrueFalse
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000185
+aExternalValue True
+aInternalValue 0
+
+eTableEntry 4
+aZKey      110000186
+aExternalValue False
+aInternalValue 1
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565777
+aName      BuckleyDataRelationship
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      513565778
+aName      BuckleyDataRelationship
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565779
+aExternalValue Parent
+aInternalValue Parent
+
+eTableEntry 4
+aZKey      513565780
+aExternalValue Guardian
+aInternalValue Guardian
+
+eTableEntry 4
+aZKey      513565781
+aExternalValue Relative
+aInternalValue Relative
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565767
+aName      CampusID
+aDesc      Unique ID identifying a student/faculty or staff person on campus
+aDomainType E
+aDataType  S
+aMaxStringLth 12
+aContextRestriction N
+
+eContext   3
+aZKey      513565768
+aName      CampusID
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565579
+aName      ChapelStudentOverrideReason
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565580
+aName      ChapelStudentOverrideReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565581
+aExternalValue A External
+aInternalValue A
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565769
+aName      ChapelTimePeriod
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      513565770
+aName      ChapelTimePeriod
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565771
+aExternalValue AM
+aInternalValue AM
+
+eTableEntry 4
+aZKey      513565772
+aExternalValue PM
+aInternalValue PM
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565628
+aName      ClassAttendanceStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565629
+aName      ClassAttendanceStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565630
+aExternalValue Present
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565631
+aExternalValue Absent
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565632
+aExternalValue Excused
+aInternalValue E
+
+eTableEntry 4
+aZKey      513565633
+aExternalValue Tardy
+aInternalValue T
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565925
+aName      ClassCancelledReason
+aDesc      Codes indicating why a Class was cancelled.
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      513565926
+aName      ClassCancelledReason
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565920
+aName      ClassEnrollmentStatus
+aDesc      Status of Class, such as 'Open for Enrollment', 'Cancelled' or 'Closed'
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565921
+aName      ClassEnrollmentStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565922
+aExternalValue Open
+aInternalValue O
+
+eTableEntry 4
+aZKey      513565923
+aExternalValue Closed
+aInternalValue L
+
+eTableEntry 4
+aZKey      513565924
+aExternalValue Cancelled
+aInternalValue C
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565927
+aName      ClassGrade
+aDesc      Minimum grade allowed to get credit for a course
+aDomainType E
+aDataType  S
+aMaxStringLth 4
+aContextRestriction N
+
+eContext   3
+aZKey      513565928
+aName      ClassGrade
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565643
+aName      ClassroomType
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565644
+aName      ClassroomType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565645
+aExternalValue Science Dry Lab
+aInternalValue SDL
+
+eTableEntry 4
+aZKey      513565646
+aExternalValue Science Wet Lab
+aInternalValue SWL
+
+eTableEntry 4
+aZKey      513565647
+aExternalValue Media Room
+aInternalValue MR
+
+eTableEntry 4
+aZKey      513565648
+aExternalValue Special
+aInternalValue Spec
+
+eTableEntry 4
+aZKey      513565649
+aExternalValue Computer Lab
+aInternalValue CL
+
+eTableEntry 4
+aZKey      513565650
+aExternalValue Piano/Instrument
+aInternalValue PI
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565918
+aName      ClassSection
+aDesc      Provides a Section identifier when a Course is given multiple times during a Term
+aDomainType E
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      513565919
+aName      ClassSection
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565753
+aName      CohortMemberType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565754
+aName      CohortMemberType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565755
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565756
+aExternalValue Dropped
+aInternalValue D
+
+eTableEntry 4
+aZKey      513565757
+aExternalValue Completed
+aInternalValue C
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565806
+aName      CollegeSemester
+aDesc      The term within the College Year
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565807
+aName      CollegeSemester
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565808
+aExternalValue Fall
+aInternalValue 01
+
+eTableEntry 4
+aZKey      513565809
+aExternalValue January
+aInternalValue 02
+
+eTableEntry 4
+aZKey      513565810
+aExternalValue Spring
+aInternalValue 03
+
+eTableEntry 4
+aZKey      513565811
+aExternalValue Summer
+aInternalValue 04
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.attrlangdomains.CollegeTermLangDomain
+aZKey      513565564
+aName      CollegeTermSemester
+aDesc      The Year/Semester format of the college term
+aDomainType E
+aDataType  S
+aMaxStringLth 50
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565565
+aName      CollegeTermSemester
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110000037
+aName      CommonLineText
+aDesc      Converts data to CommonLine Text attribute
+aDomainType E
+aDataType  S
+aMaxStringLth 256
+aContextRestriction N
+
+eContext   3
+aZKey      110000038
+aName      CommonLineText
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110000035
+aName      CommonLineZipCode
+aDomainType E
+aDataType  S
+aMaxStringLth 9
+aContextRestriction N
+
+eContext   3
+aZKey      110000036
+aName      CommonLineZipCode
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110005147
+aName      ContactListType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110005148
+aName      ContactListType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110005150
+aExternalValue Alumni
+aInternalValue A
+
+eTableEntry 4
+aZKey      110005151
+aExternalValue Church
+aInternalValue C
+
+eTableEntry 4
+aZKey      110005152
+aExternalValue Donor
+aInternalValue D
+
+eTableEntry 4
+aZKey      110005153
+aExternalValue Employee
+aInternalValue E
+
+eTableEntry 4
+aZKey      110005154
+aExternalValue Fund
+aInternalValue F
+
+eTableEntry 4
+aZKey      110005155
+aExternalValue JournalDetail
+aInternalValue G
+
+eTableEntry 4
+aZKey      110005156
+aExternalValue Cohort
+aInternalValue H
+
+eTableEntry 4
+aZKey      110005157
+aExternalValue AwardSource
+aInternalValue I
+
+eTableEntry 4
+aZKey      110005158
+aExternalValue Journal Entry
+aInternalValue J
+
+eTableEntry 4
+aZKey      110005159
+aExternalValue Class
+aInternalValue L
+
+eTableEntry 4
+aZKey      110005160
+aExternalValue Donation
+aInternalValue N
+
+eTableEntry 4
+aZKey      110005161
+aExternalValue Organization
+aInternalValue O
+
+eTableEntry 4
+aZKey      110005162
+aExternalValue Prospect
+aInternalValue P
+
+eTableEntry 4
+aZKey      110005163
+aExternalValue Person
+aInternalValue R
+
+eTableEntry 4
+aZKey      110005164
+aExternalValue School
+aInternalValue S
+
+eTableEntry 4
+aZKey      110005165
+aExternalValue Student
+aInternalValue T
+
+eTableEntry 4
+aZKey      110005166
+aExternalValue Course
+aInternalValue U
+
+eTableEntry 4
+aZKey      110005167
+aExternalValue FA Student
+aInternalValue X
+
+eTableEntry 4
+aZKey      110005168
+aExternalValue Vendor
+aInternalValue V
+
+eTableEntry 4
+aZKey      110005169
+aExternalValue Web
+aInternalValue W
+
+eTableEntry 4
+aZKey      110005170
+aExternalValue Faculty
+aInternalValue Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110000657
+aName      Country
+aDesc      Country
+aDomainType T
+aDataType  S
+aMaxStringLth 3
+aContextRestriction N
+aDLL_Name  TablesA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110000658
+aName      Country
+aIsDefault Y
+
+eContext   3
+aZKey      110000671
+aName      DevelopingCountry
+
+eContext   3
+aZKey      110000659
+aName      OnlineAppCountry
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565855
+aName      CourseNumber
+aDesc      The string which uniquely identifies a Course
+aDomainType E
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      513565856
+aName      CourseNumber
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565760
+aName      CourseStatus
+aDesc      The Status of the Course (ex., Proposed, Active, Inactive, Rejected)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565761
+aName      CourseStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565762
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565763
+aExternalValue Inactive
+aInternalValue I
+
+eTableEntry 4
+aZKey      513565764
+aExternalValue Proposed
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565765
+aExternalValue Rejected
+aInternalValue R
+
+eTableEntry 4
+aZKey      513565766
+aExternalValue Historical
+aInternalValue H
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565614
+aName      CourseSubsectionType
+aDesc      Used for IPEDS reporting
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      513565615
+aName      CourseSubsectionType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565616
+aExternalValue Lab
+aInternalValue Lab
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565885
+aName      CourseTitle
+aDesc      The Title of a Course or Course Topic
+aDomainType E
+aDataType  S
+aMaxStringLth 100
+aContextRestriction N
+
+eContext   3
+aZKey      513565886
+aName      CourseTitle
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565853
+aName      CourseTopicNumber
+aDesc      A string which uniquely identifies a Course Topic within a Course
+aDomainType E
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      513565854
+aName      CourseTopicNumber
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110007685
+aName      DataTypeDomain
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110007686
+aName      DataTypeDomain
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110007688
+aExternalValue String
+aInternalValue S
+
+eTableEntry 4
+aZKey      110007689
+aExternalValue Number
+aInternalValue L
+
+eTableEntry 4
+aZKey      110007690
+aExternalValue Decimal
+aInternalValue M
+
+eTableEntry 4
+aZKey      110007691
+aExternalValue Date
+aInternalValue D
+
+eTableEntry 4
+aZKey      110007692
+aExternalValue Date & Time
+aInternalValue T
+
+eTableEntry 4
+aZKey      110007693
+aExternalValue Time
+aInternalValue I
+
+eTableEntry 4
+aZKey      110007694
+aExternalValue Blob
+aInternalValue B
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DateDomain
+aZKey      90000052
+aName      Date
+aDesc      This domain manipulates the date portion of DateTime
+aDomainType A
+aDataType  T
+aContextRestriction N
+aDLL_Name  TZAPDMAB
+aOperName  zdmDate
+
+eContext   3
+aZKey      90000053
+aName      Date
+aEditString YYYYmmdd
+aJavaEditString yyyyMMdd
+
+eContext   3
+aZKey      90000068
+aName      Day
+
+eContext   3
+aZKey      90000074
+aName      DayOfMonth
+aEditString D
+aJavaEditString d
+
+eContext   3
+aZKey      90000073
+aName      DayOfWeek
+aEditString Dddd
+aJavaEditString EEEE
+
+eContext   3
+aZKey      90000075
+aName      DayOfYear
+aEditString jjj
+aJavaEditString D
+
+eContext   3
+aZKey      90000058
+aName      DD.MM.YYYY
+aEditString dd.mm.YYYY
+aJavaEditString dd.MM.yyyy
+aIsDefault Y
+
+eContext   3
+aZKey      354026001
+aName      DD/MM/YYYY
+aJavaEditString dd/MM/yyyy
+
+eContext   3
+aZKey      90000063
+aName      DDMonthYYYY
+aEditString dd Mmmm YYYY
+aJavaEditString dd MMMM yyyy
+
+eContext   3
+aZKey      90000065
+aName      DDMonYYYY
+aEditString dd Mmm YYYY
+aJavaEditString dd MMM yyyy
+
+eContext   3
+aZKey      123033213
+aName      FreeForm
+aEditString *
+aJavaEditString *
+
+eContext   3
+aZKey      90000056
+aName      MM-DD-YYYY
+aEditString mm-dd-YYYY
+aJavaEditString MM-dd-yyyy
+
+eContext   3
+aZKey      90000054
+aName      MM/DD/YYYY
+aEditString mm/dd/YYYY
+aJavaEditString MM/dd/yyyy
+
+eContext   3
+aZKey      90000064
+aName      MonDDYYYY
+aEditString Mmm dd, YYYY
+aJavaEditString MMM dd, yyyy
+
+eContext   3
+aZKey      90000069
+aName      Month
+
+eContext   3
+aZKey      90000062
+aName      MonthDDYYYY
+aEditString Mmmm dd, YYYY
+aJavaEditString MMMM dd, yyyy
+
+eContext   3
+aZKey      90000077
+aName      MonthOfYear
+aEditString Mmmm
+aJavaEditString MMMM
+
+eContext   3
+aZKey      90000066
+aName      MSWindowsLongSetting
+
+eContext   3
+aZKey      90000067
+aName      MSWindowsShortSetting
+
+eContext   3
+aZKey      90000076
+aName      WeekOfYear
+
+eContext   3
+aZKey      90000070
+aName      Year
+
+eContext   3
+aZKey      90000071
+aName      YYYY
+aEditString YYYY
+aJavaEditString yyyy
+
+eContext   3
+aZKey      1077348
+aName      YYYY.MM.DD
+aEditString YYYY.mm.dd
+aJavaEditString yyyy.MM.dd
+
+eContext   3
+aZKey      90000061
+aName      YYYYJJJ
+aEditString YYYYjjj
+aJavaEditString yyyyD
+
+eContext   3
+aZKey      4662461
+aName      yyyyMMdd
+aEditString yyyyMMdd
+aJavaEditString yyyyMMdd
+
+eContext   3
+aZKey      1077347
+aName      YYYYMonDD
+aEditString YYYY Mon dd
+aJavaEditString yyyy MMM dd
+
+eContext   3
+aZKey      1077346
+aName      YYYYMonthDD
+aEditString YYYY Mmmm dd
+aJavaEditString yyyy MMMM dd
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DateTimeDomain
+aZKey      90000089
+aName      DateTime
+aDesc      Basic Timestamp Domain
+aDomainType A
+aDataType  T
+aMaxStringLth 20
+aContextRestriction N
+aDLL_Name  TZAPDMAB
+aOperName  zdmDateTime
+
+eContext   3
+aZKey      90000091
+aName      Date
+aEditString YYYYmmdd
+aJavaEditString yyyyMMdd
+
+eContext   3
+aZKey      90000090
+aName      DateTime
+aEditString YYYYmmddHHMISS999
+aJavaEditString yyyyMMddHHmmssSSS
+
+eContext   3
+aZKey      90000109
+aName      Day
+
+eContext   3
+aZKey      90000115
+aName      DayOfMonth
+aEditString D
+aJavaEditString d
+
+eContext   3
+aZKey      90000114
+aName      DayOfWeek
+aEditString Dddd
+aJavaEditString EEEE
+
+eContext   3
+aZKey      90000116
+aName      DayOfYear
+aEditString jjj
+aJavaEditString D
+
+eContext   3
+aZKey      90000098
+aName      DD.MM.YYYY
+aEditString dd.mm.YYYY
+aJavaEditString dd.MM.yyyy
+
+eContext   3
+aZKey      127021331
+aName      DD.MM.YYYY HH:MM
+aEditString dd.mm.YYYY HH:MI
+aJavaEditString dd.MM.yyyy HH:mm
+aIsDefault Y
+
+eContext   3
+aZKey      90000126
+aName      DD.MM.YYYY HH:MM:SS
+aEditString dd.mm.YYYY HH:MI:SS
+aJavaEditString dd.MM.yyyy HH:mm:ss
+
+eContext   3
+aZKey      90000103
+aName      DDMonthYYYY
+aEditString dd Mmmm, YYYY
+aJavaEditString dd MMMM, yyyy
+
+eContext   3
+aZKey      90000105
+aName      DDMonYYYY
+aEditString dd Mmm YYYY
+aJavaEditString dd MMM yyyy
+
+eContext   3
+aZKey      127021332
+aName      HH:MM
+aEditString HH:MI
+aJavaEditString HH:mm
+
+eContext   3
+aZKey      354026005
+aName      HH:MM AM
+aEditString HH:Mi AM
+aJavaEditString hh:mm a
+
+eContext   3
+aZKey      127021333
+aName      HH:MM:SS
+aEditString HH:MI:SS
+aJavaEditString HH:mm:ss
+
+eContext   3
+aZKey      90000120
+aName      HH:MM:SS.S
+aEditString HH:MI:SS.9
+aJavaEditString HH:mm:ss.S
+
+eContext   3
+aZKey      90000119
+aName      HH:MM:SS.S AM
+aEditString HH:MI:SS.9 AM
+aJavaEditString HH:mm:ss.S a
+
+eContext   3
+aZKey      90000121
+aName      Hour
+aEditString HH
+aJavaEditString HH
+
+eContext   3
+aZKey      90000093
+aName      ListDisplayNumeric
+aEditString YYYY/MM/DD - HH:MI
+aJavaEditString yyyy/MM/dd - HH:mm
+
+eContext   3
+aZKey      90000122
+aName      Minute
+aEditString MI
+aJavaEditString mm
+
+eContext   3
+aZKey      90000096
+aName      MM-DD-YYYY
+aEditString mm-dd-YYYY
+aJavaEditString MM-dd-yyyy
+
+eContext   3
+aZKey      90000094
+aName      MM/DD/YYYY
+aEditString mm/dd/YYYY
+aJavaEditString  MM/dd/yyyy
+
+eContext   3
+aZKey      90000125
+aName      MM/DD/YYYY HH:MM:SS.S
+aEditString mm/dd/YYYY HH:MI:SS.9
+aJavaEditString MM/dd/yyyy HH:mm:ss.S
+
+eContext   3
+aZKey      90000124
+aName      MM/DD/YYYY HH:MM:SS.S AM
+aEditString mm/dd/YYYY HH:MI:SS.9 AM
+aJavaEditString MM/dd/yyyy HH:mm:ss.S a
+
+eContext   3
+aZKey      90000104
+aName      MonDDYYYY
+aEditString Mmm dd, YYYY
+aJavaEditString MMM dd, yyyy
+
+eContext   3
+aZKey      90000110
+aName      Month
+
+eContext   3
+aZKey      90000102
+aName      MonthDDYYYY
+aEditString Mmmm dd, YYYY
+aJavaEditString MMMM dd, yyyy
+
+eContext   3
+aZKey      90000118
+aName      MonthOfYear
+aEditString Mmmm
+aJavaEditString MMMM
+
+eContext   3
+aZKey      90000106
+aName      MSWindowsLongSetting
+
+eContext   3
+aZKey      90000108
+aName      MSWindowsSetting
+
+eContext   3
+aZKey      90000107
+aName      MSWindowsShortSetting
+
+eContext   3
+aZKey      90000123
+aName      Second
+aEditString SS
+aJavaEditString SS
+
+eContext   3
+aZKey      90000092
+aName      Time
+aEditString HHMISS999
+aJavaEditString HHmmssSSS
+
+eContext   3
+aZKey      123030441
+aName      UserFriendlyGerman
+
+eContext   3
+aZKey      90000117
+aName      WeekOfYear
+
+eContext   3
+aZKey      90000111
+aName      Year
+
+eContext   3
+aZKey      90000112
+aName      YYYY
+aEditString YYYY
+aJavaEditString yyyy
+
+eContext   3
+aZKey      354026006
+aName      YYYY/MM/DD HH:MM
+aEditString YYYY/mm/dd HH:MI
+aJavaEditString YYYY/MM/dd HH:mm
+
+eContext   3
+aZKey      90000101
+aName      YYYYJJJ
+aEditString YYYYjjj
+aJavaEditString yyyyD
+
+eContext   3
+aZKey      354026004
+aName      YYYYMMDDHHMMSSS
+aEditString YYYYmmddHHMISS9
+aJavaEditString yyyyMMddHHmmssS
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      110005250
+aName      Day
+aDesc      Number of day in month
+aDomainType A
+aDataType  L
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmInteger
+
+eContext   3
+aZKey      110005251
+aName      Day
+aEditString <= 31
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110000533
+aName      DayOfWeek
+aDomainType T
+aDataType  L
+aContextRestriction N
+
+eContext   3
+aZKey      110000534
+aName      DayOfWeek
+aJavaEditString EEEE
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000535
+aExternalValue Sunday
+aInternalValue 1
+
+eTableEntry 4
+aZKey      110000536
+aExternalValue Monday
+aInternalValue 2
+
+eTableEntry 4
+aZKey      110000537
+aExternalValue Tuesday
+aInternalValue 3
+
+eTableEntry 4
+aZKey      110000538
+aExternalValue Wednesday
+aInternalValue 4
+
+eTableEntry 4
+aZKey      110000539
+aExternalValue Thursday
+aInternalValue 5
+
+eTableEntry 4
+aZKey      110000540
+aExternalValue Friday
+aInternalValue 6
+
+eTableEntry 4
+aZKey      110000541
+aExternalValue Saturday
+aInternalValue 7
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90000129
+aName      Decimal
+aDesc      Characters '0-9' precision ( 0.00 )
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 2
+
+eContext   3
+aZKey      1165568
+aName      CurrencyText
+
+eContext   3
+aZKey      90000130
+aName      DECIMAL
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000131
+aName      DECIMAL0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000132
+aName      DECIMAL1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000133
+aName      DECIMAL2
+aDecimalFormat 2
+aIsDefault Y
+
+eContext   3
+aZKey      90000134
+aName      DECIMAL3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000135
+aName      DECIMAL4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000142
+aName      DecimalComma
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000143
+aName      DecimalComma0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000144
+aName      DecimalComma1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000145
+aName      DecimalComma2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000146
+aName      DecimalComma3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000147
+aName      DecimalComma4
+
+eContext   3
+aZKey      90000151
+aName      DecimalFraction
+
+eContext   3
+aZKey      90000149
+aName      DecimalInteger
+
+eContext   3
+aZKey      90000150
+aName      DecimalIntegerRounded
+
+eContext   3
+aZKey      90430511
+aName      DecimalKey2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000136
+aName      DecimalPoint
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000137
+aName      DecimalPoint0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000138
+aName      DecimalPoint1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000139
+aName      DecimalPoint2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000140
+aName      DecimalPoint3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000141
+aName      DecimalPoint4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000148
+aName      MSWindowsSetting
+aDecimalFormat 2
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90000244
+aName      Decimal0
+aDesc      Characters '0-9' precision ( 0 )
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000245
+aName      DECIMAL
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000246
+aName      DECIMAL0
+aDecimalFormat 0
+aIsDefault Y
+
+eContext   3
+aZKey      90000247
+aName      DECIMAL1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000248
+aName      DECIMAL2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000249
+aName      DECIMAL3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000250
+aName      DECIMAL4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000257
+aName      DecimalComma
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000258
+aName      DecimalComma0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000259
+aName      DecimalComma1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000260
+aName      DecimalComma2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000261
+aName      DecimalComma3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000262
+aName      DecimalComma4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000266
+aName      DecimalFraction
+
+eContext   3
+aZKey      90000264
+aName      DecimalInteger
+
+eContext   3
+aZKey      90000265
+aName      DecimalIntegerRounded
+
+eContext   3
+aZKey      90430512
+aName      DecimalKey0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000251
+aName      DecimalPoint
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000252
+aName      DecimalPoint0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000253
+aName      DecimalPoint1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000254
+aName      DecimalPoint2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000255
+aName      DecimalPoint3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000256
+aName      DecimalPoint4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000263
+aName      MSWindowsSetting
+aDecimalFormat 2
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90000221
+aName      Decimal1
+aDesc      Characters '0-9' precision ( 0.0 )
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000222
+aName      DECIMAL
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000223
+aName      DECIMAL0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000224
+aName      DECIMAL1
+aDecimalFormat 1
+aIsDefault Y
+
+eContext   3
+aZKey      90000225
+aName      DECIMAL2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000226
+aName      DECIMAL3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000227
+aName      DECIMAL4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000234
+aName      DecimalComma
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000235
+aName      DecimalComma0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000236
+aName      DecimalComma1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000237
+aName      DecimalComma2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000238
+aName      DecimalComma3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000239
+aName      DecimalComma4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000243
+aName      DecimalFraction
+
+eContext   3
+aZKey      90000241
+aName      DecimalInteger
+
+eContext   3
+aZKey      90000242
+aName      DecimalIntegerRounded
+
+eContext   3
+aZKey      90430513
+aName      DecimalKey1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000228
+aName      DecimalPoint
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000229
+aName      DecimalPoint0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000230
+aName      DecimalPoint1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000231
+aName      DecimalPoint2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000232
+aName      DecimalPoint3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000233
+aName      DecimalPoint4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000240
+aName      MSWindowsSetting
+aDecimalFormat 2
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90000198
+aName      Decimal2
+aDesc      Characters '0-9' precision ( 0.00 )
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 2
+
+eContext   3
+aZKey      1165569
+aName      CurrencyText
+
+eContext   3
+aZKey      90000199
+aName      DECIMAL
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000200
+aName      DECIMAL0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000201
+aName      DECIMAL1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000202
+aName      DECIMAL2
+aDecimalFormat 2
+aIsDefault Y
+
+eContext   3
+aZKey      90000203
+aName      DECIMAL3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000220
+aName      DECIMAL4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000210
+aName      DecimalComma
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000211
+aName      DecimalComma0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000212
+aName      DecimalComma1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000213
+aName      DecimalComma2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000214
+aName      DecimalComma3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000215
+aName      DecimalComma4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000219
+aName      DecimalFraction
+
+eContext   3
+aZKey      90000217
+aName      DecimalInteger
+
+eContext   3
+aZKey      90000218
+aName      DecimalIntegerRounded
+
+eContext   3
+aZKey      90430514
+aName      DecimalKey2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000204
+aName      DecimalPoint
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000205
+aName      DecimalPoint0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000206
+aName      DecimalPoint1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000207
+aName      DecimalPoint2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000208
+aName      DecimalPoint3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000209
+aName      DecimalPoint4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000216
+aName      MSWindowsSetting
+aDecimalFormat 2
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90000175
+aName      Decimal3
+aDesc      Characters '0-9' precision ( 0.000 )
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000176
+aName      DECIMAL
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000177
+aName      DECIMAL0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000178
+aName      DECIMAL1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000179
+aName      DECIMAL2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000180
+aName      DECIMAL3
+aDecimalFormat 3
+aIsDefault Y
+
+eContext   3
+aZKey      90000181
+aName      DECIMAL4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000188
+aName      DecimalComma
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000189
+aName      DecimalComma0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000190
+aName      DecimalComma1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000191
+aName      DecimalComma2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000192
+aName      DecimalComma3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000193
+aName      DecimalComma4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000197
+aName      DecimalFraction
+
+eContext   3
+aZKey      90000195
+aName      DecimalInteger
+
+eContext   3
+aZKey      90000196
+aName      DecimalIntegerRounded
+
+eContext   3
+aZKey      90430515
+aName      DecimalKey3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000182
+aName      DecimalPoint
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000183
+aName      DecimalPoint0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000184
+aName      DecimalPoint1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000185
+aName      DecimalPoint2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000186
+aName      DecimalPoint3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000187
+aName      DecimalPoint4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000194
+aName      MSWindowsSetting
+aDecimalFormat 2
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90000152
+aName      Decimal4
+aDesc      Characters '0-9' precision ( 0.0000 )
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000153
+aName      DECIMAL
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000154
+aName      DECIMAL0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000155
+aName      DECIMAL1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000156
+aName      DECIMAL2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000157
+aName      DECIMAL3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000158
+aName      DECIMAL4
+aDecimalFormat 4
+aIsDefault Y
+
+eContext   3
+aZKey      90000165
+aName      DecimalComma
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000166
+aName      DecimalComma0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000167
+aName      DecimalComma1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000168
+aName      DecimalComma2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000169
+aName      DecimalComma3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000170
+aName      DecimalComma4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000174
+aName      DecimalFraction
+
+eContext   3
+aZKey      90000172
+aName      DecimalInteger
+
+eContext   3
+aZKey      90000173
+aName      DecimalIntegerRounded
+
+eContext   3
+aZKey      90430516
+aName      DecimalKey4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000159
+aName      DecimalPoint
+aDecimalFormat -1
+
+eContext   3
+aZKey      90000160
+aName      DecimalPoint0
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000161
+aName      DecimalPoint1
+aDecimalFormat 1
+
+eContext   3
+aZKey      90000162
+aName      DecimalPoint2
+aDecimalFormat 2
+
+eContext   3
+aZKey      90000163
+aName      DecimalPoint3
+aDecimalFormat 3
+
+eContext   3
+aZKey      90000164
+aName      DecimalPoint4
+aDecimalFormat 4
+
+eContext   3
+aZKey      90000171
+aName      MSWindowsSetting
+aDecimalFormat 2
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90359329
+aName      Decimal5
+aDesc      Characters '0-9' precision ( 0.00000 )  Max 15 digits
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 5
+
+eContext   3
+aZKey      90359330
+aName      Decimal5
+aDecimalFormat 5
+aIsDefault Y
+
+eContext   3
+aZKey      90430517
+aName      DecimalKey5
+aDecimalFormat 5
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90359331
+aName      Decimal6
+aDesc      Characters '0-9' precision ( 0.000000 )  Max 15 digits
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 6
+
+eContext   3
+aZKey      90359332
+aName      Decimal6
+aDecimalFormat 6
+aIsDefault Y
+
+eContext   3
+aZKey      90430518
+aName      DecimalKey6
+aDecimalFormat 6
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90359333
+aName      Decimal7
+aDesc      Characters '0-9' precision ( 0.0000000 )  Max 15 digits
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 7
+
+eContext   3
+aZKey      90359334
+aName      Decimal7
+aDecimalFormat 7
+aIsDefault Y
+
+eContext   3
+aZKey      90430519
+aName      DecimalKey7
+aDecimalFormat 7
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90359335
+aName      Decimal8
+aDesc      Characters '0-9' precision ( 0.00000000 )  Max 15 digits
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 8
+
+eContext   3
+aZKey      90359336
+aName      Decimal8
+aDecimalFormat 8
+aIsDefault Y
+
+eContext   3
+aZKey      90430520
+aName      DecimalKey8
+aDecimalFormat 8
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      90359337
+aName      Decimal9
+aDesc      Characters '0-9' precision ( 0.000000000 )  Max 15 digits
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 9
+
+eContext   3
+aZKey      90359338
+aName      Decimal9
+aDecimalFormat 9
+aIsDefault Y
+
+eContext   3
+aZKey      90430521
+aName      DecimalKey9
+aDecimalFormat 9
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      91004756
+aName      DecimalKey0
+aDesc      Decimal used as integer
+aDomainType A
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 0
+
+eContext   3
+aZKey      91004757
+aName      DecimalKey0
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565688
+aName      DegreeCandidacyLateSubmission
+aDesc      If set, either Late "Same Year" or "Late Next Year"
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565689
+aName      DegreeCandidacyLateSubmission
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565690
+aExternalValue Late Same Year
+aInternalValue S
+
+eTableEntry 4
+aZKey      513565691
+aExternalValue Late Next Year
+aInternalValue N
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565662
+aName      DegreeMajorCLH_Type
+aDesc      Clearing House Report Type used in rules for generating reports
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565663
+aName      DegreeMajorCLH_Type
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565664
+aExternalValue Marriage & Family
+aInternalValue M
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565851
+aName      DegreeMajorCode
+aDesc      Degree Major
+aDomainType E
+aDataType  S
+aMaxStringLth 15
+aContextRestriction N
+
+eContext   3
+aZKey      513565852
+aName      DegreeMajorCode
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565734
+aName      DegreeTrackComprehensiveScore
+aDesc      The student's comprehensive score for a Degree Track
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565735
+aName      DegreeTrackComprehensiveScore
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565736
+aExternalValue No Results
+
+eTableEntry 4
+aZKey      513565737
+aExternalValue Fail
+aInternalValue F
+
+eTableEntry 4
+aZKey      513565738
+aExternalValue Low Pass
+aInternalValue L
+
+eTableEntry 4
+aZKey      513565739
+aExternalValue Pass
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565740
+aExternalValue High Pass
+aInternalValue H
+
+eTableEntry 4
+aZKey      513565741
+aExternalValue Pass With Distinction
+aInternalValue D
+
+eTableEntry 4
+aZKey      513565742
+aExternalValue Pass Research Oral
+aInternalValue R
+
+eTableEntry 4
+aZKey      513565743
+aExternalValue Not Required
+aInternalValue N
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565830
+aName      DegreeTrackGroupType
+aDesc      Required Group Type for Degree Track (1,2,3 or 4)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565831
+aName      DegreeTrackGroupType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565832
+aExternalValue Required Type 1
+aInternalValue 1
+
+eTableEntry 4
+aZKey      513565833
+aExternalValue Required Type 2
+aInternalValue 2
+
+eTableEntry 4
+aZKey      513565834
+aExternalValue Required Type 3
+aInternalValue 3
+
+eTableEntry 4
+aZKey      513565835
+aExternalValue Required Type 4
+aInternalValue 4
+
+eTableEntry 4
+aZKey      513565836
+aExternalValue Electives
+aInternalValue E
+
+eTableEntry 4
+aZKey      513565837
+aExternalValue Developmental
+aInternalValue D
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565758
+aName      DegreeTrackStatus
+aDesc      The current status of this Degree Track, (Active, Prospective, etc.)
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565759
+aName      DegreeTrackStatus
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565838
+aName      DegreeTrackType
+aDesc      Major or Minor
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565839
+aName      DegreeTrackType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565840
+aExternalValue Major
+aInternalValue J
+
+eTableEntry 4
+aZKey      513565841
+aExternalValue Minor
+aInternalValue N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      90000030
+aName      Description
+aDesc      Standard Zeidon Description
+aDomainType E
+aDataType  S
+aMaxStringLth 32000
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmText
+
+eContext   3
+aZKey      90000031
+aName      Description
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110007678
+aName      DM_DomainType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110007679
+aName      DM_DomainType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110007681
+aExternalValue A
+aInternalValue A
+
+eTableEntry 4
+aZKey      110007682
+aExternalValue T
+aInternalValue T
+
+eTableEntry 4
+aZKey      110007683
+aExternalValue E
+aInternalValue E
+
+eTableEntry 4
+aZKey      110007684
+aExternalValue F
+aInternalValue F
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.EmailAddressDomain
+aZKey      110001823
+aName      EMailAddress
+aDomainType E
+aDataType  S
+aMaxStringLth 128
+aContextRestriction N
+
+eContext   3
+aZKey      110001824
+aName      EMailAddress
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031777
+aName      EmployeeStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031778
+aName      EmployeeStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031779
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031780
+aExternalValue Inactive
+aInternalValue I
+
+eTableEntry 4
+aZKey      514031781
+aExternalValue Prospect
+aInternalValue P
+
+eTableEntry 4
+aZKey      514031782
+aExternalValue Terminated
+aInternalValue T
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031751
+aName      EmployeeType
+aDesc      Type of Employee (eg., Student Worker, Faculty )
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031752
+aName      EmployeeType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031753
+aExternalValue Student Worker
+aInternalValue S
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565608
+aName      EnrollmentHistoryStudentType
+aDesc      Type of Student for Enrollment History entry (First Time Freshman, Transfer, Readmit, etc.)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565609
+aName      EnrollmentHistoryStudentType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565610
+aExternalValue Transfer
+aInternalValue T
+
+eTableEntry 4
+aZKey      513565611
+aExternalValue Returning Student
+aInternalValue S
+
+eTableEntry 4
+aZKey      513565612
+aExternalValue First Time Freshman
+aInternalValue F
+
+eTableEntry 4
+aZKey      513565613
+aExternalValue Readmit
+aInternalValue D
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031514
+aName      EnrollmentReportChargeType
+aDesc      Type of Charge for Transaction to be used on Enrollment Report.
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031515
+aName      EnrollmentReportChargeType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031516
+aExternalValue Full Time Block
+aInternalValue FTBC
+
+eTableEntry 4
+aZKey      514031517
+aExternalValue Part Time per CR
+aInternalValue PTPC
+
+eTableEntry 4
+aZKey      514031518
+aExternalValue Overload per CR
+aInternalValue OVPC
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565842
+aName      EnrollmentTakingClassType
+aDesc      How a Class is being taken, such as for Audit, Pass/Fail or Honors
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565843
+aName      EnrollmentTakingClassType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565844
+aExternalValue Audit
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565845
+aExternalValue Pass/Fail
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565846
+aExternalValue Honors
+aInternalValue H
+
+eContext   3
+aZKey      513565847
+aName      ShortName
+
+eTableEntry 4
+aZKey      513565848
+aExternalValue Aud
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565849
+aExternalValue Hon
+aInternalValue H
+
+eTableEntry 4
+aZKey      513565850
+aExternalValue P/F
+aInternalValue P
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110000357
+aName      Ethnicity
+aDesc      Ethnic Origins
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+aDLL_Name  TablesA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110000358
+aName      Ethnicity
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000359
+aExternalValue White
+aInternalValue W
+
+eTableEntry 4
+aZKey      110000360
+aExternalValue Hispanic
+aInternalValue H
+
+eTableEntry 4
+aZKey      110000361
+aExternalValue Asian
+aInternalValue A
+
+eTableEntry 4
+aZKey      110000362
+aExternalValue Black
+aInternalValue B
+
+eTableEntry 4
+aZKey      110000363
+aExternalValue Native American
+aInternalValue I
+
+eTableEntry 4
+aZKey      110000364
+aExternalValue Other
+aInternalValue O
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031451
+aName      FA_AdmissionsPetitionReason
+aDesc      Reason for the Fin Aid Peitition
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031452
+aName      FA_AdmissionsPetitionReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031453
+aExternalValue Academic based Aid Request
+aInternalValue Academic
+
+eTableEntry 4
+aZKey      514031454
+aExternalValue Need based Aid Request
+aInternalValue Need
+
+eTableEntry 4
+aZKey      514031455
+aExternalValue General Aid Request
+aInternalValue General
+
+eTableEntry 4
+aZKey      514031456
+aExternalValue Change in Family Income
+aInternalValue ChgIncome
+
+eTableEntry 4
+aZKey      514031457
+aExternalValue Unique Financial Situation
+aInternalValue Unique
+
+eTableEntry 4
+aZKey      514031458
+aExternalValue Competing School Aid Package
+aInternalValue Competing
+
+eTableEntry 4
+aZKey      514031459
+aExternalValue Other Reasons
+aInternalValue Other
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031445
+aName      FA_AdmissionsPetitionResolution
+aDesc      The resolution to the Admissions Petition
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031446
+aName      FA_AdmissionsPetitionResolution
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031447
+aExternalValue Approved - Change in Aid
+aInternalValue Approved
+
+eTableEntry 4
+aZKey      514031448
+aExternalValue Denied - No Change in Aid
+aInternalValue Denied
+
+eTableEntry 4
+aZKey      514031449
+aExternalValue Need More Data - see notes
+aInternalValue NeedData
+
+eTableEntry 4
+aZKey      514031450
+aExternalValue Other - see notes
+aInternalValue Other
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031740
+aName      FA_AidType
+aDesc      Gift, Self-help, etc.
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031741
+aName      FA_AidType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031742
+aExternalValue Gift Aid
+aInternalValue G
+
+eTableEntry 4
+aZKey      514031743
+aExternalValue Not EFA
+aInternalValue N
+
+eTableEntry 4
+aZKey      514031744
+aExternalValue Self Help Aid
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031745
+aExternalValue Gift Or Self Help
+aInternalValue O
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031567
+aName      FA_CCCU_ReportingType
+aDesc      FinAid CCCU Reporting Type
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031568
+aName      FA_CCCU_ReportingType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031569
+aExternalValue Federal
+aInternalValue Federal
+
+eTableEntry 4
+aZKey      514031570
+aExternalValue State
+aInternalValue State
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031550
+aName      FA_CDS_ReportingType
+aDesc      FinAid CDS_ReportingType
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031551
+aName      FA_CDS_ReportingType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031552
+aExternalValue Sch/Grant Federal
+aInternalValue SchGrFed
+
+eTableEntry 4
+aZKey      514031553
+aExternalValue Sch/Grant State
+aInternalValue SchGrState
+
+eTableEntry 4
+aZKey      514031554
+aExternalValue Sch/Grant Institutional
+aInternalValue SchGrInst
+
+eTableEntry 4
+aZKey      514031555
+aExternalValue Sch/Grant  Other
+aInternalValue SchGrOther
+
+eTableEntry 4
+aZKey      514031556
+aExternalValue S/H Student Loan
+aInternalValue SHStuLoan
+
+eTableEntry 4
+aZKey      514031557
+aExternalValue S/H Federal Work Study
+aInternalValue SHFedWS
+
+eTableEntry 4
+aZKey      514031558
+aExternalValue Parent Loan
+aInternalValue ParLoan
+
+eTableEntry 4
+aZKey      514031559
+aExternalValue Tuition Waiver
+aInternalValue TuitionWav
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031414
+aName      FA_COAItemReportType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031415
+aName      FACOAItemReportType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031416
+aExternalValue Books
+aInternalValue B
+
+eTableEntry 4
+aZKey      514031417
+aExternalValue Tuition
+aInternalValue T
+
+eTableEntry 4
+aZKey      514031418
+aExternalValue Fees
+aInternalValue F
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031727
+aName      FA_COAItemType
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031728
+aName      FA_COAItemType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031729
+aExternalValue Cost Of Living
+aInternalValue COL
+
+eTableEntry 4
+aZKey      514031730
+aExternalValue Educational
+aInternalValue EDU
+
+eTableEntry 4
+aZKey      514031731
+aExternalValue Fees
+aInternalValue FEE
+
+eTableEntry 4
+aZKey      514031732
+aExternalValue Other
+aInternalValue OTH
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031471
+aName      FA_COD_AwardType
+aDomainType T
+aDataType  S
+aMaxStringLth 6
+aContextRestriction N
+
+eContext   3
+aZKey      514031472
+aName      FA_COD_AwardType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031473
+aExternalValue Pell
+aInternalValue Pell
+
+eTableEntry 4
+aZKey      514031474
+aExternalValue ACG
+aInternalValue ACG
+
+eTableEntry 4
+aZKey      514031475
+aExternalValue TEACH
+aInternalValue TEACH
+
+eTableEntry 4
+aZKey      514031476
+aExternalValue SMART
+aInternalValue SMART
+
+eTableEntry 4
+aZKey      514031477
+aExternalValue DLSubsidized
+aInternalValue DLSub
+
+eTableEntry 4
+aZKey      514031478
+aExternalValue DLUnsubsidized
+aInternalValue DLUn
+
+eTableEntry 4
+aZKey      514031479
+aExternalValue DLPLUS
+aInternalValue DLPLUS
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031426
+aName      FA_COD_CreditOverrideCode
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031427
+aName      FA_COD_CreditOverrideCode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031428
+aExternalValue Credit Overriden
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031429
+aExternalValue Endorser Accepted
+aInternalValue E
+
+eTableEntry 4
+aZKey      514031430
+aExternalValue Denied
+aInternalValue D
+
+eTableEntry 4
+aZKey      514031431
+aExternalValue Endorsed for Less Amount
+aInternalValue L
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031432
+aName      FA_COD_DocumentTypeCode
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      514031433
+aName      FA_COD_DocumentTypeCode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031434
+aExternalValue Booking Notification
+aInternalValue BN
+
+eTableEntry 4
+aZKey      514031435
+aExternalValue Credit Decision Override
+aInternalValue CO
+
+eTableEntry 4
+aZKey      514031436
+aExternalValue Negative Disbursement
+aInternalValue ND
+
+eTableEntry 4
+aZKey      514031437
+aExternalValue Payment to Service
+aInternalValue PS
+
+eTableEntry 4
+aZKey      514031438
+aExternalValue Promissory Note
+aInternalValue PN
+
+eTableEntry 4
+aZKey      514031439
+aExternalValue Response
+aInternalValue RS
+
+eTableEntry 4
+aZKey      514031440
+aExternalValue Web Initiated
+aInternalValue WB
+
+eTableEntry 4
+aZKey      514031441
+aExternalValue ATS Response
+aInternalValue AT
+
+eTableEntry 4
+aZKey      514031442
+aExternalValue TEACH Grant Counseling
+aInternalValue AC
+
+eTableEntry 4
+aZKey      514031443
+aExternalValue PLUS Application
+aInternalValue SP
+
+eTableEntry 4
+aZKey      514031444
+aExternalValue EC Acknowledgement
+aInternalValue EC
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031546
+aName      FA_DisbursementRevisionType
+aDesc      Identifies the type of a Disbursement Revision.
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031547
+aName      FA_DisbursementRevisionType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031548
+aExternalValue Type 1
+aInternalValue T1
+
+eTableEntry 4
+aZKey      514031549
+aExternalValue Type 2
+aInternalValue T2
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031497
+aName      FA_FinancialRegistrationStatus
+aDesc      Status for a term of how the student is progressing through the Financial Registration process.
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031498
+aName      FA_FinancialRegistrationStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031499
+aExternalValue Course Approval Pending
+aInternalValue CAP
+
+eTableEntry 4
+aZKey      514031500
+aExternalValue Student Services Pending - Step 2 of 6
+aInternalValue SSP
+
+eTableEntry 4
+aZKey      514031501
+aExternalValue Aid & Scholarships Pending - Step 3 of 6
+aInternalValue ASP
+
+eTableEntry 4
+aZKey      514031502
+aExternalValue Payment Plan Pending - Step 4 of 6
+aInternalValue PPP
+
+eTableEntry 4
+aZKey      514031503
+aExternalValue Payment Pending - Step 5 of 6
+aInternalValue PP
+
+eTableEntry 4
+aZKey      514031504
+aExternalValue Registration Complete - Step 6 of 6
+aInternalValue Compl
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031579
+aName      FA_FISAP_ReportingType
+aDesc      FinAid FISAP Reporting Type
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031580
+aName      FA_FISAP_ReportingType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031581
+aExternalValue Federal
+aInternalValue Federal
+
+eTableEntry 4
+aZKey      514031582
+aExternalValue State
+aInternalValue State
+
+eTableEntry 4
+aZKey      514031583
+aExternalValue Perkins
+aInternalValue Perkins
+
+eTableEntry 4
+aZKey      514031584
+aExternalValue SEOG
+aInternalValue SEOG
+
+eTableEntry 4
+aZKey      514031585
+aExternalValue FWS
+aInternalValue FWS
+
+eTableEntry 4
+aZKey      514031586
+aExternalValue Pell
+aInternalValue Pell
+
+eTableEntry 4
+aZKey      514031587
+aExternalValue ACG
+aInternalValue ACG
+
+eTableEntry 4
+aZKey      514031588
+aExternalValue SMART
+aInternalValue SMART
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031605
+aName      FA_FundedType
+aDesc      How Source is funded (ex., Annually Funded, Endowed)
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031606
+aName      FA_FundedType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031607
+aExternalValue Annually Funded
+aInternalValue AF
+
+eTableEntry 4
+aZKey      514031608
+aExternalValue Endowed
+aInternalValue Endow
+
+eTableEntry 4
+aZKey      514031609
+aExternalValue Federal
+aInternalValue FED
+
+eTableEntry 4
+aZKey      514031610
+aExternalValue Other
+aInternalValue OTH
+
+eTableEntry 4
+aZKey      514031611
+aExternalValue State
+aInternalValue NS
+
+eTableEntry 4
+aZKey      514031612
+aExternalValue Quasi Endowed
+aInternalValue QE
+
+eTableEntry 4
+aZKey      514031613
+aExternalValue Parent Loan
+aInternalValue FL
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031614
+aName      FA_GenReceiveSubdialog
+aDesc      If not null, it identifies a subdialog that will be launched when the Requirement is marked received.
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031615
+aName      FA_GenReceiveSubdialog
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031616
+aExternalValue Demographics
+aInternalValue D
+
+eTableEntry 4
+aZKey      514031617
+aExternalValue Award Acceptance
+aInternalValue A
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031399
+aName      FA_HS_DiplomaOrGED
+aDesc      Used instead of FAISIR dynamic because it needs to be set with a combo box.
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031400
+aName      FA_HS_DiplomaOrGED
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031401
+aExternalValue High School Diploma
+aInternalValue 1
+
+eTableEntry 4
+aZKey      514031402
+aExternalValue GED/State Equivalent Test
+aInternalValue 2
+
+eTableEntry 4
+aZKey      514031403
+aExternalValue Home Schooled
+aInternalValue 3
+
+eTableEntry 4
+aZKey      514031404
+aExternalValue None of the above
+aInternalValue 4
+
+eTableEntry 4
+aZKey      514031405
+aExternalValue Don't Know
+aInternalValue 5
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031560
+aName      FA_IPEDS_ReportingType
+aDesc      FinAid IPEDS Reporting Type
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031561
+aName      FA_IPEDS_ReportingType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031562
+aExternalValue Federal
+aInternalValue Federal
+
+eTableEntry 4
+aZKey      514031563
+aExternalValue State
+aInternalValue State
+
+eTableEntry 4
+aZKey      514031564
+aExternalValue Institutional
+aInternalValue Instit
+
+eTableEntry 4
+aZKey      514031565
+aExternalValue Loans
+aInternalValue Loans
+
+eTableEntry 4
+aZKey      514031566
+aExternalValue Pell
+aInternalValue Pell
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031589
+aName      FA_NCAA_ReportingType
+aDesc      FinAid NCAA Reporting Type
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031590
+aName      FA_NCAA_ReportingType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031591
+aExternalValue PELL
+aInternalValue PELL
+
+eTableEntry 4
+aZKey      514031592
+aExternalValue SGA
+aInternalValue SGA
+
+eTableEntry 4
+aZKey      514031593
+aExternalValue IGA
+aInternalValue IGA
+
+eTableEntry 4
+aZKey      514031594
+aExternalValue POGA
+aInternalValue POGA
+
+eTableEntry 4
+aZKey      514031595
+aExternalValue OGA
+aInternalValue OGA
+
+eTableEntry 4
+aZKey      514031596
+aExternalValue FWS
+aInternalValue FWS
+
+eTableEntry 4
+aZKey      514031597
+aExternalValue CEP
+aInternalValue CEP
+
+eTableEntry 4
+aZKey      514031598
+aExternalValue FSEOG
+aInternalValue FSEOG
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.AdminDivisionDynamicTableDomain
+aZKey      514031708
+aName      FA_PaymentMethod
+aDesc      Method of payment for school bill
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031709
+aName      FA_PaymentMethod
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031710
+aExternalValue Cash
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031711
+aExternalValue Financial Aid
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031712
+aExternalValue Financial Aid Partial
+aInternalValue FP
+
+eTableEntry 4
+aZKey      514031713
+aExternalValue Tuition Reimbursement
+aInternalValue T
+
+eTableEntry 4
+aZKey      514031714
+aExternalValue Direct Bill
+aInternalValue D
+
+eTableEntry 4
+aZKey      514031715
+aExternalValue Collections
+aInternalValue X
+
+eTableEntry 4
+aZKey      514031716
+aExternalValue ENC Employee
+aInternalValue E
+
+eTableEntry 4
+aZKey      514031717
+aExternalValue Military
+aInternalValue M
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031509
+aName      FA_ProfileRequirementType
+aDesc      Identifies how the Profile Requirement was created
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031510
+aName      FA_ProfileRequirementType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031511
+aExternalValue Track
+aInternalValue T
+
+eTableEntry 4
+aZKey      514031512
+aExternalValue Rule
+aInternalValue R
+
+eTableEntry 4
+aZKey      514031513
+aExternalValue Manual
+aInternalValue M
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031692
+aName      FA_ProviderType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031693
+aName      FA_ProviderType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031694
+aExternalValue Institutional Aid
+aInternalValue I
+
+eTableEntry 4
+aZKey      514031695
+aExternalValue Government
+aInternalValue G
+
+eTableEntry 4
+aZKey      514031696
+aExternalValue Employer
+aInternalValue E
+
+eTableEntry 4
+aZKey      514031697
+aExternalValue Other
+aInternalValue O
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031410
+aName      FA_ReportingType1
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031411
+aName      FA_ReportingType1
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031408
+aName      FA_ReportingType2
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031409
+aName      FA_ReportingType2
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031406
+aName      FA_ReportingType3
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031407
+aName      FA_ReportingType3
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031505
+aName      FA_RequirementClassification
+aDesc      Classifies FA Requirements for award analysis
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031506
+aName      FA_RequirementClassification
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031507
+aExternalValue Application
+aInternalValue Appl
+
+eTableEntry 4
+aZKey      514031508
+aExternalValue ISIR
+aInternalValue ISIR
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031724
+aName      FA_RequirementType
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031725
+aName      FA_RequirementType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031726
+aExternalValue Document
+aInternalValue D
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031762
+aName      FA_RuleApply
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031763
+aName      FA_RuleApply
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031764
+aExternalValue Budget
+aInternalValue B
+
+eTableEntry 4
+aZKey      514031765
+aExternalValue Award
+aInternalValue A
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031387
+aName      FA_RuleCode
+aDomainType T
+aDataType  S
+aMaxStringLth 8
+aContextRestriction N
+
+eContext   3
+aZKey      514031388
+aName      FA_RuleCode
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031383
+aName      FA_RuleType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031384
+aName      FA_RuleType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031385
+aExternalValue Table Lookup
+aInternalValue T
+
+eTableEntry 4
+aZKey      514031386
+aExternalValue Qualification
+aInternalValue Q
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031412
+aName      FA_ScannelKurzReportType
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031413
+aName      FA_ScannelKurzReportType
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031718
+aName      FA_SourceType
+aDesc      50
+G - grant
+L - oan
+S - cholarship
+W - ork study 
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031719
+aName      FA_SourceType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031720
+aExternalValue Grant
+aInternalValue G
+
+eTableEntry 4
+aZKey      514031721
+aExternalValue Loan
+aInternalValue L
+
+eTableEntry 4
+aZKey      514031722
+aExternalValue Scholarship
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031723
+aExternalValue Work Study
+aInternalValue W
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031575
+aName      FA_StateReportingType
+aDesc      FinAid State Reporting Type
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031576
+aName      FA_StateReportingType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031577
+aExternalValue Federal
+aInternalValue Federal
+
+eTableEntry 4
+aZKey      514031578
+aExternalValue State
+aInternalValue State
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031419
+aName      FA_TEACH_ATS_StatusCode
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031420
+aName      FA_TEACH_ATS_StatusCode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031421
+
+eTableEntry 4
+aZKey      514031422
+aExternalValue Accepted
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031423
+aExternalValue Rejected
+aInternalValue R
+
+eTableEntry 4
+aZKey      514031424
+aExternalValue Pending
+aInternalValue P
+
+eTableEntry 4
+aZKey      514031425
+aExternalValue Closed
+aInternalValue C
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031493
+aName      FA_Title4SATransactionType
+aDesc      Identifies if and how the SA TransactionCode is to be handled for Title 4.
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031494
+aName      FA_Title4SATransactionType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031495
+aExternalValue Base
+aInternalValue B
+
+eTableEntry 4
+aZKey      514031496
+aExternalValue Misc
+aInternalValue M
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031571
+aName      FA_USNEWS_ReportingType
+aDesc      FinAid USNEWS Reporting Type
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031572
+aName      FA_USNEWS_ReportingType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031573
+aExternalValue Federal
+aInternalValue Federal
+
+eTableEntry 4
+aZKey      514031574
+aExternalValue State
+aInternalValue State
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031691
+aName      FacultyTenure
+aDesc      For tenured faculty, the level of tenure
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031692
+aName      FacultyTenure
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031693
+aExternalValue Tenured
+aInternalValue T
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031389
+aName      FAISIR_AssumeYesNo
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031390
+aName      FAISIR_AssumeYesNo
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031391
+aExternalValue Assumed Yes
+aInternalValue 1
+
+eTableEntry 4
+aZKey      514031392
+aExternalValue Assumed No
+aInternalValue 2
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031599
+aName      FAISIR_YesNo
+aDesc      Yes or No
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031600
+aName      FAISIR_YesNo
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031601
+
+eTableEntry 4
+aZKey      514031602
+aExternalValue Yes
+aInternalValue 1
+
+eTableEntry 4
+aZKey      514031603
+aExternalValue No
+aInternalValue 2
+
+eTableEntry 4
+aZKey      514031604
+aExternalValue Don't Know
+aInternalValue 3
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031529
+aName      FinAidSourceStatus
+aDesc      Financial Aid Source Status, (eg. Historical, Inactive)
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031530
+aName      FinAidSourceStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031531
+
+eTableEntry 4
+aZKey      514031532
+aExternalValue Inactive
+aInternalValue I
+
+eTableEntry 4
+aZKey      514031533
+aExternalValue Historical
+aInternalValue H
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031519
+aName      FinAidStackableAwardType
+aDesc      Identifies how a stackable award is to be distributed.
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031520
+aName      FinAidStackableAwardType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031521
+
+eTableEntry 4
+aZKey      514031522
+aExternalValue Both Periods Evenly
+aInternalValue B
+
+eTableEntry 4
+aZKey      514031523
+aExternalValue Period 1 Only
+aInternalValue 1
+
+eTableEntry 4
+aZKey      514031524
+aExternalValue Period 2 Only
+aInternalValue 2
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031651
+aName      FinancialInstrumentType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031652
+aName      FinancialInstrumentType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031653
+aExternalValue Wire
+aInternalValue W
+
+eTableEntry 4
+aZKey      514031654
+aExternalValue Cash
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031655
+aExternalValue Other
+aInternalValue O
+
+eTableEntry 4
+aZKey      514031656
+aExternalValue Money Order
+aInternalValue M
+
+eTableEntry 4
+aZKey      514031657
+aExternalValue Check
+aInternalValue K
+
+eTableEntry 4
+aZKey      514031658
+aExternalValue EFT
+aInternalValue E
+
+eTableEntry 4
+aZKey      514031659
+aExternalValue CreditCard - Unknown
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031660
+aExternalValue Credit Card - Visa/MC
+aInternalValue V
+
+eTableEntry 4
+aZKey      514031661
+aExternalValue Credit Card - Amex
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031662
+aExternalValue Credit Card - Discover
+aInternalValue D
+
+eContext   3
+aZKey      514031663
+aName      FinancialInstrumentTypeReport
+
+eTableEntry 4
+aZKey      514031664
+aExternalValue Wire
+aInternalValue W
+
+eTableEntry 4
+aZKey      514031665
+aExternalValue Cash
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031666
+aExternalValue Other
+aInternalValue O
+
+eTableEntry 4
+aZKey      514031667
+aExternalValue Money Order
+aInternalValue M
+
+eTableEntry 4
+aZKey      514031668
+aExternalValue Check
+aInternalValue K
+
+eTableEntry 4
+aZKey      514031669
+aExternalValue EFT
+aInternalValue E
+
+eTableEntry 4
+aZKey      514031670
+aExternalValue CreditCard-Unknown
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031671
+aExternalValue CC-(Visa/MC)
+aInternalValue V
+
+eTableEntry 4
+aZKey      514031672
+aExternalValue CC-(Amex)
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031673
+aExternalValue CC-(Disc)
+aInternalValue D
+
+eContext   3
+aZKey      514031674
+aName      SACashier
+
+eTableEntry 4
+aZKey      514031675
+aExternalValue Credit Card - Amex
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031676
+aExternalValue Credit Card - Unknown
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031677
+aExternalValue Credit Card - Discover
+aInternalValue D
+
+eTableEntry 4
+aZKey      514031678
+aExternalValue Check
+aInternalValue K
+
+eTableEntry 4
+aZKey      514031679
+aExternalValue Money Order
+aInternalValue M
+
+eTableEntry 4
+aZKey      514031680
+aExternalValue Cash
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031681
+aExternalValue Credit Card - Visa/Mastercard
+aInternalValue V
+
+eTableEntry 4
+aZKey      514031682
+aExternalValue Wire
+aInternalValue W
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001814
+aName      FirstName
+aDesc      Person's First Name
+aDomainType E
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      110001815
+aName      FirstName
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031683
+aName      FTransType
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      514031684
+aName      FTransType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031685
+aExternalValue Charge
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031686
+aExternalValue Credit/Payment
+aInternalValue R
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031755
+aName      FullTimeCalculatedAs
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031756
+aName      FullTimeCalculatedAs
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031757
+
+eTableEntry 4
+aZKey      514031758
+aExternalValue Annual Basis
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031759
+aExternalValue Other
+aInternalValue O
+
+eTableEntry 4
+aZKey      514031760
+aExternalValue Quarter Basis
+aInternalValue Q
+
+eTableEntry 4
+aZKey      514031761
+aExternalValue Semester Basis
+aInternalValue S
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110000544
+aName      FunctionalArea
+aDomainType T
+aDataType  S
+aMaxStringLth 30
+aContextRestriction N
+
+eContext   3
+aZKey      110000545
+aName      FunctionalArea
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000546
+aExternalValue Admissions
+aInternalValue Admissions
+
+eTableEntry 4
+aZKey      110000662
+aExternalValue General
+aInternalValue General
+
+eTableEntry 4
+aZKey      110000547
+aExternalValue Development
+aInternalValue Development
+
+eTableEntry 4
+aZKey      110000548
+aExternalValue Alumni
+aInternalValue Alumni
+
+eTableEntry 4
+aZKey      110000549
+aExternalValue Churches
+aInternalValue Churches
+
+eTableEntry 4
+aZKey      110000550
+aExternalValue Academics
+aInternalValue Academics
+
+eTableEntry 4
+aZKey      110000551
+aExternalValue FinancialAid
+aInternalValue FinancialAid
+
+eTableEntry 4
+aZKey      110000552
+aExternalValue Student Life
+aInternalValue Student Life
+
+eTableEntry 4
+aZKey      110000553
+aExternalValue Faculty Services
+aInternalValue FacultyServices
+
+eTableEntry 4
+aZKey      110000554
+aExternalValue System Administration
+aInternalValue System Administration
+
+eTableEntry 4
+aZKey      110000555
+aExternalValue Reports
+aInternalValue Reports
+
+eTableEntry 4
+aZKey      110000556
+aExternalValue ReportUserGroup
+aInternalValue ReportUserGroup
+
+eTableEntry 4
+aZKey      110000557
+aExternalValue RunReports
+aInternalValue RunReports
+
+eTableEntry 4
+aZKey      110000558
+aExternalValue Mailings
+aInternalValue Mailings
+
+eTableEntry 4
+aZKey      110000559
+aExternalValue Students
+aInternalValue Students
+
+eTableEntry 4
+aZKey      110000560
+aExternalValue Retention
+aInternalValue Retention
+
+eTableEntry 4
+aZKey      110000561
+aExternalValue Student Accounts
+aInternalValue StudentAccounts
+
+eTableEntry 4
+aZKey      110000562
+aExternalValue Human Resources
+aInternalValue HumanResources
+
+eTableEntry 4
+aZKey      110000563
+aExternalValue VehicleRegistration
+aInternalValue VehicleRegistration
+
+eTableEntry 4
+aZKey      110000564
+aExternalValue Bursar
+aInternalValue Bursar
+
+eTableEntry 4
+aZKey      110000565
+aExternalValue GeneralLedger
+aInternalValue GeneralLedger
+
+eTableEntry 4
+aZKey      110000566
+aExternalValue Banking
+aInternalValue Banking
+
+eTableEntry 4
+aZKey      110000567
+aExternalValue Accounts Payable
+aInternalValue AccountsPayable
+
+eTableEntry 4
+aZKey      110000568
+aExternalValue People
+aInternalValue People
+
+eTableEntry 4
+aZKey      110000569
+aExternalValue Organizations
+aInternalValue Organizations
+
+eTableEntry 4
+aZKey      110000570
+aExternalValue Donors
+aInternalValue Donors
+
+eTableEntry 4
+aZKey      110000571
+aExternalValue School
+aInternalValue School
+
+eTableEntry 4
+aZKey      110000572
+aExternalValue Store
+aInternalValue Store
+
+eTableEntry 4
+aZKey      110000663
+aExternalValue Instructor Portal
+aInternalValue Instructor Portal
+
+eTableEntry 4
+aZKey      110000664
+aExternalValue Student Portal
+aInternalValue Student Portal
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110001828
+aName      Gender
+aDesc      (Male/Female)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110001829
+aName      Gender
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110001830
+aExternalValue Female
+aInternalValue F
+
+eTableEntry 4
+aZKey      110001831
+aExternalValue Male
+aInternalValue M
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001835
+aName      GeneralName_Address
+aDesc      General Text (names, streets, cities, etc.)
+aDomainType E
+aDataType  S
+aMaxStringLth 50
+aContextRestriction N
+
+eContext   3
+aZKey      110001836
+aName      GeneralName_Address
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031711
+aName      GL_ReportType
+aDesc      Types of Reports, such as BD - Budget
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031712
+aName      GL_ReportType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031713
+aExternalValue BL
+aInternalValue BL
+
+eTableEntry 4
+aZKey      514031714
+aExternalValue PL
+aInternalValue PL
+
+eTableEntry 4
+aZKey      514031715
+aExternalValue TB
+aInternalValue TB
+
+eTableEntry 4
+aZKey      514031716
+aExternalValue BD
+aInternalValue BD
+
+eTableEntry 4
+aZKey      514031717
+aExternalValue BA
+aInternalValue BA
+
+eTableEntry 4
+aZKey      514031718
+aExternalValue BC
+aInternalValue BC
+
+eTableEntry 4
+aZKey      514031719
+aExternalValue Budget by Chart Entry
+aInternalValue BDCH
+
+eTableEntry 4
+aZKey      514031720
+aExternalValue Budget by Chart Entry CC
+aInternalValue BDCHC
+
+eTableEntry 4
+aZKey      514031721
+aExternalValue Budget by Chart Entry Acc
+aInternalValue BDCHA
+
+eTableEntry 4
+aZKey      514031722
+aExternalValue Budget by CC
+aInternalValue BDCC
+
+eTableEntry 4
+aZKey      514031723
+aExternalValue Budget by CC/Acc
+aInternalValue BDCA
+
+eTableEntry 4
+aZKey      514031724
+aExternalValue Budget by Fund/CC/Acc
+aInternalValue BDFCA
+
+eTableEntry 4
+aZKey      514031725
+aExternalValue Budget by Acc
+aInternalValue BDA
+
+eTableEntry 4
+aZKey      514031726
+aExternalValue Budget by Acc/CC
+aInternalValue BDAC
+
+eTableEntry 4
+aZKey      514031727
+aExternalValue Budget by Acc/Fund
+aInternalValue BDAF
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565887
+aName      HonorsGraduationLevel
+aDesc      NO LONGER USED
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565888
+aName      HonorsGraduationLevel
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565889
+aExternalValue Summa
+aInternalValue S
+
+eTableEntry 4
+aZKey      513565890
+aExternalValue Magna
+aInternalValue M
+
+eTableEntry 4
+aZKey      513565891
+aExternalValue Cum
+aInternalValue C
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031706
+aName      HR_BudgetReportDetailLevel
+aDesc      Indicates what level of Detail appears for Adjuncts and Overload on the Budget Report
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031707
+aName      HR_BudgetReportDetailLevel
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031708
+aExternalValue No Detail
+aInternalValue N
+
+eTableEntry 4
+aZKey      514031709
+aExternalValue Full Class Detail
+aInternalValue Y
+
+eTableEntry 4
+aZKey      514031710
+aExternalValue Employee Summary
+aInternalValue E
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031746
+aName      HR_ContractDistributionType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031747
+aName      HR_ContractDistributionType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031748
+aExternalValue General
+aInternalValue G
+
+eTableEntry 4
+aZKey      514031749
+aExternalValue Additional Salary
+aInternalValue SA
+
+eTableEntry 4
+aZKey      514031750
+aExternalValue Additional Salary Months
+aInternalValue SM
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031767
+aName      HR_ContractStatus
+aDesc      The Status of the Contract (ex., Active, Open, Closed)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031768
+aName      ContractSelection
+
+eTableEntry 4
+aZKey      514031769
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031770
+aExternalValue Inactive
+aInternalValue I
+
+eContext   3
+aZKey      514031771
+aName      HR_ContractStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031772
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031773
+aExternalValue Official
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031774
+aExternalValue Open
+aInternalValue O
+
+eTableEntry 4
+aZKey      514031775
+aExternalValue Inactive
+aInternalValue I
+
+eTableEntry 4
+aZKey      514031776
+aExternalValue Proposed
+aInternalValue P
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      514031765
+aName      HR_ContractYear
+aDesc      Contract year of form, 2004-2005
+aDomainType F
+aDataType  S
+aMaxStringLth 9
+aContextRestriction N
+
+eContext   3
+aZKey      514031766
+aName      HR_ContractYear
+aEditString 9999-9999
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      514031763
+aName      HR_DistributionDeptCode
+aDesc      Dept Code for salary distribution
+aDomainType E
+aDataType  S
+aMaxStringLth 15
+aContextRestriction N
+
+eContext   3
+aZKey      514031764
+aName      HR_DistributionDeptCode
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031682
+aName      HR_DoctorateFirstProfessionalOpt
+aDesc      Either Doctorate or First Professional Degree
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031683
+aName      HR_DoctorateFirstProfessionalOpt
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031684
+aExternalValue Doctorate
+aInternalValue Doc
+
+eTableEntry 4
+aZKey      514031685
+aExternalValue First Professional
+aInternalValue FP
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031742
+aName      HR_EmployeeClassFeeType
+aDesc      Employee Class Fee Type
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031743
+aName      HR_EmployeeClassFeeType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031744
+aExternalValue Adjunct
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031745
+aExternalValue Overload
+aInternalValue O
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031633
+aName      HR_EmployeeClassification
+aDesc      Classification
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031634
+aName      HR_EmployeeClassification
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031635
+aExternalValue Hourly Staff
+aInternalValue H
+
+eTableEntry 4
+aZKey      514031636
+aExternalValue Salaried Staff
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031637
+aExternalValue Faculty
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031638
+aExternalValue Admin. Faculty
+aInternalValue AF
+
+eTableEntry 4
+aZKey      514031639
+aExternalValue Admin. Staff
+aInternalValue AS
+
+eTableEntry 4
+aZKey      514031640
+aExternalValue Administrator
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031641
+aExternalValue Student
+aInternalValue ST
+
+eTableEntry 4
+aZKey      514031642
+aExternalValue Adjunct Faculty
+aInternalValue AJ
+
+eTableEntry 4
+aZKey      514031643
+aExternalValue Contracted
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031644
+aExternalValue Grad. Assistant
+aInternalValue GA
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031804
+aName      HR_FacultyDegree
+aDomainType T
+aDataType  S
+aMaxStringLth 3
+aContextRestriction N
+
+eContext   3
+aZKey      514031805
+aName      HR_FacultyDegree
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031806
+aExternalValue BA/BS
+aInternalValue BAS
+
+eTableEntry 4
+aZKey      514031807
+aExternalValue MA
+aInternalValue MA
+
+eTableEntry 4
+aZKey      514031808
+aExternalValue MA+
+aInternalValue MA+
+
+eTableEntry 4
+aZKey      514031809
+aExternalValue PhD
+aInternalValue PhD
+
+eTableEntry 4
+aZKey      514031810
+aExternalValue JD
+aInternalValue JD
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031797
+aName      HR_FacultyRank
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031798
+aName      HR_FacultyRank
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031799
+aExternalValue Assistant Professor
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031800
+aExternalValue Associate Professor
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031801
+aExternalValue Professor
+aInternalValue P
+
+eTableEntry 4
+aZKey      514031802
+aExternalValue Instructor
+aInternalValue I
+
+eTableEntry 4
+aZKey      514031803
+aExternalValue Lecturer
+aInternalValue L
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031686
+aName      HR_HighestEmployeeDegree
+aDesc      Highest degree the employee has currently earned
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031687
+aName      HR_HighestEmployeeDegree
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031688
+aExternalValue BA/BS
+aInternalValue BA/BS
+
+eTableEntry 4
+aZKey      514031689
+aExternalValue MA
+aInternalValue MA
+
+eTableEntry 4
+aZKey      514031690
+aExternalValue PhD
+aInternalValue PhD
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031678
+aName      HR_InsuranceType
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031679
+aName      HR_InsuranceType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031680
+aExternalValue HMO
+aInternalValue HMO
+
+eTableEntry 4
+aZKey      514031681
+aExternalValue PPO
+aInternalValue PPO
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031658
+aName      HR_IPEDS_Category
+aDesc      Category for reporting on IPEDS report
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031659
+aName      HR_IPEDS_Category
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031660
+
+eTableEntry 4
+aZKey      514031661
+aExternalValue Primarily Instruction
+aInternalValue PI
+
+eTableEntry 4
+aZKey      514031662
+aExternalValue Executive/Administrative/Managerial
+aInternalValue EAM
+
+eTableEntry 4
+aZKey      514031663
+aExternalValue Other Professional
+aInternalValue OP
+
+eTableEntry 4
+aZKey      514031664
+aExternalValue Technical/Paraprofessional
+aInternalValue TP
+
+eTableEntry 4
+aZKey      514031665
+aExternalValue Clerical/Secretarial
+aInternalValue CS
+
+eTableEntry 4
+aZKey      514031666
+aExternalValue Skilled Crafts
+aInternalValue SK
+
+eTableEntry 4
+aZKey      514031667
+aExternalValue Service/Maintenance
+aInternalValue SM
+
+eTableEntry 4
+aZKey      514031668
+aExternalValue Instructional
+aInternalValue IN
+
+eTableEntry 4
+aZKey      514031669
+aExternalValue Non-Instructional
+aInternalValue NI
+
+eContext   3
+aZKey      514031670
+aName      HR_IPEDS_CategoryNew
+
+eTableEntry 4
+aZKey      514031671
+
+eTableEntry 4
+aZKey      514031672
+aExternalValue Instructional
+aInternalValue IN
+
+eTableEntry 4
+aZKey      514031673
+aExternalValue Non-Instructional
+aInternalValue NI
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031645
+aName      HR_IPEDS_OccupationalCategory
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031646
+aName      HR_IPEDS_OccupationalCategory
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031647
+
+eTableEntry 4
+aZKey      514031648
+aExternalValue DonC Test Value
+aInternalValue DonC
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031788
+aName      HR_MedicalCode
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031789
+aName      HR_MedicalCode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031790
+
+eTableEntry 4
+aZKey      514031791
+aExternalValue 2
+aInternalValue 2
+
+eTableEntry 4
+aZKey      514031792
+aExternalValue 3
+aInternalValue 3
+
+eTableEntry 4
+aZKey      514031793
+aExternalValue 4
+aInternalValue 4
+
+eTableEntry 4
+aZKey      514031794
+aExternalValue 5
+aInternalValue 5
+
+eTableEntry 4
+aZKey      514031795
+aExternalValue 7
+aInternalValue 7
+
+eTableEntry 4
+aZKey      514031796
+aExternalValue 8
+aInternalValue 8
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031733
+aName      HR_NewContractReason
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031734
+aName      HR_NewContractReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031735
+
+eTableEntry 4
+aZKey      514031736
+aExternalValue New Hire
+aInternalValue NewHire
+
+eTableEntry 4
+aZKey      514031737
+aExternalValue Promotion
+aInternalValue Promotion
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031701
+aName      HR_OccupationalActivity
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031702
+aName      HR_OccupationalActivity
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031703
+
+eTableEntry 4
+aZKey      514031704
+aExternalValue Technical and Paraprofessional
+aInternalValue Tech/Para
+
+eTableEntry 4
+aZKey      514031705
+aExternalValue Other Professionals
+aInternalValue OtherProf
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031728
+aName      HR_PaymentMode
+aDesc      Mode of Payment (Biweekly, Monthly, etc.)
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031729
+aName      HR_PaymentMode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031730
+aExternalValue BiWeekly
+aInternalValue BiWeekly
+
+eTableEntry 4
+aZKey      514031731
+aExternalValue Monthly
+aInternalValue Monthly
+
+eTableEntry 4
+aZKey      514031732
+aExternalValue SemiMonthly
+aInternalValue SemiMthly
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031674
+aName      HR_PositionStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031675
+aName      HR_PositionStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031676
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031677
+aExternalValue Inactive
+aInternalValue I
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031783
+aName      HR_RetirementsBenefitsType
+aDomainType T
+aDataType  S
+aMaxStringLth 4
+aContextRestriction N
+
+eContext   3
+aZKey      514031784
+aName      HR_RetirementsBenefitsType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031785
+aExternalValue Pre-Tax
+aInternalValue Pre
+
+eTableEntry 4
+aZKey      514031786
+aExternalValue Post-Tax
+aInternalValue Post
+
+eTableEntry 4
+aZKey      514031787
+aExternalValue None
+aInternalValue None
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031649
+aName      HR_SOC_Code
+aDomainType T
+aDataType  S
+aMaxStringLth 7
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031650
+aName      HR_SOC_Code
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031651
+
+eTableEntry 4
+aZKey      514031652
+aExternalValue Don C Test Only
+aInternalValue 15-0000
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031694
+aName      HR_TenureTrack
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031695
+aName      HR_TenureTrack
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031696
+
+eTableEntry 4
+aZKey      514031697
+aExternalValue Tenured
+aInternalValue Tenured
+
+eTableEntry 4
+aZKey      514031698
+aExternalValue On Tenure Track
+aInternalValue OnTrack
+
+eTableEntry 4
+aZKey      514031699
+aExternalValue Not on Track
+aInternalValue NonTenured
+
+eTableEntry 4
+aZKey      514031700
+aExternalValue Without Faculty Status
+aInternalValue NonFaculty
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031738
+aName      HR_TerminationReason
+aDesc      Dynamic Table of Reasons for Termination
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031739
+aName      HR_TerminationReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031740
+aExternalValue Poor Performance
+aInternalValue PoorP
+
+eTableEntry 4
+aZKey      514031741
+aExternalValue Extendend Absences
+aInternalValue ExtAbs
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031653
+aName      HR_TuitionDiscountApplStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031654
+aName      HR_TuitionDiscountApplStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031655
+
+eTableEntry 4
+aZKey      514031656
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031657
+aExternalValue Inactive
+aInternalValue I
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      90000044
+aName      Integer
+aDesc      Integer numbers from -lots to +lots.
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmInteger
+aDecimalFormat 0
+
+eContext   3
+aZKey      90000046
+aName      Hex
+
+eContext   3
+aZKey      92010217
+aName      hexAddress
+
+eContext   3
+aZKey      90000045
+aName      INTEGER
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565582
+aName      InternalInsuranceStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565583
+aName      InternalInsuranceStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565584
+aExternalValue Yes
+aInternalValue Y
+
+eTableEntry 4
+aZKey      513565585
+aExternalValue No
+aInternalValue N
+
+eTableEntry 4
+aZKey      513565586
+aExternalValue Both
+aInternalValue B
+
+eTableEntry 4
+aZKey      513565587
+aExternalValue Less than 9 credits
+aInternalValue L
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031460
+aName      IPEDS_CollegeDegreeLevelCode
+aDesc      219
+Code for input on IPEDS reports for degree level
+03/06/19 - Changing the values of this domain to the values in the Clearinghouse Program Credential levels. There is only code that converts this to program credential. 
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      514031461
+aName      IPEDS_CollegeDegreeLevelCode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031462
+aExternalValue 01 - Undergraduate Certificate or Diploma Program
+aInternalValue 01
+
+eTableEntry 4
+aZKey      514031463
+aExternalValue 02 - Associate's Degree
+aInternalValue 02
+
+eTableEntry 4
+aZKey      514031464
+aExternalValue 03 - Bachelor's Degree
+aInternalValue 03
+
+eTableEntry 4
+aZKey      514031465
+aExternalValue 04 - Post Baccalaureate Certificate
+aInternalValue 04
+
+eTableEntry 4
+aZKey      514031466
+aExternalValue 05 - Master's Degree
+aInternalValue 05
+
+eTableEntry 4
+aZKey      514031467
+aExternalValue 06 - Doctoral Degree
+aInternalValue 06
+
+eTableEntry 4
+aZKey      514031468
+aExternalValue 07 - First Professional Degree
+aInternalValue 07
+
+eTableEntry 4
+aZKey      514031469
+aExternalValue 08 - Graduate/Professional Certificate
+aInternalValue 08
+
+eTableEntry 4
+aZKey      514031470
+aExternalValue 99 - Non-Credintial Program (Preparatory Coursework/Teacher Certification)
+aInternalValue 99
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031703
+aName      ISIRImportStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031704
+aName      ISIRImportStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031705
+aExternalValue New FA Package
+aInternalValue N
+
+eTableEntry 4
+aZKey      514031706
+aExternalValue Update Current FA Package
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031707
+aExternalValue Update Other FA Package
+aInternalValue O
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031698
+aName      ISIRPersonType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031699
+aName      ISIRPersonType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031700
+
+eTableEntry 4
+aZKey      514031701
+aExternalValue Student
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031702
+aExternalValue Prospect
+aInternalValue P
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.PasswordDomain
+aZKey      110007673
+aName      JavaPassword
+aDesc      Password for logging into Web Java
+aDomainType A
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+
+eContext   3
+aZKey      110007674
+aName      JavaPassword
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001816
+aName      LastName
+aDesc      Person's Last Name
+aDomainType E
+aDataType  S
+aMaxStringLth 50
+aContextRestriction N
+
+eContext   3
+aZKey      110001817
+aName      LastName
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001639
+aName      Local
+aDomainType E
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      110001640
+aName      Local
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110000650
+aName      MaritalStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110000651
+aName      MaritalStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000652
+aExternalValue Married
+aInternalValue M
+
+eTableEntry 4
+aZKey      110000653
+aExternalValue Single
+aInternalValue S
+
+eTableEntry 4
+aZKey      110000654
+aExternalValue Divorced
+aInternalValue D
+
+eTableEntry 4
+aZKey      110000655
+aExternalValue Separated
+aInternalValue E
+
+eTableEntry 4
+aZKey      110000656
+aExternalValue Widow/er
+aInternalValue W
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      90145848
+aName      MetaName
+aDesc      Name of a meta object (ie., LOD, Dialog, Report)
+aDomainType E
+aDataType  S
+aMaxStringLth 8
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmQSName
+
+eContext   3
+aZKey      90203297
+aName      MetaName
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001812
+aName      MiddleName
+aDesc      Person's middle name or initial
+aDomainType E
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      110001813
+aName      MiddleName
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565571
+aName      MisconductAction
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      513565572
+aName      MisconductAction
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565569
+aName      MisconductStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      513565570
+aName      MisconductStatus
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565573
+aName      MisconductType
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      513565574
+aName      MisconductType
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      1051178
+aName      Month
+aDesc      Number of month in year (e.g.  November is 11)
+aDomainType T
+aDataType  L
+aContextRestriction N
+
+eContext   3
+aZKey      1051179
+aName      Month
+aIsDefault Y
+
+eTableEntry 4
+aZKey      1051180
+aExternalValue January
+aInternalValue 1
+
+eTableEntry 4
+aZKey      1051181
+aExternalValue February
+aInternalValue 2
+
+eTableEntry 4
+aZKey      1051182
+aExternalValue March
+aInternalValue 3
+
+eTableEntry 4
+aZKey      1051184
+aExternalValue April
+aInternalValue 4
+
+eTableEntry 4
+aZKey      1051185
+aExternalValue May
+aInternalValue 5
+
+eTableEntry 4
+aZKey      1051186
+aExternalValue June
+aInternalValue 6
+
+eTableEntry 4
+aZKey      1051187
+aExternalValue July
+aInternalValue 7
+
+eTableEntry 4
+aZKey      1051188
+aExternalValue August
+aInternalValue 8
+
+eTableEntry 4
+aZKey      1051189
+aExternalValue September
+aInternalValue 9
+
+eTableEntry 4
+aZKey      1051190
+aExternalValue October
+aInternalValue 10
+
+eTableEntry 4
+aZKey      1051191
+aExternalValue November
+aInternalValue 11
+
+eTableEntry 4
+aZKey      1051192
+aExternalValue December
+aInternalValue 12
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001943
+aName      MonthDay
+aDomainType F
+aDataType  S
+aMaxStringLth 4
+aContextRestriction N
+
+eContext   3
+aZKey      110001944
+aName      MonthDay
+aEditString 99/99
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565592
+aName      NonresidencyPetitionReason
+aDesc      The reason offered by the Student for why they should be granted nonresidency status
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565593
+aName      NonresidencyPetitionReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565594
+aExternalValue Financial Hardship
+aInternalValue FH
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565595
+aName      NonresidencyPetitionStatus
+aDesc      The status of a Student's petition for nonresidency
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565596
+aName      NonresidencyPetitionStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565597
+aExternalValue Pending
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565598
+aExternalValue Accepted
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565599
+aExternalValue Denied
+aInternalValue D
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      1158059
+aName      Note
+aDesc      10000 byte string
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aContextRestriction N
+
+eContext   3
+aZKey      1158060
+aName      Note
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.PasswordDomain
+aZKey      90000042
+aName      Password
+aDesc      Encrypted password
+aDomainType A
+aDataType  S
+aMaxStringLth 9
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmPassword
+
+eContext   3
+aZKey      90000043
+aName      Password
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      1084699
+aName      PasswordUL
+aDesc      Password in Upper and Lower case
+aDomainType A
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmPasswordUL
+
+eContext   3
+aZKey      1084734
+aName      PasswordUL
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      110002440
+aName      Percent
+aDesc      Percent as a decimal <= 1
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  TZAPDMAC
+aOperName  zdmDecimal
+aDecimalFormat 3
+
+eContext   3
+aZKey      110002441
+aName      Percent
+aDecimalFormat 3
+aEditString <= 1; >= 0
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      110000609
+aName      PersonnelSalutation
+aDesc      Personnel Salutation (Mr., Ms., Mrs.)
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TablesA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110000610
+aName      PersonnelSalutation
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000611
+aExternalValue Mr.
+aInternalValue Mr.
+
+eTableEntry 4
+aZKey      110000612
+aExternalValue Mr.
+aInternalValue Mr
+
+eTableEntry 4
+aZKey      110000613
+aExternalValue Ms.
+aInternalValue Ms.
+
+eTableEntry 4
+aZKey      110000614
+aExternalValue Ms.
+aInternalValue Ms
+
+eTableEntry 4
+aZKey      110000615
+aExternalValue Mrs.
+aInternalValue Mrs
+
+eTableEntry 4
+aZKey      110000616
+aExternalValue Mrs.
+aInternalValue Mrs.
+
+eTableEntry 4
+aZKey      110000617
+aExternalValue Rev.
+aInternalValue Rev
+
+eTableEntry 4
+aZKey      110000618
+aExternalValue Rev.
+aInternalValue Rev.
+
+eTableEntry 4
+aZKey      110000619
+aExternalValue Miss
+aInternalValue Miss
+
+eTableEntry 4
+aZKey      110000620
+aExternalValue Dr.
+aInternalValue Dr.
+
+eTableEntry 4
+aZKey      110000621
+aExternalValue Dr.
+aInternalValue Dr
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110004880
+aName      PhoneAreaCodeExchange
+aDesc      Phone exchange and optional Area Code
+aDomainType T
+aDataType  S
+aMaxStringLth 7
+aContextRestriction N
+aDLL_Name  ZENCAS
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110004881
+aName      PhoneAreaCodeExchange
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110004883
+aExternalValue 745
+aInternalValue 745
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001832
+aName      PhoneNumber
+aDesc      Any phone number.  Requires flexible format for foreign numbers.
+aDomainType F
+aDataType  S
+aMaxStringLth 30
+aContextRestriction N
+
+eContext   3
+aZKey      110001833
+aName      PhoneNumber
+aEditString 999-999-9999
+aJavaEditString (999) 999-9999
+
+eContext   3
+aZKey      110001834
+aName      PhoneNumberNoDashes
+aEditString 9999999999
+aJavaEditString 9999999999
+
+eContext   3
+aZKey      110001838
+aName      PhoneNumberNoFormatting
+aEditString 9999999999
+aJavaEditString 9999999999
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110000370
+aName      PrimaryLanguage
+aDesc      Identifies the primary language of the person
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TablesA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110000371
+aName      PrimaryLanguage
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000372
+aExternalValue English
+aInternalValue EN
+
+eTableEntry 4
+aZKey      110000373
+aExternalValue French
+aInternalValue FR
+
+eTableEntry 4
+aZKey      110000374
+aExternalValue Spanish
+aInternalValue SP
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      513565566
+aName      ProposedChangeType
+aDomainType T
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+
+eContext   3
+aZKey      513565567
+aName      ProposedChangeType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565568
+aExternalValue Person
+aInternalValue Person
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      90000040
+aName      QSFileName
+aDesc      QuinSoft File Name - 32 chars
+aDomainType E
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmText
+
+eContext   3
+aZKey      90000041
+aName      QSFILENAME
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      1165598
+aName      QSFullPathName
+aDesc      Construct full path expanding embedded environment variables to their value.
+aDomainType E
+aDataType  S
+aMaxStringLth 260
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmExpandEnvVar
+
+eContext   3
+aZKey      1165599
+aName      QSFullPathName
+aIsDefault Y
+
+eContext   3
+aZKey      1165601
+aName      TEXT
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      90000038
+aName      QSName
+aDesc      QuinSoft Name
+aDomainType E
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmQSName
+
+eContext   3
+aZKey      90000039
+aName      QSName
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      90000036
+aName      QSNameLJNS
+aDesc      QuinSoft Name - left justified, no spaces
+aDomainType E
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmQSName
+
+eContext   3
+aZKey      90000037
+aName      QSNameLJNS
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      90000034
+aName      QSNameUpper
+aDesc      Characters 'a-z', 'A-Z', '0-9'
+aDomainType E
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmText
+aDecimalFormat 1234
+
+eContext   3
+aZKey      90000035
+aName      QSNAMEUPPER
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565857
+aName      RegistrationForeignClass
+aDesc      Type of enrollment, such as 'Currently Taking  Class' or 'Completed Class'
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565858
+aName      AuditDisplay
+
+eTableEntry 4
+aZKey      513565859
+aExternalValue Enrolled
+aInternalValue T
+
+eTableEntry 4
+aZKey      513565860
+aExternalValue Completed
+aInternalValue C
+
+eTableEntry 4
+aZKey      513565861
+aExternalValue Waived
+aInternalValue V
+
+eTableEntry 4
+aZKey      513565862
+aExternalValue Transferred
+aInternalValue F
+
+eTableEntry 4
+aZKey      513565863
+aExternalValue Transferred
+aInternalValue X
+
+eTableEntry 4
+aZKey      513565864
+aExternalValue Waived
+aInternalValue Y
+
+eContext   3
+aZKey      513565865
+aName      EnrollmentUpdate
+
+eTableEntry 4
+aZKey      513565866
+aExternalValue Enrolled
+aInternalValue T
+
+eTableEntry 4
+aZKey      513565867
+aExternalValue Completed
+aInternalValue C
+
+eTableEntry 4
+aZKey      513565868
+aExternalValue Dropped
+aInternalValue D
+
+eTableEntry 4
+aZKey      513565869
+aExternalValue Withdrawn
+aInternalValue W
+
+eTableEntry 4
+aZKey      513565870
+aExternalValue Waitlisted
+aInternalValue L
+
+eContext   3
+aZKey      513565871
+aName      RegistrationForeignClass
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565872
+aExternalValue Completed
+aInternalValue C
+
+eTableEntry 4
+aZKey      513565873
+aExternalValue Denied Transfer
+aInternalValue N
+
+eTableEntry 4
+aZKey      513565874
+aExternalValue Dropped
+aInternalValue D
+
+eTableEntry 4
+aZKey      513565875
+aExternalValue Enrolled
+aInternalValue T
+
+eTableEntry 4
+aZKey      513565876
+aExternalValue Incomplete
+aInternalValue I
+
+eTableEntry 4
+aZKey      513565877
+aExternalValue L. Transferred
+aInternalValue X
+
+eTableEntry 4
+aZKey      513565878
+aExternalValue L. Waived
+aInternalValue Y
+
+eTableEntry 4
+aZKey      513565879
+aExternalValue Pre-enrolled
+aInternalValue R
+
+eTableEntry 4
+aZKey      513565880
+aExternalValue Pre-Transferred
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565881
+aExternalValue Transferred
+aInternalValue F
+
+eTableEntry 4
+aZKey      513565882
+aExternalValue Waitlisted
+aInternalValue L
+
+eTableEntry 4
+aZKey      513565883
+aExternalValue Waived
+aInternalValue V
+
+eTableEntry 4
+aZKey      513565884
+aExternalValue Withdrawn
+aInternalValue W
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031480
+aName      RegistrationTrack
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+
+eContext   3
+aZKey      514031481
+aName      RegistrationTrack
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031482
+
+eTableEntry 4
+aZKey      514031483
+aExternalValue Classes Registered
+aInternalValue CR
+
+eTableEntry 4
+aZKey      514031484
+aExternalValue Advisor Approved
+aInternalValue AA
+
+eTableEntry 4
+aZKey      514031485
+aExternalValue FERPA Complete
+aInternalValue FC
+
+eTableEntry 4
+aZKey      514031486
+aExternalValue Signed
+aInternalValue SIGN
+
+eTableEntry 4
+aZKey      514031487
+aExternalValue Student Services Completed
+aInternalValue SSC
+
+eTableEntry 4
+aZKey      514031488
+aExternalValue Educational Allowance Complete
+aInternalValue EA
+
+eTableEntry 4
+aZKey      514031489
+aExternalValue Aid & Scholarships verified
+aInternalValue ASV
+
+eTableEntry 4
+aZKey      514031490
+aExternalValue Payment Plan Selected
+aInternalValue PPS
+
+eTableEntry 4
+aZKey      514031491
+aExternalValue Paid
+aInternalValue PAID
+
+eTableEntry 4
+aZKey      514031492
+aExternalValue Complete
+aInternalValue COMPLETE
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565588
+aName      ResidencyOffCampusReason
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      513565589
+aName      ResidencyOffCampusReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565590
+aExternalValue Lives with Immediate Family
+aInternalValue L
+
+eTableEntry 4
+aZKey      513565591
+aExternalValue Married
+aInternalValue M
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565800
+aName      ResidencyStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565801
+aName      ResidencyStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565802
+aExternalValue Resident
+aInternalValue R
+
+eTableEntry 4
+aZKey      513565803
+aExternalValue Commuter
+aInternalValue C
+
+eTableEntry 4
+aZKey      513565804
+aExternalValue Off Campus
+aInternalValue O
+
+eTableEntry 4
+aZKey      513565805
+aExternalValue To Be Determined
+aInternalValue T
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565775
+aName      RetentionRiskType
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565776
+aName      RetentionRiskType
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.RevenueDomain
+aZKey      110000026
+aName      Revenue
+aDesc      Dollar amounts, etc.
+aDomainType E
+aDataType  M
+aContextRestriction N
+aDLL_Name  DomainC
+aOperName  Revenue
+aDecimalFormat 2
+
+eContext   3
+aZKey      110000027
+aName      Revenue
+aDecimalFormat 2
+aJavaEditString #,###.00
+aIsDefault Y
+
+eContext   3
+aZKey      110000028
+aName      RevenueText
+aDecimalFormat 2
+aJavaEditString TextForCheckAmount
+
+eContext   3
+aZKey      110000029
+aName      RevenueWithDollarSign
+aDecimalFormat 2
+aJavaEditString $#,###.00
+
+eContext   3
+aZKey      110000030
+aName      RevenueWithDollarSignCR
+aDecimalFormat 2
+aJavaEditString $#,###.00CR
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565816
+aName      RoomBoardSize
+aDesc      Size of black board or white board in room
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      513565817
+aName      RoomBoardSize
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565818
+aExternalValue Large
+aInternalValue L
+
+eTableEntry 4
+aZKey      513565819
+aExternalValue Small
+aInternalValue S
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565820
+aName      RoomConfiguration
+aDesc      Configuration (layout) of room
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      513565821
+aName      RoomConfiguration
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565822
+aExternalValue U-Shaped
+aInternalValue U
+
+eTableEntry 4
+aZKey      513565823
+aExternalValue Lecture
+aInternalValue L
+
+eTableEntry 4
+aZKey      513565824
+aExternalValue Desk Chair
+aInternalValue D
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565812
+aName      RoomFlexibilityLevel
+aDesc      Level of flexibility in altering the configuration of the room
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      513565813
+aName      RoomFlexibilityLevel
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565814
+aExternalValue Free Form
+aInternalValue F
+
+eTableEntry 4
+aZKey      513565815
+aExternalValue Immobile
+aInternalValue I
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565792
+aName      RoomResidentBillingCode
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      513565793
+aName      RoomResidentBillingCode
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565794
+aExternalValue 01
+aInternalValue 01
+
+eTableEntry 4
+aZKey      513565795
+aExternalValue 02
+aInternalValue 02
+
+eTableEntry 4
+aZKey      513565796
+aExternalValue 03
+aInternalValue 03
+
+eTableEntry 4
+aZKey      513565797
+aExternalValue 04
+aInternalValue 04
+
+eTableEntry 4
+aZKey      513565798
+aExternalValue 05
+aInternalValue 05
+
+eTableEntry 4
+aZKey      513565799
+aExternalValue 06
+aInternalValue 06
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565929
+aName      RoomType
+aDesc      Type of Room (ex., C-Class Room, D-Residence)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565930
+aName      OtherRoomType
+
+eTableEntry 4
+aZKey      513565931
+aExternalValue Classroom
+aInternalValue C
+
+eTableEntry 4
+aZKey      513565932
+aExternalValue Meeting
+aInternalValue M
+
+eTableEntry 4
+aZKey      513565933
+aExternalValue Office
+aInternalValue O
+
+eContext   3
+aZKey      513565934
+aName      RoomType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565935
+aExternalValue Classroom
+aInternalValue C
+
+eTableEntry 4
+aZKey      513565936
+aExternalValue Residence
+aInternalValue D
+
+eTableEntry 4
+aZKey      513565937
+aExternalValue Meeting
+aInternalValue M
+
+eTableEntry 4
+aZKey      513565938
+aExternalValue Office
+aInternalValue O
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031647
+aName      SA_ApplyRule
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031648
+aName      SA_ApplyRule
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031649
+aExternalValue Charge Rule
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031650
+aExternalValue Refund Rule
+aInternalValue R
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031393
+aName      SA_FISAP_TransactionType
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031394
+aName      SA_FISAP_TransactionType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031395
+aExternalValue Undergrad Tuition
+aInternalValue UTuition
+
+eTableEntry 4
+aZKey      514031396
+aExternalValue Grad Tuition
+aInternalValue GTuition
+
+eTableEntry 4
+aZKey      514031397
+aExternalValue Undergrad Fees
+aInternalValue UFees
+
+eTableEntry 4
+aZKey      514031398
+aExternalValue Grad Fees
+aInternalValue GFees
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565575
+aName      SA_FundingType
+aDesc      Student Account Funding Types
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction Y
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565576
+aName      SA_FundingType
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031534
+aName      SA_MealPlanGeneralType
+aDesc      The type of meal plan that can be duplicated per semester
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031535
+aName      SA_MealPlanGeneralType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031536
+aExternalValue 20 Meals / Week
+aInternalValue 20/Wk
+
+eTableEntry 4
+aZKey      514031537
+aExternalValue 10 Meals / Week
+aInternalValue 10/Wk
+
+eTableEntry 4
+aZKey      514031538
+aExternalValue 14 Meals / Week
+aInternalValue 14/Wk
+
+eTableEntry 4
+aZKey      514031539
+aExternalValue 20 Meals / Week-Commuter
+aInternalValue 20/WkCom
+
+eTableEntry 4
+aZKey      514031540
+aExternalValue 10 Meals / Week-Commuter
+aInternalValue 10/WkCom
+
+eTableEntry 4
+aZKey      514031541
+aExternalValue 14 Meals / Week-Commuter
+aInternalValue 14/WkCom
+
+eTableEntry 4
+aZKey      514031542
+aExternalValue 10 Meal Block Plan
+aInternalValue 10BlPlan
+
+eTableEntry 4
+aZKey      514031543
+aExternalValue Continous Meal Plan
+aInternalValue CMP
+
+eTableEntry 4
+aZKey      514031544
+aExternalValue 14 Meal Block Plan
+aInternalValue 14BlPlan
+
+eTableEntry 4
+aZKey      514031545
+aExternalValue 20 Meal Block Plan
+aInternalValue 20BlPlan
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031525
+aName      SA_TransactionFrequencyType
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031526
+aName      SA_TransactionFrequencyType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031527
+aExternalValue Once/Term
+aInternalValue Term
+
+eTableEntry 4
+aZKey      514031528
+aExternalValue Once/Year
+aInternalValue Year
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031632
+aName      SABillType
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      514031633
+aName      SABillType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031634
+aExternalValue Tuition Charge
+aInternalValue T
+
+eTableEntry 4
+aZKey      514031635
+aExternalValue Tuition Adjustment Charge
+aInternalValue TA
+
+eTableEntry 4
+aZKey      514031636
+aExternalValue Course/Lab Fee
+aInternalValue L
+
+eTableEntry 4
+aZKey      514031637
+aExternalValue Room and Board
+aInternalValue R
+
+eTableEntry 4
+aZKey      514031638
+aExternalValue Meal Plan
+aInternalValue M
+
+eTableEntry 4
+aZKey      514031639
+aExternalValue Misc Fees
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031640
+aExternalValue Other Charges
+aInternalValue O
+
+eTableEntry 4
+aZKey      514031641
+aExternalValue Credit
+aInternalValue C
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031618
+aName      SAJournal
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      514031619
+aName      SAJournal
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031620
+
+eTableEntry 4
+aZKey      514031621
+aExternalValue Adjustment
+aInternalValue ADJ
+
+eTableEntry 4
+aZKey      514031622
+aExternalValue Student Receipt
+aInternalValue SR
+
+eTableEntry 4
+aZKey      514031623
+aExternalValue Cash Receipts
+aInternalValue CR
+
+eTableEntry 4
+aZKey      514031624
+aExternalValue Interest
+aInternalValue INT
+
+eTableEntry 4
+aZKey      514031625
+aExternalValue Refund
+aInternalValue REF
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031626
+aName      SAPaymentPlan
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      514031627
+aName      SAPaymentPlan
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031628
+
+eTableEntry 4
+aZKey      514031629
+aExternalValue Sally Mae
+aInternalValue S
+
+eTableEntry 4
+aZKey      514031630
+aExternalValue E
+aInternalValue E
+
+eTableEntry 4
+aZKey      514031631
+aExternalValue M
+aInternalValue M
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031750
+aName      ScholarshipAwardedBy
+aDesc      Who can awar scholarships. Admissions, Fin Aid, General, etc.
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031751
+aName      ScholarshipAwardedBy
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031752
+aExternalValue Admissions
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031753
+aExternalValue Financial Aid
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031754
+aExternalValue General
+aInternalValue G
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainSortA
+aZKey      110000669
+aName      SecurityQuestions
+aDesc      Security Question validations for forgotten passwords.
+aDomainType T
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+aDLL_Name  TablesA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110000670
+aName      SecurityQuestions
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001820
+aName      ShortDescription
+aDomainType E
+aDataType  S
+aMaxStringLth 30
+aContextRestriction N
+
+eContext   3
+aZKey      110001821
+aName      ShortDescription
+aIsDefault Y
+
+eContext   3
+aZKey      110001822
+aName      Note
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.SSNDomain
+aZKey      110000031
+aName      SocialSecurityNumber
+aDomainType A
+aDataType  S
+aMaxStringLth 9
+aContextRestriction N
+aDLL_Name  DomainC
+aOperName  SocialSecurityNumber
+
+eContext   3
+aZKey      110000032
+aName      SocialSecurityNumber
+aEditString 999-99-9999
+aJavaEditString 999-99-9999
+aIsDefault Y
+
+eContext   3
+aZKey      110000033
+aName      SSN_NoDashes
+aEditString 999999999
+aJavaEditString 999999999
+
+eContext   3
+aZKey      110000034
+aName      SSN_SecurityDisplay
+aEditString 999999999
+aJavaEditString *****9999
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DynamicTableDomain
+aZKey      110000280
+aName      StandardTimes
+aDesc      Standard daytime times to make entering times easlier.
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      110000281
+aName      StandardTimes
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000282
+aExternalValue 8:00 AM
+aInternalValue 8:00 AM
+
+eTableEntry 4
+aZKey      110000283
+aExternalValue 8:30 AM
+aInternalValue 8:30 AM
+
+eTableEntry 4
+aZKey      110000284
+aExternalValue 9:00 AM
+aInternalValue 9:00 AM
+
+eTableEntry 4
+aZKey      110000285
+aExternalValue 9:30 AM
+aInternalValue 9:30 AM
+
+eTableEntry 4
+aZKey      110000286
+aExternalValue 10:00 AM
+aInternalValue 10:00 AM
+
+eTableEntry 4
+aZKey      110000287
+aExternalValue 10:30 AM
+aInternalValue 10:30 AM
+
+eTableEntry 4
+aZKey      110000288
+aExternalValue 11:00 AM
+aInternalValue 11:00 AM
+
+eTableEntry 4
+aZKey      110000289
+aExternalValue 11:30 AM
+aInternalValue 11:30 AM
+
+eTableEntry 4
+aZKey      110000290
+aExternalValue 12:00 PM
+aInternalValue 12:00 PM
+
+eTableEntry 4
+aZKey      110000291
+aExternalValue 12:30 PM
+aInternalValue 12:30 PM
+
+eTableEntry 4
+aZKey      110000292
+aExternalValue 1:00 PM
+aInternalValue 1:00 PM
+
+eTableEntry 4
+aZKey      110000293
+aExternalValue 1:30 PM
+aInternalValue 1:30 PM
+
+eTableEntry 4
+aZKey      110000294
+aExternalValue 2:00 PM
+aInternalValue 2:00 PM
+
+eTableEntry 4
+aZKey      110000295
+aExternalValue 2:30 PM
+aInternalValue 2:30 PM
+
+eTableEntry 4
+aZKey      110000296
+aExternalValue 3:00 PM
+aInternalValue 3:00 PM
+
+eTableEntry 4
+aZKey      110000297
+aExternalValue 3:30 PM
+aInternalValue 3:30 PM
+
+eTableEntry 4
+aZKey      110000298
+aExternalValue 4:00 PM
+aInternalValue 4:00 PM
+
+eTableEntry 4
+aZKey      110000299
+aExternalValue 4:30 PM
+aInternalValue 4:30 PM
+
+eTableEntry 4
+aZKey      110000300
+aExternalValue 5:00 PM
+aInternalValue 5:00 PM
+
+eTableEntry 4
+aZKey      110000301
+aExternalValue 5:30 PM
+aInternalValue 5:30 PM
+
+eTableEntry 4
+aZKey      110000302
+aExternalValue 6:00 PM
+aInternalValue 6:00 PM
+
+eTableEntry 4
+aZKey      110000303
+aExternalValue 6:30 PM
+aInternalValue 6:30 PM
+
+eTableEntry 4
+aZKey      110000304
+aExternalValue 7:00 PM
+aInternalValue 7:00 PM
+
+eTableEntry 4
+aZKey      110000305
+aExternalValue 7:30 PM
+aInternalValue 7:30 PM
+
+eTableEntry 4
+aZKey      110000306
+aExternalValue 8:00 PM
+aInternalValue 8:00 PM
+
+eTableEntry 4
+aZKey      110000307
+aExternalValue 8:30 PM
+aInternalValue 8:30 PM
+
+eTableEntry 4
+aZKey      110000308
+aExternalValue 9:00 PM
+aInternalValue 9:00 PM
+
+eTableEntry 4
+aZKey      110000309
+aExternalValue 9:30 PM
+aInternalValue 9:30 PM
+
+eTableEntry 4
+aZKey      110000310
+aExternalValue 10:00 PM
+aInternalValue 10:00 PM
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DynamicTableDomain
+aZKey      110000052
+aName      State
+aDesc      US States and Canadian Provinces
+aDomainType T
+aDataType  S
+aMaxStringLth 20
+aContextRestriction N
+aDLL_Name  TablesA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110000053
+aName      OnlineAppState
+
+eTableEntry 4
+aZKey      110000055
+aExternalValue AK
+aInternalValue AK
+
+eTableEntry 4
+aZKey      110000056
+aExternalValue AL
+aInternalValue AL
+
+eTableEntry 4
+aZKey      110000057
+aExternalValue AR
+aInternalValue AR
+
+eTableEntry 4
+aZKey      110000058
+aExternalValue AZ
+aInternalValue AZ
+
+eTableEntry 4
+aZKey      110000059
+aExternalValue CA
+aInternalValue CA
+
+eTableEntry 4
+aZKey      110000060
+aExternalValue CO
+aInternalValue CO
+
+eTableEntry 4
+aZKey      110000061
+aExternalValue CT
+aInternalValue CT
+
+eTableEntry 4
+aZKey      110000062
+aExternalValue DE
+aInternalValue DE
+
+eTableEntry 4
+aZKey      110000063
+aExternalValue FL
+aInternalValue FL
+
+eTableEntry 4
+aZKey      110000064
+aExternalValue GA
+aInternalValue GA
+
+eTableEntry 4
+aZKey      110000065
+aExternalValue HI
+aInternalValue HI
+
+eTableEntry 4
+aZKey      110000066
+aExternalValue IA
+aInternalValue IA
+
+eTableEntry 4
+aZKey      110000067
+aExternalValue ID
+aInternalValue ID
+
+eTableEntry 4
+aZKey      110000068
+aExternalValue IL
+aInternalValue IL
+
+eTableEntry 4
+aZKey      110000069
+aExternalValue IN
+aInternalValue IN
+
+eTableEntry 4
+aZKey      110000070
+aExternalValue KS
+aInternalValue KS
+
+eTableEntry 4
+aZKey      110000071
+aExternalValue KY
+aInternalValue KY
+
+eTableEntry 4
+aZKey      110000072
+aExternalValue LA
+aInternalValue LA
+
+eTableEntry 4
+aZKey      110000073
+aExternalValue MA
+aInternalValue MA
+
+eTableEntry 4
+aZKey      110000074
+aExternalValue MD
+aInternalValue MD
+
+eTableEntry 4
+aZKey      110000075
+aExternalValue ME
+aInternalValue ME
+
+eTableEntry 4
+aZKey      110000076
+aExternalValue MI
+aInternalValue MI
+
+eTableEntry 4
+aZKey      110000077
+aExternalValue MN
+aInternalValue MN
+
+eTableEntry 4
+aZKey      110000078
+aExternalValue MO
+aInternalValue MO
+
+eTableEntry 4
+aZKey      110000079
+aExternalValue MS
+aInternalValue MS
+
+eTableEntry 4
+aZKey      110000080
+aExternalValue MT
+aInternalValue MT
+
+eTableEntry 4
+aZKey      110000081
+aExternalValue NC
+aInternalValue NC
+
+eTableEntry 4
+aZKey      110000082
+aExternalValue ND
+aInternalValue ND
+
+eTableEntry 4
+aZKey      110000083
+aExternalValue NE
+aInternalValue NE
+
+eTableEntry 4
+aZKey      110000084
+aExternalValue NH
+aInternalValue NH
+
+eTableEntry 4
+aZKey      110000085
+aExternalValue NJ
+aInternalValue NJ
+
+eTableEntry 4
+aZKey      110000086
+aExternalValue NM
+aInternalValue NM
+
+eTableEntry 4
+aZKey      110000087
+aExternalValue NV
+aInternalValue NV
+
+eTableEntry 4
+aZKey      110000088
+aExternalValue NY
+aInternalValue NY
+
+eTableEntry 4
+aZKey      110000089
+aExternalValue OH
+aInternalValue OH
+
+eTableEntry 4
+aZKey      110000090
+aExternalValue OK
+aInternalValue OK
+
+eTableEntry 4
+aZKey      110000091
+aExternalValue OR
+aInternalValue OR
+
+eTableEntry 4
+aZKey      110000092
+aExternalValue PA
+aInternalValue PA
+
+eTableEntry 4
+aZKey      110000093
+aExternalValue RI
+aInternalValue RI
+
+eTableEntry 4
+aZKey      110000094
+aExternalValue SC
+aInternalValue SC
+
+eTableEntry 4
+aZKey      110000095
+aExternalValue SD
+aInternalValue SD
+
+eTableEntry 4
+aZKey      110000096
+aExternalValue TN
+aInternalValue TN
+
+eTableEntry 4
+aZKey      110000097
+aExternalValue TX
+aInternalValue TX
+
+eTableEntry 4
+aZKey      110000098
+aExternalValue UT
+aInternalValue UT
+
+eTableEntry 4
+aZKey      110000099
+aExternalValue VA
+aInternalValue VA
+
+eTableEntry 4
+aZKey      110000100
+aExternalValue VT
+aInternalValue VT
+
+eTableEntry 4
+aZKey      110000101
+aExternalValue WA
+aInternalValue WA
+
+eTableEntry 4
+aZKey      110000102
+aExternalValue WI
+aInternalValue WI
+
+eTableEntry 4
+aZKey      110000103
+aExternalValue WV
+aInternalValue WV
+
+eTableEntry 4
+aZKey      110000104
+aExternalValue WY
+aInternalValue WY
+
+eContext   3
+aZKey      110000105
+aName      State
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000107
+aExternalValue AA
+aInternalValue AA
+
+eTableEntry 4
+aZKey      110000108
+aExternalValue AB
+aInternalValue AB
+
+eTableEntry 4
+aZKey      110000109
+aExternalValue AE
+aInternalValue AE
+
+eTableEntry 4
+aZKey      110000110
+aExternalValue AK
+aInternalValue AK
+
+eTableEntry 4
+aZKey      110000111
+aExternalValue AL
+aInternalValue AL
+
+eTableEntry 4
+aZKey      110000112
+aExternalValue AP
+aInternalValue AP
+
+eTableEntry 4
+aZKey      110000113
+aExternalValue AR
+aInternalValue AR
+
+eTableEntry 4
+aZKey      110000114
+aExternalValue AZ
+aInternalValue AZ
+
+eTableEntry 4
+aZKey      110000115
+aExternalValue BC
+aInternalValue BC
+
+eTableEntry 4
+aZKey      110000116
+aExternalValue CA
+aInternalValue CA
+
+eTableEntry 4
+aZKey      110000117
+aExternalValue CO
+aInternalValue CO
+
+eTableEntry 4
+aZKey      110000118
+aExternalValue CT
+aInternalValue CT
+
+eTableEntry 4
+aZKey      110000119
+aExternalValue DC
+aInternalValue DC
+
+eTableEntry 4
+aZKey      110000120
+aExternalValue DE
+aInternalValue DE
+
+eTableEntry 4
+aZKey      110000121
+aExternalValue FL
+aInternalValue FL
+
+eTableEntry 4
+aZKey      110000122
+aExternalValue GA
+aInternalValue GA
+
+eTableEntry 4
+aZKey      110000123
+aExternalValue GU
+aInternalValue GU
+
+eTableEntry 4
+aZKey      110000124
+aExternalValue HI
+aInternalValue HI
+
+eTableEntry 4
+aZKey      110000125
+aExternalValue IA
+aInternalValue IA
+
+eTableEntry 4
+aZKey      110000126
+aExternalValue ID
+aInternalValue ID
+
+eTableEntry 4
+aZKey      110000127
+aExternalValue IL
+aInternalValue IL
+
+eTableEntry 4
+aZKey      110000128
+aExternalValue IN
+aInternalValue IN
+
+eTableEntry 4
+aZKey      110000129
+aExternalValue KS
+aInternalValue KS
+
+eTableEntry 4
+aZKey      110000130
+aExternalValue KY
+aInternalValue KY
+
+eTableEntry 4
+aZKey      110000131
+aExternalValue LA
+aInternalValue LA
+
+eTableEntry 4
+aZKey      110000132
+aExternalValue MA
+aInternalValue MA
+
+eTableEntry 4
+aZKey      110000133
+aExternalValue MB
+aInternalValue MB
+
+eTableEntry 4
+aZKey      110000134
+aExternalValue MD
+aInternalValue MD
+
+eTableEntry 4
+aZKey      110000135
+aExternalValue ME
+aInternalValue ME
+
+eTableEntry 4
+aZKey      110000136
+aExternalValue MI
+aInternalValue MI
+
+eTableEntry 4
+aZKey      110000137
+aExternalValue MN
+aInternalValue MN
+
+eTableEntry 4
+aZKey      110000138
+aExternalValue MO
+aInternalValue MO
+
+eTableEntry 4
+aZKey      110000139
+aExternalValue MS
+aInternalValue MS
+
+eTableEntry 4
+aZKey      110000140
+aExternalValue MT
+aInternalValue MT
+
+eTableEntry 4
+aZKey      110000141
+aExternalValue NB
+aInternalValue NB
+
+eTableEntry 4
+aZKey      110000142
+aExternalValue NC
+aInternalValue NC
+
+eTableEntry 4
+aZKey      110000143
+aExternalValue ND
+aInternalValue ND
+
+eTableEntry 4
+aZKey      110000144
+aExternalValue NE
+aInternalValue NE
+
+eTableEntry 4
+aZKey      110000145
+aExternalValue NF
+aInternalValue NF
+
+eTableEntry 4
+aZKey      110000146
+aExternalValue NH
+aInternalValue NH
+
+eTableEntry 4
+aZKey      110000147
+aExternalValue NJ
+aInternalValue NJ
+
+eTableEntry 4
+aZKey      110000148
+aExternalValue NL
+aInternalValue NL
+
+eTableEntry 4
+aZKey      110000149
+aExternalValue NM
+aInternalValue NM
+
+eTableEntry 4
+aZKey      110000150
+aExternalValue NS
+aInternalValue NS
+
+eTableEntry 4
+aZKey      110000151
+aExternalValue NT
+aInternalValue NT
+
+eTableEntry 4
+aZKey      110000152
+aExternalValue NV
+aInternalValue NV
+
+eTableEntry 4
+aZKey      110000153
+aExternalValue NY
+aInternalValue NY
+
+eTableEntry 4
+aZKey      110000154
+aExternalValue OH
+aInternalValue OH
+
+eTableEntry 4
+aZKey      110000155
+aExternalValue OK
+aInternalValue OK
+
+eTableEntry 4
+aZKey      110000156
+aExternalValue ON
+aInternalValue ON
+
+eTableEntry 4
+aZKey      110000157
+aExternalValue OR
+aInternalValue OR
+
+eTableEntry 4
+aZKey      110000158
+aExternalValue PA
+aInternalValue PA
+
+eTableEntry 4
+aZKey      110000159
+aExternalValue PE
+aInternalValue PE
+
+eTableEntry 4
+aZKey      110000160
+aExternalValue PR
+aInternalValue PR
+
+eTableEntry 4
+aZKey      110000161
+aExternalValue QC
+aInternalValue QC
+
+eTableEntry 4
+aZKey      110000162
+aExternalValue RI
+aInternalValue RI
+
+eTableEntry 4
+aZKey      110000163
+aExternalValue SC
+aInternalValue SC
+
+eTableEntry 4
+aZKey      110000164
+aExternalValue SD
+aInternalValue SD
+
+eTableEntry 4
+aZKey      110000165
+aExternalValue SK
+aInternalValue SK
+
+eTableEntry 4
+aZKey      110000166
+aExternalValue TN
+aInternalValue TN
+
+eTableEntry 4
+aZKey      110000167
+aExternalValue TX
+aInternalValue TX
+
+eTableEntry 4
+aZKey      110000168
+aExternalValue UT
+aInternalValue UT
+
+eTableEntry 4
+aZKey      110000169
+aExternalValue VA
+aInternalValue VA
+
+eTableEntry 4
+aZKey      110000170
+aExternalValue Error for Convert (vt)
+aInternalValue VI
+
+eTableEntry 4
+aZKey      110000171
+aExternalValue VT
+aInternalValue VT
+
+eTableEntry 4
+aZKey      110000172
+aExternalValue WA
+aInternalValue WA
+
+eTableEntry 4
+aZKey      110000173
+aExternalValue WI
+aInternalValue WI
+
+eTableEntry 4
+aZKey      110000174
+aExternalValue WV
+aInternalValue WV
+
+eTableEntry 4
+aZKey      110000175
+aExternalValue WY
+aInternalValue WY
+
+eTableEntry 4
+aZKey      110000176
+aExternalValue YK
+aInternalValue YK
+
+eContext   3
+aZKey      110000177
+aName      Country
+
+eContext   3
+aZKey      110000178
+aName      OnlineAppCountry
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      514031687
+aName      StatementType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031688
+aName      StatementType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031689
+aExternalValue Estimated
+aInternalValue E
+
+eTableEntry 4
+aZKey      514031690
+aExternalValue Actual
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031691
+aExternalValue Unofficial
+aInternalValue O
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565892
+aName      StudentAcademicLevel
+aDesc      The current academic level (fresh, soph, junior, senior) of a student
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+
+eContext   3
+aZKey      513565893
+aName      ClassLevel
+
+eContext   3
+aZKey      513565894
+aName      ShortAcademicLevel
+
+eTableEntry 4
+aZKey      513565895
+aExternalValue Fr
+aInternalValue 1
+
+eTableEntry 4
+aZKey      513565896
+aExternalValue PreE
+aInternalValue 0
+
+eTableEntry 4
+aZKey      513565897
+aExternalValue Fr(2)
+aInternalValue 8
+
+eTableEntry 4
+aZKey      513565898
+aExternalValue Soph
+aInternalValue 2
+
+eTableEntry 4
+aZKey      513565899
+aExternalValue Jr
+aInternalValue 3
+
+eTableEntry 4
+aZKey      513565900
+aExternalValue Sr
+aInternalValue 4
+
+eTableEntry 4
+aZKey      513565901
+aExternalValue Grad
+aInternalValue 6
+
+eTableEntry 4
+aZKey      513565902
+aExternalValue Spec
+aInternalValue 7
+
+eTableEntry 4
+aZKey      513565903
+aExternalValue Sr 5
+aInternalValue 9
+
+eTableEntry 4
+aZKey      513565904
+aExternalValue Alum
+aInternalValue 10
+
+eTableEntry 4
+aZKey      513565905
+aExternalValue Cert
+aInternalValue 20
+
+eContext   3
+aZKey      513565906
+aName      StudentAcademicLevel
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565907
+aExternalValue Freshman
+aInternalValue 1
+
+eTableEntry 4
+aZKey      513565908
+aExternalValue Freshman(2)
+aInternalValue 8
+
+eTableEntry 4
+aZKey      513565909
+aExternalValue Sophomore
+aInternalValue 2
+
+eTableEntry 4
+aZKey      513565910
+aExternalValue Junior
+aInternalValue 3
+
+eTableEntry 4
+aZKey      513565911
+aExternalValue Senior
+aInternalValue 4
+
+eTableEntry 4
+aZKey      513565912
+aExternalValue Graduate
+aInternalValue 6
+
+eTableEntry 4
+aZKey      513565913
+aExternalValue Special
+aInternalValue 7
+
+eTableEntry 4
+aZKey      513565914
+aExternalValue 5 YR Senior
+aInternalValue 9
+
+eTableEntry 4
+aZKey      513565915
+aExternalValue Deg Alumni
+aInternalValue 10
+
+eTableEntry 4
+aZKey      513565916
+aExternalValue Certificate
+aInternalValue 20
+
+eTableEntry 4
+aZKey      513565917
+aExternalValue PreEntry or Unknown
+aInternalValue 0
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565728
+aName      StudentAcademicStanding
+aDesc      Academic standing, both as determined automatically and set manually
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565729
+aName      StudentAcademicStanding
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565730
+aExternalValue Good Standing
+aInternalValue G
+
+eTableEntry 4
+aZKey      513565731
+aExternalValue Academic Probation
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565732
+aExternalValue Academic Suspension
+aInternalValue S
+
+eTableEntry 4
+aZKey      513565733
+aExternalValue Academic Warning
+aInternalValue W
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565600
+aName      StudentAdvisorRegiApprovalStatus
+aDesc      The Status of a Student's proposed Registration as moditored by an Advisor
+aDomainType T
+aDataType  S
+aMaxStringLth 15
+aContextRestriction N
+
+eContext   3
+aZKey      513565601
+aName      StudentAdvisorRegiApprovalStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565602
+aExternalValue Waiting Student Scheduling
+aInternalValue WaitStu
+
+eTableEntry 4
+aZKey      513565603
+aExternalValue Waiting Approval
+aInternalValue WaitFac
+
+eTableEntry 4
+aZKey      513565604
+aExternalValue Approved
+aInternalValue WaitStuSub
+
+eTableEntry 4
+aZKey      513565605
+aExternalValue NOT Approved
+aInternalValue WaitStuCh
+
+eTableEntry 4
+aZKey      513565606
+aExternalValue Submitted
+aInternalValue Submitted
+
+eTableEntry 4
+aZKey      513565607
+aExternalValue Processed by Registrar
+aInternalValue Processed
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565719
+aName      StudentFinancialStanding
+aDesc      Financial standing as set by Financial Aid
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565720
+aName      StudentAcademicStandingRec
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565721
+aExternalValue Eligible
+aInternalValue G
+
+eTableEntry 4
+aZKey      513565722
+aExternalValue Warning
+aInternalValue W
+
+eTableEntry 4
+aZKey      513565723
+aExternalValue Ineligible
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565724
+aExternalValue Timeframe
+aInternalValue T
+
+eTableEntry 4
+aZKey      513565725
+aExternalValue Probation
+aInternalValue B
+
+eTableEntry 4
+aZKey      513565726
+aExternalValue Academic Success Plan
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565727
+aExternalValue Timeframe Success Plan
+aInternalValue S
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565577
+aName      StudentFinancialStandingEval
+aDomainType E
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      513565578
+aName      StudentFinancialStandingEval
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565749
+aName      StudentGownCut
+aDesc      The cut of a student's graduation gown
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565750
+aName      StudentGownCut
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565751
+aExternalValue Regular
+aInternalValue R
+
+eTableEntry 4
+aZKey      513565752
+aExternalValue Full Cut
+aInternalValue F
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565639
+aName      StudentGradeChangeReason
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565640
+aName      StudentGradeChangeReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565641
+aExternalValue Professor Error
+aInternalValue ProfErr
+
+eTableEntry 4
+aZKey      513565642
+aExternalValue Student Petition
+aInternalValue StuPet
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565744
+aName      StudentGradPetitionState
+aDesc      The state of the student's Petition to Participate in Graduation request
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565745
+aName      StudentGradPetitionState
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565746
+aExternalValue Requested
+aInternalValue R
+
+eTableEntry 4
+aZKey      513565747
+aExternalValue Approved
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565748
+aExternalValue Denied
+aInternalValue D
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565706
+aName      StudentHS_Classification
+aDesc      High School Classification (Fresmanh, Sophomore, etc.)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565707
+aName      StudentHS_Classification
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565708
+
+eTableEntry 4
+aZKey      513565709
+aExternalValue Freshman
+aInternalValue F
+
+eTableEntry 4
+aZKey      513565710
+aExternalValue Sophomore
+aInternalValue O
+
+eTableEntry 4
+aZKey      513565711
+aExternalValue Junior
+aInternalValue J
+
+eTableEntry 4
+aZKey      513565712
+aExternalValue Senior
+aInternalValue S
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      513565699
+aName      StudentHS_CourseGrade
+aDesc      High School Course grade for Student Record (number or letter)
+aDomainType E
+aDataType  S
+aMaxStringLth 3
+aContextRestriction N
+
+eContext   3
+aZKey      513565700
+aName      StudentHS_CourseGrade
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565713
+aName      StudentHS_CourseSubject
+aDesc      Standard subject area for a High School Couse entry
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565714
+aName      StudentHS_CourseSubject
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565715
+aExternalValue Math
+aInternalValue M
+
+eTableEntry 4
+aZKey      513565716
+aExternalValue Language
+aInternalValue L
+
+eTableEntry 4
+aZKey      513565717
+aExternalValue Science
+aInternalValue S
+
+eTableEntry 4
+aZKey      513565718
+aExternalValue Other
+aInternalValue O
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565701
+aName      StudentHS_RequirementType
+aDesc      Special high school requirement type
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565702
+aName      StudentHS_RequirementType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565703
+
+eTableEntry 4
+aZKey      513565704
+aExternalValue Language
+aInternalValue L
+
+eTableEntry 4
+aZKey      513565705
+aExternalValue Developmental
+aInternalValue D
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565674
+aName      StudentHS_TranscriptStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565675
+aName      StudentHS_TranscriptStatus
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565665
+aName      StudentPayTypeClassification
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      513565666
+aName      StudentPayTypeClassification
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565667
+aExternalValue Cash
+aInternalValue Cash
+
+eTableEntry 4
+aZKey      513565668
+aExternalValue Collections
+aInternalValue Collect
+
+eTableEntry 4
+aZKey      513565669
+aExternalValue Direct Bill
+aInternalValue Direct
+
+eTableEntry 4
+aZKey      513565670
+aExternalValue ENC Employee
+aInternalValue Employee
+
+eTableEntry 4
+aZKey      513565671
+aExternalValue Tuition Reimbursement
+aInternalValue Reimburse
+
+eTableEntry 4
+aZKey      513565672
+aExternalValue Financial Aid 
+aInternalValue Aid
+
+eTableEntry 4
+aZKey      513565673
+aExternalValue Military
+aInternalValue Military
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565634
+aName      StudentSourceOfWithdrawal
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565635
+aName      StudentSourceOfWithdrawal
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565636
+
+eTableEntry 4
+aZKey      513565637
+aExternalValue Student
+aInternalValue Student
+
+eTableEntry 4
+aZKey      513565638
+aExternalValue Admin
+aInternalValue Admin
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565784
+aName      StudentStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565785
+aName      StudentStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565786
+aExternalValue Inactive
+aInternalValue I
+
+eTableEntry 4
+aZKey      513565787
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      513565788
+aExternalValue No Show
+aInternalValue N
+
+eTableEntry 4
+aZKey      513565789
+aExternalValue Pre-Deposit
+aInternalValue P
+
+eTableEntry 4
+aZKey      513565790
+aExternalValue Deposit
+aInternalValue D
+
+eTableEntry 4
+aZKey      513565791
+aExternalValue Awaiting Class
+aInternalValue W
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565692
+aName      StudentTestingStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565693
+aName      StudentTestingStatus
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565694
+aName      StudentWithdrawalReason
+aDomainType T
+aDataType  S
+aMaxStringLth 5
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565695
+aName      StudentWithdrawalReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565696
+
+eTableEntry 4
+aZKey      513565697
+aExternalValue Financial
+aInternalValue FIN
+
+eTableEntry 4
+aZKey      513565698
+aExternalValue Poor Conduct
+aInternalValue PC
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565825
+aName      StudyOptionGroupType
+aDesc      Type of study option group
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      513565826
+aName      StudyOptionGroupType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565827
+
+eTableEntry 4
+aZKey      513565828
+aExternalValue Study Group
+aInternalValue G
+
+eTableEntry 4
+aZKey      513565829
+aExternalValue Supplemental Instruction
+aInternalValue I
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      90000032
+aName      Text
+aDesc      Any Character String
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmText
+
+eContext   3
+aZKey      90000033
+aName      TEXT
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.TimeDomain
+aZKey      90000078
+aName      Time
+aDomainType A
+aDataType  T
+aContextRestriction N
+aDLL_Name  TZAPDMAB
+aOperName  zdmTime
+
+eContext   3
+aZKey      123033214
+aName      FreeForm
+aEditString *
+aJavaEditString *
+
+eContext   3
+aZKey      354026002
+aName      H:MM AM
+aJavaEditString h:mm a
+
+eContext   3
+aZKey      127021328
+aName      HH:MM
+aEditString HH:MI
+aJavaEditString HH:mm
+
+eContext   3
+aZKey      354025999
+aName      HH:MM AM
+aEditString HH:Mi AM
+aJavaEditString hh:mm a
+aIsDefault Y
+
+eContext   3
+aZKey      127021329
+aName      HH:MM:SS
+aEditString HH:MI:SS
+aJavaEditString HH:mm:ss
+
+eContext   3
+aZKey      90000081
+aName      HH:MM:SS.S
+aEditString HH:MI:SS.9
+aJavaEditString HH:mm:ss.S
+
+eContext   3
+aZKey      90000080
+aName      HH:MM:SS.S AM
+aEditString HH:MI:SS.9 AM
+aJavaEditString HH:mm:ss.S a
+
+eContext   3
+aZKey      90000084
+aName      Hour
+aEditString HH
+aJavaEditString HH
+
+eContext   3
+aZKey      90000085
+aName      Minute
+aEditString MI
+aJavaEditString MM
+
+eContext   3
+aZKey      90000082
+aName      MSWindowsSetting
+
+eContext   3
+aZKey      90000087
+aName      Second
+aEditString SS
+aJavaEditString ss
+
+eContext   3
+aZKey      90000079
+aName      Time
+aEditString HHMISS999
+aJavaEditString HHmmssSSS
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565623
+aName      TranscriptCreditCEU_Unit
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565624
+aName      TranscriptCreditCEU_Unit
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565625
+
+eTableEntry 4
+aZKey      513565626
+aExternalValue CR
+aInternalValue R
+
+eTableEntry 4
+aZKey      513565627
+aExternalValue CEU
+aInternalValue U
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565651
+aName      TranscriptRequestHeldReason
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+
+eContext   3
+aZKey      513565652
+aName      TranscriptRequestHeldReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565653
+aExternalValue Fall Grades
+aInternalValue FG
+
+eTableEntry 4
+aZKey      513565654
+aExternalValue January Grades
+aInternalValue JG
+
+eTableEntry 4
+aZKey      513565655
+aExternalValue Spring Grades
+aInternalValue SG
+
+eTableEntry 4
+aZKey      513565656
+aExternalValue Summer Grades
+aInternalValue MG
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565773
+aName      TranscriptRequestReason
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565774
+aName      TranscriptRequestReason
+aIsDefault Y
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565657
+aName      TranscriptRequestType
+aDesc      Transcript request type (eg., Undergrad, Grad, Certificate)
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565658
+aName      TranscriptRequestType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565659
+aExternalValue Undergraduate
+aInternalValue U
+
+eTableEntry 4
+aZKey      513565660
+aExternalValue Graduate
+aInternalValue G
+
+eTableEntry 4
+aZKey      513565661
+aExternalValue Certificate
+aInternalValue C
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565676
+aName      TransferDeniedReason
+aDomainType T
+aDataType  S
+aMaxStringLth 2
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565677
+aName      TransferDeniedReason
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565678
+
+eTableEntry 4
+aZKey      513565679
+aExternalValue No Credit
+aInternalValue NC
+
+eTableEntry 4
+aZKey      513565680
+aExternalValue Pass/Fail
+aInternalValue PF
+
+eTableEntry 4
+aZKey      513565681
+aExternalValue Pre-college Level
+aInternalValue PL
+
+eTableEntry 4
+aZKey      513565682
+aExternalValue No Equivalent
+aInternalValue NE
+
+eTableEntry 4
+aZKey      513565683
+aExternalValue Grade Below C-
+aInternalValue GB
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.StaticTableDomainWContextAndLang
+aZKey      513565684
+aName      TransferGroupType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      513565685
+aName      TransferGroupType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      513565686
+aExternalValue Transfer
+aInternalValue T
+
+eTableEntry 4
+aZKey      513565687
+aExternalValue Waiver
+aInternalValue W
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110000195
+aName      UserAuthorizationLevel
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      110000196
+aName      UserAuthorizationLevel
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000198
+aExternalValue Windows Access
+aInternalValue Windows
+
+eTableEntry 4
+aZKey      110000199
+aExternalValue Web Access
+aInternalValue Web
+
+eTableEntry 4
+aZKey      110000200
+aExternalValue Prospect
+aInternalValue Prospect
+
+eTableEntry 4
+aZKey      110000201
+aExternalValue FERPA
+aInternalValue FERPA
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110000202
+aName      UserLoginAuthenticationType
+aDesc      How a User is authenticated during login.
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TablesA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110000203
+aName      UserLoginAuthenticationType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000205
+aExternalValue Internal
+aInternalValue Internal
+
+eTableEntry 4
+aZKey      110000206
+aExternalValue Active Directory
+aInternalValue AD
+
+eTableEntry 4
+aZKey      110000207
+aExternalValue Internal
+aInternalValue I
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContext
+aZKey      110000251
+aName      UserStatus
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+aDLL_Name  TablesA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      110000252
+aName      UserStatus
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000254
+aExternalValue Active
+aInternalValue A
+
+eTableEntry 4
+aZKey      110000255
+aExternalValue Inactive
+aInternalValue I
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      514031754
+aName      VehicleRegistrationType
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      514031755
+aName      VehicleRegistrationType
+aIsDefault Y
+
+eTableEntry 4
+aZKey      514031756
+aExternalValue Commuter
+aInternalValue C
+
+eTableEntry 4
+aZKey      514031757
+aExternalValue Resident
+aInternalValue R
+
+eTableEntry 4
+aZKey      514031758
+aExternalValue Faculty/Staff
+aInternalValue F
+
+eTableEntry 4
+aZKey      514031759
+aExternalValue Tenant
+aInternalValue T
+
+eTableEntry 4
+aZKey      514031760
+aExternalValue RA
+aInternalValue A
+
+eTableEntry 4
+aZKey      514031761
+aExternalValue MC
+aInternalValue M
+
+eTableEntry 4
+aZKey      514031762
+aExternalValue Registered Owner
+aInternalValue G
+
+eDomain    2
+aJavaClass org.nazarene.nazsis.domains.DynamicTableDomainWContextAndLang
+aZKey      513565782
+aName      WaiverReason
+aDesc      Reason why a class is waived for a student
+aDomainType T
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmDynamicTable
+
+eContext   3
+aZKey      513565783
+aName      WaiverReason
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110000004
+aName      XML_SubentityPosition
+aDesc      Used to position expansion of a subentity within parenet attributes in generating an XML file from an object instance.
+aDomainType E
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+
+eContext   3
+aZKey      110000005
+aName      XML_SubentityPosition
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      1178138
+aName      XRA_Tag
+aDesc      Double ^ to ^^and modify & to ^
+aDomainType A
+aDataType  S
+aMaxStringLth 32
+aContextRestriction N
+
+eContext   3
+aZKey      1178139
+aName      XRA_Tag
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      1178141
+aName      XRA_Text
+aDesc      Double ^ to ^^ and modify & to ^
+aDomainType A
+aDataType  S
+aMaxStringLth 65534
+aContextRestriction N
+
+eContext   3
+aZKey      1178142
+aName      XRA_Text
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      1005026
+aName      XRA_YNA
+aDesc      Yes/No/All
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      1005028
+aName      XRA_YNA
+aIsDefault Y
+
+eTableEntry 4
+aZKey      92484581
+
+eTableEntry 4
+aZKey      1005053
+aExternalValue A
+aInternalValue A
+
+eTableEntry 4
+aZKey      1005054
+aExternalValue N
+aInternalValue N
+
+eTableEntry 4
+aZKey      1005055
+aExternalValue Y
+aInternalValue Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      110000006
+aName      Y/N
+aDesc      Yes or No
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      110000007
+aName      Default
+
+eTableEntry 4
+aZKey      110000008
+aExternalValue Default
+aInternalValue Y
+
+eTableEntry 4
+aZKey      110000009
+aInternalValue N
+
+eContext   3
+aZKey      110000010
+aName      Y/N
+aIsDefault Y
+
+eTableEntry 4
+aZKey      110000011
+aExternalValue Y
+aInternalValue Y
+
+eTableEntry 4
+aZKey      110000012
+aExternalValue N
+aInternalValue N
+
+eContext   3
+aZKey      110000013
+aName      Yes/No
+
+eTableEntry 4
+aZKey      110000014
+aExternalValue Yes
+aInternalValue Y
+
+eTableEntry 4
+aZKey      110000015
+aExternalValue No
+aInternalValue N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110000226
+aName      Year
+aDesc      4 Digit Year
+aDomainType F
+aDataType  S
+aMaxStringLth 4
+aContextRestriction N
+
+eContext   3
+aZKey      110000227
+aName      Year
+aEditString 9999
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110002614
+aName      YearMonth
+aDesc      Year and Month of the form: YYYYMM
+aDomainType F
+aDataType  S
+aMaxStringLth 6
+aContextRestriction N
+
+eContext   3
+aZKey      110002615
+aName      YearMonth
+aEditString 999999
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      110001825
+aName      ZipCode
+aDesc      US Zip Code
+aDomainType E
+aDataType  S
+aMaxStringLth 10
+aContextRestriction N
+
+eContext   3
+aZKey      110001826
+aName      ZipCode
+aEditString 99999
+aIsDefault Y
+
+eContext   3
+aZKey      110001827
+aName      ZipCode10
+aEditString 99999-9999
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      110007676
+aName      ZKey
+aDomainType E
+aDataType  L
+aContextRestriction N
+
+eContext   3
+aZKey      110007677
+aName      ZKey
+aIsDefault Y
+
